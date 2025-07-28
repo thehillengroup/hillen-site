@@ -11,7 +11,7 @@ const Contact = () => {
   return (
     <section className="py-20 px-4 bg-bg text-dark">
       <div className="max-w-xl mx-auto space-y-8">
-        <h1 className="text-4xl font-bold text-center" data-aos="fade-up">Contact Uss</h1>
+        <h1 className="text-4xl font-bold text-center" data-aos="fade-up">Contact Us!</h1>
         <p className="text-gray-600 text-center" data-aos="fade-up" data-aos-delay="100">
           Have questions or need to connect? We’d love to hear from you.
         </p>
