@@ -2,7 +2,9 @@
   "name": "thehillengroup-site",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://thehillengroup.net",
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "aos": "^2.3.4",
     "autoprefixer": "^10.0.0",
     "postcss": "^8.0.0",

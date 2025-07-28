@@ -1,14 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 import ContactForm from '../components/ContactForm';
 
-const Contact = () => (
-  <section className="max-w-3xl mx-auto py-20 px-4">
-    <h2 className="text-3xl font-bold text-primary mb-6 text-center">Contact Us</h2>
-    <p className="text-lg text-center mb-10 text-dark">
-      Have a project or question? Send us a message and we'll get back to you promptly.
-    </p>
-    <ContactForm />
-  </section>
-);
+const Contact = () => {
+  useEffect(() => {
+    AOS.init({ once: true, duration: 800 });
+  }, []);
+
+  return (
+    <section className="py-20 px-4 bg-bg text-dark">
+      <div className="max-w-xl mx-auto space-y-8">
+        <h1 className="text-4xl font-bold text-center" data-aos="fade-up">Contact Us</h1>
+        <p className="text-gray-600 text-center" data-aos="fade-up" data-aos-delay="100">
+          Have questions or need to connect? We’d love to hear from you.
+        </p>
+        <div data-aos="fade-up" data-aos-delay="200">
+          <ContactForm />
+        </div>
+      </div>
+    </section>
+  );
+};
 
 export default Contact;
