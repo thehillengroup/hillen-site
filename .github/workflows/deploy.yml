@@ -1,29 +1,37 @@
-name: Deploy to HostGator via FTP
+name: Build & Deploy to HostGator
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      # 1. Check out your code
+      - uses: actions/checkout@v3
 
-      - name: Install dependencies
-        run: npm install
+      # 2. Use Node.js 18
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
 
-      - name: Build React app
-        run: npm run build
+      # 3. Install dependencies & build
+      - run: npm ci
+      - run: npm run build
 
+      # 4. Deploy via FTP
       - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftp
+          port: 21
           local-dir: build/
-          server-dir: /public_html/theHillenGroup/
-          dangerous-clean-slate: true
+          # if your domain points at /public_html/theHillenGroup, use that.
+          # otherwise, if it’s rooted at /public_html, drop the subfolder.
+          server-dir: /public_html/
+          dangerous-clean-slate: true     # wipes remote before upload
+          log-level: debug               # verbose logs for troubleshooting
