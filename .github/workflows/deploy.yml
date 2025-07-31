@@ -31,6 +31,6 @@ jobs:
           port: 21
           local-dir: build/
           # adjust as needed—either /public_html/ or /public_html/theHillenGroup/
-          server-dir: /public_html/
+          server-dir: /public_html/theHillenGroup/
           dangerous-clean-slate: true
           log-level: verbose   # <-- was "debug", now "verbose"
