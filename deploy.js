@@ -17,7 +17,7 @@ const ftp = require('basic-ftp');
     console.log('🟢 Connected to FTP');
 
     // 2) Determine the remote path (fallback provided)
-    const remotePath = process.env.FTP_REMOTE_PATH || '/public_html/theHillenGroup';
+    const remotePath = process.env.FTP_REMOTE_PATH || '/theHillenGroup';
     console.log('📁 Deploying to:', remotePath);
 
     // 3) Ensure the directory exists, then clear it out
