@@ -1,3 +1,4 @@
+# .github/workflows/deploy.yml
 name: Build & Deploy to HostGator
 
 on:
@@ -8,29 +9,39 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      # 1. Checkout your code
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      # 2. Use Node.js
-      - uses: actions/setup-node@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: '18'
 
-      # 3. Install & build
-      - run: npm ci
-      - run: npm run build
+      - name: Install dependencies
+        run: npm ci
 
-      # 4. Deploy via FTP
+      - name: Build project
+        run: npm run build
+
       - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          server: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftp
-          port: 21
+          server:    ${{ secrets.FTP_HOST }}
+          username:  ${{ secrets.FTP_USERNAME }}
+          password:  ${{ secrets.FTP_PASSWORD }}
+          protocol:  ftp
+          port:      21
           local-dir: build/
-          # adjust as needed—either /public_html/ or /public_html/theHillenGroup/
-          server-dir: /public_html/theHillenGroup/
-          dangerous-clean-slate: true
-          log-level: verbose   # <-- was "debug", now "verbose"
+          server-dir: /public_html/theHillenGroup/           # ← adjust to /public_html/theHillenGroup/ if needed
+          
+          # ensure nothing in 'build' is skipped:
+          include: |
+            **/*
+          exclude: |
+            .git*
+            node_modules/**
+          
+          force-pasv:           true        # use passive mode
+          dangerous-clean-slate: true        # wipe remote before upload
+          log-level:            verbose     #  minimal | standard | verbose
+
