@@ -8,15 +8,15 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      # 1. Check out your code
+      # 1. Checkout your code
       - uses: actions/checkout@v3
 
-      # 2. Use Node.js 18
+      # 2. Use Node.js
       - uses: actions/setup-node@v3
         with:
           node-version: '18'
 
-      # 3. Install dependencies & build
+      # 3. Install & build
       - run: npm ci
       - run: npm run build
 
@@ -30,8 +30,7 @@ jobs:
           protocol: ftp
           port: 21
           local-dir: build/
-          # if your domain points at /public_html/theHillenGroup, use that.
-          # otherwise, if it’s rooted at /public_html, drop the subfolder.
+          # adjust as needed—either /public_html/ or /public_html/theHillenGroup/
           server-dir: /public_html/
-          dangerous-clean-slate: true     # wipes remote before upload
-          log-level: debug               # verbose logs for troubleshooting
+          dangerous-clean-slate: true
+          log-level: verbose   # <-- was "debug", now "verbose"
