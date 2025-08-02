@@ -68,7 +68,7 @@ const Home = () => {
         />
         <div className="absolute inset-0 bg-dark/60 z-0" />
         <div className="relative z-10 text-center max-w-3xl space-y-6" data-aos="fade-up">
-          <h1 className="text-4xl md:text-6xl font-bold">Welcome to The Hillen Group!</h1>
+          <h1 className="text-4xl md:text-6xl font-bold">Welcome to The Hillen Group</h1>
           <p className="text-xl md:text-2xl text-white/90">Strategic Solutions. Delivered.</p>
           <Link
             to="/services"

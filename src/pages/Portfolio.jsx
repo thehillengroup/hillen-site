@@ -1,77 +1,118 @@
-import React from 'react';
+// src/pages/Portfolio.jsx
+import React, { useState, useEffect } from 'react';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const projects = [
   {
     title: 'Skyline Ventures',
-    description: 'Corporate redesign for a finance firm. React frontend, SEO optimization, and visual branding overhaul.',
+    description:
+      'Corporate redesign for a finance firm. React frontend, SEO optimization, and visual branding overhaul.',
     image: '/images/projects/layout-preview1.png',
     link: 'https://skylineventures.example.com',
     tags: ['Web Design', 'SEO', 'React'],
   },
   {
     title: 'CivicConnect Portal',
-    description: 'Responsive public service portal. Node backend with React SPA. Used for community access and updates.',
+    description:
+      'Responsive public service portal. Node backend with React SPA. Used for community access and updates.',
     image: '/images/projects/layout-preview2.png',
     link: 'https://civicconnect.example.com',
     tags: ['Web App', 'Public Sector', 'React'],
   },
   {
     title: 'Hillen Internal Dashboard',
-    description: 'Role-based internal dashboard with analytics widgets, integrated charts, and responsive layout.',
+    description:
+      'Role-based internal dashboard with analytics widgets, integrated charts, and responsive layout.',
     image: '/images/projects/layout-preview3.png',
     link: '',
     tags: ['Internal Tools', 'Analytics', 'Custom Dev'],
   },
-  {
-    title: 'Legacy Migration Project',
-    description: 'Full site migration from .NET to JAMstack. Headless CMS (Contentful), Gatsby frontend, optimized delivery.',
-    image: '/images/projects/layout-preview4.png',
-    link: '',
-    tags: ['Migration', 'Gatsby', 'Headless CMS'],
-  },
+  // …add more projects as needed
 ];
 
-const Portfolio = () => (
-  <section className="py-20 px-4 bg-white text-dark">
-    <div className="max-w-7xl mx-auto">
-      <h1 className="text-4xl font-bold text-center mb-12">Our Portfolio</h1>
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
-        {projects.map((project, index) => (
-          <div
-            key={index}
-            className="bg-white border rounded-xl shadow hover:shadow-xl transition-all duration-300 overflow-hidden"
-          >
-            <img
-              src={project.image}
-              alt={project.title}
-              className="w-full h-56 object-cover"
-            />
-            <div className="p-6 space-y-3">
-              <h2 className="text-xl font-semibold text-primary">{project.title}</h2>
-              <p className="text-gray-600 text-sm">{project.description}</p>
-              <div className="flex flex-wrap gap-2">
-                {project.tags.map((tag, i) => (
-                  <span key={i} className="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-              {project.link && (
-                <a
-                  href={project.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block text-sm text-primary font-medium hover:underline pt-2"
-                >
-                  View Project →
-                </a>
-              )}
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-);
+export default function Portfolio() {
+  const [isMobile, setIsMobile] = useState(false);
 
-export default Portfolio;
+  useEffect(() => {
+    // 1) Initialize AOS
+    AOS.init({ once: true, duration: 800 });
+    // 2) Track viewport width to toggle mobile animations
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // 3) Refresh AOS when mobile/desktop mode changes
+  useEffect(() => {
+    AOS.refresh();
+  }, [isMobile]);
+
+  // 4) Heading delay: no delay on mobile
+  const headingDelay = isMobile ? 0 : 100;
+
+  return (
+    <section
+      className="py-20 px-4 bg-bg text-dark"
+      data-aos="fade-up"
+      data-aos-delay={headingDelay}
+    >
+      <h1
+        className="text-4xl font-bold text-center mb-12"
+        data-aos="fade-up"
+        data-aos-delay={headingDelay}
+      >
+        Our Portfolio
+      </h1>
+
+      <div className="max-w-6xl mx-auto grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {projects.map((proj, idx) => {
+          // Mobile: simple fade-up, no delay
+          // Desktop: zoom-in with staggered delay
+          const animation = isMobile ? 'fade-up' : 'zoom-in';
+          const delay = isMobile ? 0 : 200 + idx * 100;
+
+          return (
+            <a
+              key={proj.title}
+              href={proj.link || '#'}
+              target="_blank"
+              rel="noreferrer"
+              className="block bg-white rounded-lg shadow-md overflow-hidden"
+              data-aos={animation}
+              data-aos-delay={delay}
+            >
+              <img
+                src={proj.image}
+                alt={proj.title}
+                className="w-full h-48 object-cover"
+              />
+              <div className="p-6">
+                <h2 className="text-2xl font-semibold mb-2">
+                  {proj.title}
+                </h2>
+                <p className="text-gray-600 mb-4">
+                  {proj.description}
+                </p>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {proj.tags.map((tag, i) => (
+                    <span
+                      key={i}
+                      className="bg-blue-100 text-blue-800 text-sm px-2 py-1 rounded"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <span className="text-teal-600 font-medium hover:underline">
+                  View Project →
+                </span>
+              </div>
+            </a>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
