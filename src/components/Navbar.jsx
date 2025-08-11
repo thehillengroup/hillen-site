@@ -57,6 +57,7 @@ const Navbar = () => {
           <Link to="/about" className="hover:text-accent">About</Link>
           <Link to="/services" className="hover:text-accent">Services</Link>
           <Link to="/portfolio" className="hover:text-accent">Portfolio</Link>
+          <Link to="/careers" className="hover:text-accent">Careers</Link>
           <Link to="/contact" className="hover:text-accent">Contact</Link>
         </nav>
       </div>
@@ -97,6 +98,7 @@ const Navbar = () => {
           <Link to="/about" onClick={toggleMenu} className="block hover:text-accent">About</Link>
           <Link to="/services" onClick={toggleMenu} className="block hover:text-accent">Services</Link>
           <Link to="/portfolio" onClick={toggleMenu} className="block hover:text-accent">Portfolio</Link>
+          <Link to="/careers" onClick={toggleMenu} className="block hover:text-accent">Careers</Link>
           <Link to="/contact" onClick={toggleMenu} className="block hover:text-accent">Contact</Link>
         </div>
       </div>

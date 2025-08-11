@@ -1,56 +1,90 @@
 import React, { useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { FaComments, FaChartLine, FaUsers } from 'react-icons/fa';
+
+// import the icons you want
+import {
+  FaLaptopCode,
+  FaMobileAlt,
+  FaProjectDiagram,
+  FaPaintBrush,
+  FaPencilRuler,
+  FaCloud,
+} from 'react-icons/fa';
 
 const services = [
   {
-    icon: <FaComments />,
-    title: 'Strategic Communication',
-    desc: 'Messaging strategies that align your voice and goals across all platforms.',
+    Icon: FaLaptopCode,
+    title: 'Web Application Development & Services',
+    description:
+      'Custom, scalable web applications built with React, Node.js, and modern frameworks—designed for performance and maintainability.',
   },
   {
-    icon: <FaChartLine />,
-    title: 'Organizational Strategy',
-    desc: 'From growth planning to operational refinement, we elevate your core.',
+    Icon: FaMobileAlt,
+    title: 'Mobile Application Development',
+    description:
+      'Native and cross-platform apps for iOS and Android, crafted to deliver a seamless user experience on every device.',
   },
   {
-    icon: <FaUsers />,
-    title: 'Stakeholder Engagement',
-    desc: 'Designing dialogues and processes that foster alignment and buy-in.',
+    Icon: FaProjectDiagram,
+    title: 'Project Planning & Management',
+    description:
+      'End-to-end project roadmaps, agile workflows, and milestone tracking that keep your initiatives on time and on budget.',
+  },
+  {
+    Icon: FaPaintBrush,
+    title: 'Web Design & Maintenance',
+    description:
+      'Ongoing site updates, security patches, and UX/UI refinements to ensure your web presence stays fresh and reliable.',
+  },
+  {
+    Icon: FaPencilRuler,
+    title: 'UI/UX Design & Prototyping',
+    description:
+      'User-centered design, interactive wireframes, and high-fidelity prototypes that validate concepts before you build.',
+  },
+  {
+    Icon: FaCloud,
+    title: 'Cloud Integration & DevOps',
+    description:
+      'Automated CI/CD pipelines, container orchestration, and cloud architecture (AWS, Azure, GCP) for maximum uptime and scalability.',
   },
 ];
 
-const Services = () => {
+export default function Services() {
   useEffect(() => {
     AOS.init({ once: true, duration: 800 });
   }, []);
 
   return (
-    <section className="py-20 bg-white text-dark px-4">
-      <div className="max-w-5xl mx-auto text-center space-y-8">
-        <h1 className="text-4xl font-bold" data-aos="fade-up">Our Services</h1>
-        <p className="text-lg text-gray-600" data-aos="fade-up" data-aos-delay="100">
-          We offer tailored services to help your organization achieve its mission through clarity, engagement, and action.
-        </p>
+    <section className="py-20 px-4 bg-white text-dark">
+      <div className="max-w-7xl mx-auto">
+        {/* Page Heading */}
+        <h1
+          className="text-4xl font-bold text-center mb-12"
+          data-aos="fade-up"
+        >
+          Our IT Services
+        </h1>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mt-12">
-          {services.map((service, index) => (
+        {/* Services Grid */}
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          {services.map(({ Icon, title, description }, idx) => (
             <div
-              key={service.title}
-              className="p-6 bg-bg rounded-lg shadow hover:shadow-lg transition"
+              key={title}
+              className="p-6 border rounded-lg shadow hover:shadow-xl transition duration-300 flex flex-col"
               data-aos="fade-up"
-              data-aos-delay={index * 150}
+              data-aos-delay={100 + idx * 100}
             >
-              <div className="text-primary text-3xl mb-4">{service.icon}</div>
-              <h3 className="text-xl font-semibold">{service.title}</h3>
-              <p className="text-gray-600 mt-2">{service.desc}</p>
+              <div className="flex items-center mb-4">
+                <Icon className="text-primary text-3xl mr-3 flex-shrink-0" />
+                <h2 className="text-2xl font-semibold">{title}</h2>
+              </div>
+              <p className="text-gray-600 flex-grow">{description}</p>
             </div>
           ))}
         </div>
       </div>
     </section>
   );
-};
-
-export default Services;
+}

@@ -1,0 +1,155 @@
+{
+  "updatedAt": "2025-08-10T00:00:00Z",
+  "jobs": [
+    {
+      "id": "fe-01",
+      "title": "Frontend Engineer (React)",
+      "dept": "Engineering",
+      "level": "Mid-Senior",
+      "location": "Remote (US)",
+      "type": "Full-time",
+      "tags": ["React", "TypeScript", "Tailwind"],
+      "summary": "Build accessible, high-performance web interfaces used by enterprise clients.",
+      "responsibilities": [
+        "Implement UI components with React + TypeScript",
+        "Collaborate with designers to ship polished UX",
+        "Write tests and participate in code reviews"
+      ],
+      "requirements": [
+        "3+ years with React",
+        "Strong CSS/Tailwind and accessibility knowledge",
+        "Experience with CRA/Vite, Jest, RTL"
+      ],
+      "postedAt": "2025-08-05",
+      "apply": {
+        "email": "careers@thehillengroup.net",
+        "subject": "Application: Frontend Engineer (React) - The Hillen Group"
+      }
+    },
+    {
+      "id": "be-01",
+      "title": "Backend Engineer (Node.js)",
+      "dept": "Engineering",
+      "level": "Mid-Senior",
+      "location": "Hybrid (Baltimore, MD)",
+      "type": "Full-time",
+      "tags": ["Node.js", "PostgreSQL", "API"],
+      "summary": "Design and maintain secure, scalable APIs and backend services.",
+      "responsibilities": [
+        "Design REST/GraphQL endpoints",
+        "Own database schema and migrations",
+        "Monitor performance and reliability"
+      ],
+      "requirements": [
+        "3+ years with Node.js (Express/NestJS)",
+        "SQL proficiency (Postgres preferred)",
+        "CI/CD familiarity (GitHub Actions, Docker)"
+      ],
+      "postedAt": "2025-08-03",
+      "apply": {
+        "email": "careers@thehillengroup.net",
+        "subject": "Application: Backend Engineer (Node.js) - The Hillen Group"
+      }
+    },
+    {
+      "id": "fs-01",
+      "title": "Full-Stack Engineer (React/Node)",
+      "dept": "Engineering",
+      "level": "Senior",
+      "location": "Remote (US)",
+      "type": "Contract-to-Hire",
+      "tags": ["React", "Node", "DevOps"],
+      "summary": "Own features end-to-end across UI, API, and deployment.",
+      "responsibilities": [
+        "Deliver features across frontend and backend",
+        "Own deployments and production readiness",
+        "Mentor teammates; improve developer experience"
+      ],
+      "requirements": [
+        "5+ years full-stack JavaScript",
+        "Production React + Node experience",
+        "Cloud exposure (AWS/Azure/GCP)"
+      ],
+      "postedAt": "2025-08-01",
+      "apply": {
+        "email": "careers@thehillengroup.net",
+        "subject": "Application: Full-Stack Engineer - The Hillen Group"
+      }
+    },
+    {
+      "id": "mb-01",
+      "title": "Mobile Engineer (React Native)",
+      "dept": "Engineering",
+      "level": "Mid",
+      "location": "Remote (US)",
+      "type": "Full-time",
+      "tags": ["React Native", "iOS", "Android"],
+      "summary": "Ship delightful mobile experiences across iOS and Android from one codebase.",
+      "responsibilities": [
+        "Build screens, navigation, and native modules",
+        "Integrate APIs and analytics",
+        "Publish and maintain App Store/Play releases"
+      ],
+      "requirements": [
+        "2+ years React Native",
+        "Familiar with native build tooling",
+        "Experience with OTA updates (Expo/CodePush)"
+      ],
+      "postedAt": "2025-08-02",
+      "apply": {
+        "email": "careers@thehillengroup.net",
+        "subject": "Application: Mobile Engineer (React Native) - The Hillen Group"
+      }
+    },
+    {
+      "id": "ux-01",
+      "title": "UI/UX Designer",
+      "dept": "Design",
+      "level": "Mid",
+      "location": "Hybrid (Baltimore, MD)",
+      "type": "Full-time",
+      "tags": ["Figma", "Wireframes", "Prototyping"],
+      "summary": "Transform business goals into intuitive, elegant product experiences.",
+      "responsibilities": [
+        "Research, wireframe, and prototype flows",
+        "Create design systems and component libraries",
+        "Partner with engineers for high-quality delivery"
+      ],
+      "requirements": [
+        "2+ years product design",
+        "Expert in Figma or similar tools",
+        "Portfolio demonstrating shipped work"
+      ],
+      "postedAt": "2025-08-04",
+      "apply": {
+        "email": "careers@thehillengroup.net",
+        "subject": "Application: UI/UX Designer - The Hillen Group"
+      }
+    },
+    {
+      "id": "dv-01",
+      "title": "DevOps Engineer",
+      "dept": "Platform",
+      "level": "Senior",
+      "location": "Remote (US)",
+      "type": "Full-time",
+      "tags": ["CI/CD", "Docker", "AWS"],
+      "summary": "Automate, observe, and harden our path from commit to production.",
+      "responsibilities": [
+        "Own CI/CD pipelines and infrastructure as code",
+        "Monitor uptime, performance, and cost",
+        "Establish security best practices"
+      ],
+      "requirements": [
+        "4+ years DevOps/SRE",
+        "Docker + Kubernetes or ECS",
+        "IaC (Terraform/CloudFormation)"
+      ],
+      "postedAt": "2025-08-06",
+      "apply": {
+        "email": "careers@thehillengroup.net",
+        "subject": "Application: DevOps Engineer - The Hillen Group"
+      }
+    }
+  ]
+}

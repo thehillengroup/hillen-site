@@ -31,7 +31,7 @@ const ContactForm = () => {
 
   return (
     <form ref={form} onSubmit={sendEmail} className="bg-white rounded-lg shadow-md p-8 space-y-6">
-      <input type="hidden" name="to_email" value="mike@thehillengroup.net" />
+      <input type="hidden" name="to_email" value="careers@thehillengroup.net" />
       <div>
         <label htmlFor="from_name" className="block font-semibold mb-1">Name</label>
         <input
