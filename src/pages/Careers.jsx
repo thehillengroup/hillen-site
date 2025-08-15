@@ -84,6 +84,38 @@ export default function Careers() {
   const totalOpen = jobs.length;
   const remoteCount = jobs.filter((j) => (j.location || '').toLowerCase().startsWith('remote')).length;
 
+  // JobPosting JSON-LD graph (up to 25 roles)
+  const jobGraph = useMemo(() => {
+    if (!jobs.length) return [];
+    const base = typeof window !== 'undefined' ? window.location.origin : 'https://thehillengroup.net';
+    const org = {
+      '@type': 'Organization',
+      name: 'The Hillen Group',
+      url: base,
+    };
+    const mapLoc = (loc) => {
+      if (!loc) return undefined;
+      if ((loc || '').toLowerCase().includes('remote')) return { jobLocationType: 'TELECOMMUTE' };
+      return {
+        jobLocationType: 'ON_SITE',
+        applicantLocationRequirements: { '@type': 'Country', name: 'USA' },
+      };
+    };
+    return jobs.slice(0, 25).map((j) => ({
+      '@context': 'https://schema.org',
+      '@type': 'JobPosting',
+      title: j.title,
+      description: j.summary,
+      datePosted: j.postedAt || new Date().toISOString().slice(0, 10),
+      employmentType: j.type || 'FULL_TIME',
+      hiringOrganization: org,
+      identifier: { '@type': 'PropertyValue', name: 'THG', value: j.id || j.title },
+      ...mapLoc(j.location),
+      directApply: true,
+      url: `${base}/apply?jobId=${encodeURIComponent(j.id || '')}`,
+    }));
+  }, [jobs]);
+
   // Loading
   if (loading) {
     return (
@@ -157,11 +189,13 @@ export default function Careers() {
               onChange={(e) => setQ(e.target.value)}
               placeholder="Search roles, skills, or keywords…"
               className="w-full rounded-md border px-3 py-2 outline-none focus:ring-2 focus:ring-accent"
+              aria-label="Search jobs"
             />
             <select
               value={dept}
               onChange={(e) => setDept(e.target.value)}
               className="w-full rounded-md border px-3 py-2 outline-none focus:ring-2 focus:ring-accent"
+              aria-label="Filter by department"
             >
               {selects.dept.map((d) => (
                 <option key={d}>{d}</option>
@@ -171,6 +205,7 @@ export default function Careers() {
               value={loc}
               onChange={(e) => setLoc(e.target.value)}
               className="w-full rounded-md border px-3 py-2 outline-none focus:ring-2 focus:ring-accent"
+              aria-label="Filter by location"
             >
               {selects.location.map((d) => (
                 <option key={d}>{d}</option>
@@ -180,6 +215,7 @@ export default function Careers() {
               value={type}
               onChange={(e) => setType(e.target.value)}
               className="w-full rounded-md border px-3 py-2 outline-none focus:ring-2 focus:ring-accent"
+              aria-label="Filter by employment type"
             >
               {selects.type.map((d) => (
                 <option key={d}>{d}</option>
@@ -206,7 +242,7 @@ export default function Careers() {
 
         {/* Footer note */}
         <div className="mt-12 text-center text-sm text-gray-600" data-aos="fade-up">
-          Don&apos;t see the right role? Send your resume to{' '}
+          Don’t see the right role? Send your resume to{' '}
           <a
             className="text-primary underline"
             href="mailto:careers@thehillengroup.net?subject=General%20Application%20%E2%80%93%20The%20Hillen%20Group"
@@ -216,6 +252,12 @@ export default function Careers() {
           .
         </div>
       </div>
+
+      {/* JSON-LD for job listings */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify({ '@graph': jobGraph }) }}
+      />
     </section>
   );
 }
@@ -234,9 +276,24 @@ function JobCard({ job, idx }) {
             <h2 className="text-2xl font-semibold">{job.title}</h2>
             <div className="mt-1 text-sm text-gray-600 flex flex-wrap gap-3">
               {job.dept && <span>{job.dept}</span>}
-              {job.level && <><span>•</span><span>{job.level}</span></>}
-              {job.location && <><span>•</span><span>{job.location}</span></>}
-              {job.type && <><span>•</span><span>{job.type}</span></>}
+              {job.level && (
+                <>
+                  <span>•</span>
+                  <span>{job.level}</span>
+                </>
+              )}
+              {job.location && (
+                <>
+                  <span>•</span>
+                  <span>{job.location}</span>
+                </>
+              )}
+              {job.type && (
+                <>
+                  <span>•</span>
+                  <span>{job.type}</span>
+                </>
+              )}
             </div>
           </div>
           <div className="flex items-center gap-2">

@@ -1,13 +1,139 @@
+/* src/index.css */
+
+/* Tailwind layers */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: 'Segoe UI', sans-serif;
+/* ===========================
+   Brand tokens (optional vars)
+   =========================== */
+:root {
+  --thg-brand: #00a9b7;            /* accent */
+  --thg-dark: #0b1f28;             /* primary text */
+  --thg-bg: #f7fafb;               /* site background */
+  --thg-orange: rgb(255, 166, 0);  /* CTA/hover */
 }
 
-html, body, #root {
-  height: 100%;
-  margin: 0;
-  padding: 0;
+/* ===========================
+   Base & defaults
+   =========================== */
+html:focus-within { scroll-behavior: smooth; }
+
+body {
+  @apply bg-bg text-dark antialiased;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: var(--thg-orange);
+  color: #111827; /* slate-900 */
+}
+
+/* Ensure images scale and don’t overflow containers */
+img, svg, video, canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ===========================
+   Accessibility helpers (508/WCAG)
+   =========================== */
+
+/* Skip to main content (appears on focus) */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.skip-link:focus {
+  position: fixed;
+  left: 1rem;
+  top: 1rem;
+  z-index: 10000;
+  width: auto;
+  height: auto;
+  padding: .5rem .75rem;
+  border-radius: .5rem;
+  background: #111827;       /* slate-900 */
+  color: #fff;
+  outline: 2px solid #f59e0b; /* amber-500 */
+}
+
+/* Strong, consistent focus styles */
+*:focus-visible {
+  outline: 2px solid #f59e0b;   /* amber-500 */
+  outline-offset: 2px;
+}
+
+/* Developer aid: flag images missing alt text (remove when done auditing) */
+img:not([alt]) {
+  filter: grayscale(100%);
+  outline: 2px dashed #f59e0b;
+  outline-offset: 2px;
+}
+
+/* ===========================
+   Navigation helpers
+   =========================== */
+
+/* Force a green header background when needed */
+.nav-green { background-color: #0f766e !important; } /* tailwind green-700 */
+
+/* Make inline SVG logos inherit text color so we can tint on hover */
+.logo-tint,
+.logo-tint *[fill]:not([fill="none"]) { fill: currentColor !important; }
+.logo-tint *[stroke]:not([stroke="none"]) { stroke: currentColor !important; }
+
+/* Bottom tabs: optional helper padding if content is hidden on small screens
+   Apply to a wrapper if needed: <main class="pb-for-tabs sm:pb-0"> */
+.pb-for-tabs { padding-bottom: 5.5rem; }
+
+/* ===========================
+   Forms polish
+   =========================== */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="url"],
+select,
+textarea {
+  @apply bg-white;
+}
+input, select, textarea {
+  @apply focus:outline-none;
+}
+::placeholder { color: #9ca3af; } /* gray-400 */
+
+/* ===========================
+   Animations & motion safety
+   =========================== */
+@media (prefers-reduced-motion: reduce) {
+  [data-aos] {
+    transition: none !important;
+    transform: none !important;
+    animation: none !important;
+  }
+}
+
+/* ===========================
+   Utilities (optional)
+   =========================== */
+
+/* Subtle card shadow for white surfaces (if you want a quick class) */
+.card {
+  @apply bg-white border rounded-xl shadow-sm;
+}
+
+/* Frosted glass helper (used in a few callouts) */
+.glass {
+  background: rgba(255,255,255,0.7);
+  -webkit-backdrop-filter: saturate(180%) blur(8px);
+  backdrop-filter: saturate(180%) blur(8px);
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 0.75rem;
 }

@@ -80,6 +80,26 @@ export default function Apply() {
     [jobs, jobId]
   );
 
+  // JSON-LD for selected job
+  const jobPostingLd = useMemo(() => {
+    if (!selectedJob) return null;
+    const base =
+      typeof window !== 'undefined' ? window.location.origin : 'https://thehillengroup.net';
+    const tele = (selectedJob.location || '').toLowerCase().includes('remote');
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'JobPosting',
+      title: selectedJob.title,
+      description: selectedJob.summary,
+      datePosted: selectedJob.postedAt || new Date().toISOString().slice(0, 10),
+      employmentType: selectedJob.type || 'FULL_TIME',
+      hiringOrganization: { '@type': 'Organization', name: 'The Hillen Group', url: base },
+      ...(tele ? { jobLocationType: 'TELECOMMUTE' } : { jobLocationType: 'ON_SITE' }),
+      directApply: true,
+      url: `${base}/apply?jobId=${encodeURIComponent(selectedJob.id)}`,
+    };
+  }, [selectedJob]);
+
   // --- resume handling ---
   const acceptMimes = [
     'application/pdf',
@@ -144,18 +164,13 @@ export default function Apply() {
     e.preventDefault();
     setFormErr('');
     if (!validate()) {
-      // Announce a generic error banner as well
       setFormErr('Please fix the highlighted fields and try again.');
       return;
     }
-
-    // simulate submit UX
     setSubmitting(true);
-    await new Promise((r) => setTimeout(r, 1200));
+    await new Promise((r) => setTimeout(r, 1200)); // simulate
     setSubmitting(false);
     setSubmitted(true);
-
-    // scroll to top of the card on success
     setTimeout(() => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
       AOS.refresh();
@@ -174,7 +189,7 @@ export default function Apply() {
     setSubmitted(false);
   }
 
-  // --- loading + error states for jobs feed ---
+  // Loading & error states
   if (loading) {
     return (
       <section className="py-20 px-4 bg-bg text-dark">
@@ -193,7 +208,9 @@ export default function Apply() {
     return (
       <section className="py-20 px-4 bg-bg text-dark">
         <div className="max-w-3xl mx-auto text-center space-y-4">
-          <h1 className="text-4xl font-bold" data-aos="fade-up">Apply Now</h1>
+          <h1 className="text-4xl font-bold" data-aos="fade-up">
+            Apply Now
+          </h1>
           <p className="text-red-600" data-aos="fade-up" data-aos-delay="100">
             Could not load positions ({loadErr}).
           </p>
@@ -208,7 +225,7 @@ export default function Apply() {
     );
   }
 
-  // --- success screen ---
+  // Success screen
   if (submitted) {
     return (
       <section className="py-20 px-4 bg-bg text-dark">
@@ -227,10 +244,22 @@ export default function Apply() {
                   We’ll wire this to submit to HR next.
                 </p>
                 <div className="mt-4 text-sm text-gray-600">
-                  <div><span className="font-medium">Name:</span> {fullName || '—'}</div>
-                  <div><span className="font-medium">Email:</span> {email || '—'}</div>
-                  {phone && <div><span className="font-medium">Phone:</span> {phone}</div>}
-                  {linkedin && <div><span className="font-medium">Profile:</span> {linkedin}</div>}
+                  <div>
+                    <span className="font-medium">Name:</span> {fullName || '—'}
+                  </div>
+                  <div>
+                    <span className="font-medium">Email:</span> {email || '—'}
+                  </div>
+                  {phone && (
+                    <div>
+                      <span className="font-medium">Phone:</span> {phone}
+                    </div>
+                  )}
+                  {linkedin && (
+                    <div>
+                      <span className="font-medium">Profile:</span> {linkedin}
+                    </div>
+                  )}
                   {resume && (
                     <div className="mt-1">
                       <span className="font-medium">Resume:</span> {resume.name} ({bytesToSize(resume.size)})
@@ -243,7 +272,6 @@ export default function Apply() {
                     className="inline-flex items-center rounded-md bg-teal-600 px-5 py-2.5 font-semibold text-white hover:brightness-110"
                     onClick={() => {
                       resetForm();
-                      // keep same job preselected
                     }}
                   >
                     Apply to another role
@@ -265,11 +293,17 @@ export default function Apply() {
             </div>
           </div>
         </div>
+        {jobPostingLd && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(jobPostingLd) }}
+          />
+        )}
       </section>
     );
   }
 
-  // --- main form ---
+  // Main form
   return (
     <section className="py-20 px-4 bg-bg text-dark">
       <div className="max-w-3xl mx-auto">
@@ -287,7 +321,9 @@ export default function Apply() {
                 {selectedJob ? selectedJob.title : 'Select a position'}
               </div>
               {fieldErrs.jobId && (
-                <div className="text-sm text-red-600 mt-1" role="alert">{fieldErrs.jobId}</div>
+                <div className="text-sm text-red-600 mt-1" role="alert">
+                  {fieldErrs.jobId}
+                </div>
               )}
             </div>
             <div className="w-full md:w-80">
@@ -295,11 +331,17 @@ export default function Apply() {
               <select
                 value={jobId}
                 onChange={(e) => setJobId(e.target.value)}
-                className={`w-full rounded-md border px-3 py-2 outline-none focus:ring-2 focus:ring-accent ${fieldErrs.jobId ? 'border-red-400' : ''}`}
+                className={`w-full rounded-md border px-3 py-2 outline-none focus:ring-2 focus:ring-accent ${
+                  fieldErrs.jobId ? 'border-red-400' : ''
+                }`}
               >
-                <option value="" disabled>Select a role…</option>
+                <option value="" disabled>
+                  Select a role…
+                </option>
                 {jobs.map((j) => (
-                  <option key={j.id} value={j.id}>{j.title}</option>
+                  <option key={j.id} value={j.id}>
+                    {j.title}
+                  </option>
                 ))}
               </select>
             </div>
@@ -329,7 +371,9 @@ export default function Apply() {
               <label className="block text-sm text-gray-600 mb-1">Full Name *</label>
               <input
                 type="text"
-                className={`w-full rounded-md border px-3 py-2 outline-none focus:ring-2 focus:ring-accent ${fieldErrs.fullName ? 'border-red-400' : ''}`}
+                className={`w-full rounded-md border px-3 py-2 outline-none focus:ring-2 focus:ring-accent ${
+                  fieldErrs.fullName ? 'border-red-400' : ''
+                }`}
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 placeholder="Jane Doe"
@@ -337,14 +381,18 @@ export default function Apply() {
                 aria-describedby={fieldErrs.fullName ? 'err-fullName' : undefined}
               />
               {fieldErrs.fullName && (
-                <div id="err-fullName" className="text-xs text-red-600 mt-1">{fieldErrs.fullName}</div>
+                <div id="err-fullName" className="text-xs text-red-600 mt-1">
+                  {fieldErrs.fullName}
+                </div>
               )}
             </div>
             <div>
               <label className="block text-sm text-gray-600 mb-1">Email *</label>
               <input
                 type="email"
-                className={`w-full rounded-md border px-3 py-2 outline-none focus:ring-2 focus:ring-accent ${fieldErrs.email ? 'border-red-400' : ''}`}
+                className={`w-full rounded-md border px-3 py-2 outline-none focus:ring-2 focus:ring-accent ${
+                  fieldErrs.email ? 'border-red-400' : ''
+                }`}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="jane@example.com"
@@ -352,7 +400,9 @@ export default function Apply() {
                 aria-describedby={fieldErrs.email ? 'err-email' : undefined}
               />
               {fieldErrs.email && (
-                <div id="err-email" className="text-xs text-red-600 mt-1">{fieldErrs.email}</div>
+                <div id="err-email" className="text-xs text-red-600 mt-1">
+                  {fieldErrs.email}
+                </div>
               )}
             </div>
           </div>
@@ -404,7 +454,11 @@ export default function Apply() {
               onDrop={onDrop}
               className={[
                 'relative rounded-lg border-2 border-dashed p-5 md:p-6 text-center transition',
-                dragOver ? 'border-accent bg-accent/5' : (fieldErrs.resume ? 'border-red-400' : 'border-gray-300 hover:border-gray-400')
+                dragOver
+                  ? 'border-accent bg-accent/5'
+                  : fieldErrs.resume
+                  ? 'border-red-400'
+                  : 'border-gray-300 hover:border-gray-400',
               ].join(' ')}
               aria-label="Drag and drop resume here"
             >
@@ -418,12 +472,19 @@ export default function Apply() {
               />
               <div className="pointer-events-none">
                 <div className="flex flex-col items-center">
-                  <svg className="w-10 h-10 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <svg
+                    className="w-10 h-10 text-gray-400"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                  >
                     <path d="M12 16V4m0 0l-3.5 3.5M12 4l3.5 3.5M4 16v3a1 1 0 001 1h14a1 1 0 001-1v-3" />
                   </svg>
                   {!resume ? (
                     <p className="mt-2 text-sm text-gray-600">
-                      <span className="font-medium">Drag & drop</span> your resume here, or <span className="font-medium">click to browse</span>.
+                      <span className="font-medium">Drag & drop</span> your resume here, or{' '}
+                      <span className="font-medium">click to browse</span>.
                     </p>
                   ) : (
                     <p className="mt-2 text-sm text-gray-700">
@@ -436,7 +497,9 @@ export default function Apply() {
             </div>
 
             {fieldErrs.resume && (
-              <div id="err-resume" className="text-xs text-red-600 mt-1">{fieldErrs.resume}</div>
+              <div id="err-resume" className="text-xs text-red-600 mt-1">
+                {fieldErrs.resume}
+              </div>
             )}
 
             {resume && (
@@ -445,11 +508,7 @@ export default function Apply() {
                   <span className="font-medium">{resume.name}</span>
                   <span className="text-gray-500"> — {bytesToSize(resume.size)}</span>
                 </div>
-                <button
-                  type="button"
-                  className="text-sm text-red-600 hover:underline"
-                  onClick={() => setResume(null)}
-                >
+                <button type="button" className="text-sm text-red-600 hover:underline" onClick={() => setResume(null)}>
                   Remove
                 </button>
               </div>
@@ -469,7 +528,11 @@ export default function Apply() {
                 <>
                   <svg className="animate-spin -ml-1 mr-2 h-5 w-5 text-white" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3-3-3-3v4a12 12 0 00-12 12h4z"></path>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8v4l3-3-3-3v4a12 12 0 00-12 12h4z"
+                    ></path>
                   </svg>
                   Submitting…
                 </>
@@ -484,6 +547,10 @@ export default function Apply() {
           </div>
         </form>
       </div>
+
+      {jobPostingLd && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jobPostingLd) }} />
+      )}
     </section>
   );
 }
