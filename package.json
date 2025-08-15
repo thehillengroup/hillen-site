@@ -40,6 +40,9 @@
   },
   "devDependencies": {
     "dotenv": "^17.2.1",
-    "ftp-deploy": "^2.4.7"
+    "ftp-deploy": "^2.4.7",
+    "stylelint": "^16.23.1",
+    "stylelint-config-standard": "^39.0.0",
+    "stylelint-config-tailwindcss": "^1.0.0"
   }
 }
