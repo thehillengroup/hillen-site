@@ -8,7 +8,7 @@ export default function Privacy() {
     AOS.init({ once: true, duration: 800 });
   }, []);
 
-  const updated = 'August 2025';
+  const updated = 'June 2025';
 
   return (
     <section className="py-20 px-4 bg-bg text-dark">
@@ -169,7 +169,7 @@ export default function Privacy() {
           />
 
           <Section
-            title="9) Children’s Privacy"
+            title="9) Children's Privacy"
             delay={500}
             body={
               <p>
