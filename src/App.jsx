@@ -15,7 +15,6 @@ import Accessibility508 from './pages/Accessibility508';
 import Industries from './pages/Industries';
 import Sitemap from './pages/Sitemap';
 import Apply from './pages/Apply';
-import NavMockups from './pages/NavMockups';
 import NotFound from './pages/NotFound';
 
 function App() {
@@ -35,7 +34,6 @@ function App() {
       <Route path="/industries" element={<Layout><Industries /></Layout>} />
       <Route path="/sitemap" element={<Layout><Sitemap /></Layout>} />
       <Route path="/apply" element={<Layout><Apply /></Layout>}/>
-      <Route path="/nav-mockups" element={<Layout><NavMockups /></Layout>}/>
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

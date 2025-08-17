@@ -1,8 +1,58 @@
 // src/components/Footer.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { NAV } from '../config/nav';
+
+// --- helpers to derive links from NAV ---
+function flattenNav(nav) {
+  const out = [];
+  nav.forEach((n) => {
+    if (!n.type && n.to) out.push({ label: n.label, to: n.to });
+    if (n.type === 'menu') {
+      n.items.forEach((it) => out.push({ label: it.label, to: it.to, href: it.href, external: it.external }));
+    }
+    if (n.type === 'mega') {
+      n.cols.forEach((c) => out.push({ label: c.title, to: c.to }));
+    }
+  });
+  return out;
+}
+
+const ALL = flattenNav(NAV);
+
+// pick a clean, high-signal set for the footer
+const desiredOrder = [
+  'Home', 'About', 'Services', 'Industries', 'Portfolio', 'Careers', 'Contact', 'Login',
+  'Privacy', 'Terms', 'Accessibility', 'Sitemap', 'Capabilities PDF'
+];
+
+function pickFooterLinks() {
+  // start with any matching labels found in NAV
+  const fromNav = desiredOrder
+    .map(lab => ALL.find(x => x.label === lab || x.label === lab.replace(' (508)', '')))
+    .filter(Boolean);
+
+  // add legal/static if not present
+  const legal = [
+    { label: 'Privacy', to: '/privacy' },
+    { label: 'Terms', to: '/terms' },
+    { label: 'Accessibility', to: '/accessibility' },
+    { label: 'Sitemap', to: '/sitemap' }
+  ];
+  legal.forEach(l => { if (!fromNav.find(x => x.label === l.label)) fromNav.push(l); });
+
+  // ensure Capabilities PDF if exists in NAV Resources
+  const cap = ALL.find(x => x.label?.toLowerCase().includes('capabilities') && x.href);
+  if (cap && !fromNav.find(x => x.label === cap.label)) fromNav.push(cap);
+
+  // remove duplicates by label
+  const seen = new Set();
+  return fromNav.filter(x => (seen.has(x.label) ? false : (seen.add(x.label), true)));
+}
 
 export default function Footer() {
+  const links = pickFooterLinks();
+
   return (
     <footer className="bg-dark text-white mt-12" role="contentinfo">
       <div className="max-w-7xl mx-auto px-4 py-10">
@@ -17,27 +67,30 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Middle: quick links */}
+        {/* Middle: quick links (auto-derived from NAV + legal) */}
         <nav aria-label="Footer" className="mt-6 grid gap-3 sm:flex sm:flex-wrap sm:items-center sm:gap-5 text-sm">
-          <Link className="hover:underline focus:underline" to="/privacy">Privacy</Link>
-          <Link className="hover:underline focus:underline" to="/terms">Terms</Link>
-          <Link className="hover:underline focus:underline" to="/accessibility">Accessibility (508)</Link>
-          <Link className="hover:underline focus:underline" to="/sitemap">Sitemap</Link>
-          <a
-            className="hover:underline focus:underline"
-            href="/docs/capabilities.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Capabilities PDF
-          </a>
-          <Link className="hover:underline focus:underline" to="/careers">Careers</Link>
-          <Link className="hover:underline focus:underline" to="/contact">Contact</Link>
+          {links.map((l) =>
+            l.href ? (
+              <a
+                key={l.label}
+                className="hover:underline focus:underline"
+                href={l.href}
+                target={l.external ? '_blank' : undefined}
+                rel={l.external ? 'noopener noreferrer' : undefined}
+              >
+                {l.label}
+              </a>
+            ) : (
+              <Link key={l.label} className="hover:underline focus:underline" to={l.to}>
+                {l.label}
+              </Link>
+            )
+          )}
         </nav>
 
         {/* Bottom: copyright */}
         <div className="mt-6 text-sm text-white/70">
-          &copy; {new Date().getFullYear()} The Hillen Group. All rights reserved, folks.
+          © {new Date().getFullYear()} The Hillen Group. All rights reserved, folks.
         </div>
       </div>
     </footer>
