@@ -63,6 +63,35 @@ img, svg, video, canvas {
   color: #fff;
   outline: 2px solid #f59e0b; /* amber-500 */
 }
+ 
+/* 508/WCAG: Skip link */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.skip-link:focus {
+  position: fixed;
+  left: 1rem;
+  top: 1rem;
+  z-index: 10000;
+  width: auto;
+  height: auto;
+  padding: .5rem .75rem;
+  border-radius: .5rem;
+  background: #111827; /* slate-900 */
+  color: #fff;
+  outline: 2px solid #f59e0b; /* amber-500 */
+}
+
+/* Strong, consistent focus styles */
+*:focus-visible {
+  outline: 2px solid #f59e0b;   /* amber-500 */
+  outline-offset: 2px;
+}
 
 /* Strong, consistent focus styles */
 *:focus-visible {

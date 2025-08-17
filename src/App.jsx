@@ -8,9 +8,11 @@ import Services from './pages/Services';
 import Portfolio from './pages/Portfolio';
 import Careers from './pages/Careers';
 import Contact from './pages/Contact';
+import Login from './pages/Login';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
 import Accessibility508 from './pages/Accessibility508';
+import Industries from './pages/Industries';
 import Sitemap from './pages/Sitemap';
 import Apply from './pages/Apply';
 import NavMockups from './pages/NavMockups';
@@ -26,9 +28,11 @@ function App() {
       <Route path="/portfolio" element={<Layout><Portfolio /></Layout>}/>
       <Route path="/careers" element={<Layout><Careers /></Layout>}/>
       <Route path="/contact" element={<Layout><Contact /></Layout>}/>
+      <Route path="/login" element={<Layout><Login /></Layout>}/>
       <Route path="/privacy" element={<Layout><Privacy /></Layout>} />
       <Route path="/terms" element={<Layout><Terms /></Layout>} />
       <Route path="/accessibility" element={<Layout><Accessibility508 /></Layout>} />
+      <Route path="/industries" element={<Layout><Industries /></Layout>} />
       <Route path="/sitemap" element={<Layout><Sitemap /></Layout>} />
       <Route path="/apply" element={<Layout><Apply /></Layout>}/>
       <Route path="/nav-mockups" element={<Layout><NavMockups /></Layout>}/>
