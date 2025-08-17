@@ -1,19 +1,21 @@
+// src/components/Layout.jsx
 import React from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 
-const Layout = ({ children }) => {
+export default function Layout({ children }) {
   return (
-    <div className="min-h-dvh flex flex-col">
-      {/* Skip link for keyboard users */}
-      <a href="#main" className="skip-link">Skip to main content</a>
-      <Navbar />
-      <main id="main" role="main" tabIndex={-1} className="focus:outline-none flex-1">
-        {children}
-      </main>
-      <Footer />
-    </div>
-  );
-};
+    <>
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:rounded-md focus:bg-white focus:px-3 focus:py-2 focus:shadow-lg"
+      >
+        Skip to main content
+      </a>
 
-export default Layout;
+      <Navbar />
+      <main id="main" className="min-h-[60vh] pb-24">{children}</main>
+      <Footer />
+    </>
+  );
+}
