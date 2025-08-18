@@ -14,12 +14,7 @@ const NotFound = () => {
   return (
     <MinimalistLayout bg="bg-white">
       <div className="flex flex-col items-center justify-center text-center space-y-4">
-        <img
-          src={logo}
-          alt="The Hillen Group"
-          className="w-64 h-auto mb-2"
-        />
-
+        <Picture alt="The Hillen Group" src={logo} imgClassName="w-64 h-auto mb-2" priority />
         <h1 className="text-5xl font-bold text-primary">404</h1>
         <h2 className="text-2xl font-semibold text-dark">Page Not Found</h2>
         <p className="text-gray-500">

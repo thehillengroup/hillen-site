@@ -1,5 +1,6 @@
 // src/pages/Portfolio.jsx
 import React, { useState, useEffect } from 'react';
+import Picture from '../components/media/Picture';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
@@ -83,10 +84,10 @@ export default function Portfolio() {
               data-aos={animation}
               data-aos-delay={delay}
             >
-              <img
-                src={proj.image}
+              <Picture
                 alt={proj.title}
-                className="w-full h-48 object-cover"
+                src={proj.image}
+                imgClassName="w-full h-48 object-cover"
               />
               <div className="p-6">
                 <h2 className="text-2xl font-semibold mb-2">

@@ -4,6 +4,7 @@ import { Link, NavLink, useLocation } from 'react-router-dom';
 import { Dialog, Menu, Popover, Transition } from '@headlessui/react';
 import Icon from './ui/Icon';
 import { NAV } from '../config/nav';
+import Picture from './media/Picture';
 import logo from '../assets/images/The-Hillen-White-logo.png';
 
 const cn = (...a) => a.filter(Boolean).join(' ');
@@ -28,9 +29,9 @@ export default function Navbar() {
             </svg>
           </button>
 
-          {/* Center: logo */}
+          {/* Center: logo (Picture, slightly larger) */}
           <Link to="/home" className="flex items-center gap-3 mx-auto lg:mx-0" aria-label="The Hillen Group Home">
-            <img src={logo} alt="The Hillen Group" className="h-16 w-auto lg:h-14" />
+            <Picture alt="The Hillen Group" src={logo} imgClassName="h-20 w-auto lg:h-16" priority />
           </Link>
 
           {/* Right: Login (mobile) */}
@@ -144,51 +145,67 @@ function TopMenu({ label, items }) {
   );
 }
 
+/* ------------ FIXED: Mega menu closes on click ------------- */
 function TopMega({ label, cols }) {
   return (
     <Popover className="relative">
-      <Popover.Button className="inline-flex items-center gap-1 text-white hover:text-[rgb(255,166,0)] transition">
-        {label}
-        <Icon name="chevronDown" className="h-4 w-4" />
-      </Popover.Button>
+      {({ close }) => (
+        <>
+          <Popover.Button className="inline-flex items-center gap-1 text-white hover:text-[rgb(255,166,0)] transition">
+            {label}
+            <Icon name="chevronDown" className="h-4 w-4" />
+          </Popover.Button>
 
-      <Transition
-        as={Fragment}
-        enter="transition ease-out duration-100"
-        enterFrom="opacity-0 -translate-y-1"
-        enterTo="opacity-100 translate-y-0"
-        leave="transition ease-in duration-75"
-        leaveFrom="opacity-100 translate-y-0"
-        leaveTo="opacity-0 -translate-y-1"
-      >
-        <Popover.Panel className="absolute left-1/2 z-50 mt-3 w-[760px] -translate-x-1/2 rounded-2xl border bg-white/95 p-6 text-dark shadow-2xl backdrop-blur-md">
-          <div className="grid grid-cols-3 gap-6 text-sm">
-            {cols.map((c) => (
-              <Link key={c.title} to={c.to} className="group rounded-lg p-3 hover:bg-gray-50">
-                <div className="flex items-center gap-2">
-                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-md bg-teal-100 text-teal-700">
-                    <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden="true">
-                      <circle cx="12" cy="12" r="8" />
-                    </svg>
-                  </span>
-                  <div className="font-semibold text-dark group-hover:text-teal-700">{c.title}</div>
+          <Transition
+            as={Fragment}
+            enter="transition ease-out duration-100"
+            enterFrom="opacity-0 -translate-y-1"
+            enterTo="opacity-100 translate-y-0"
+            leave="transition ease-in duration-75"
+            leaveFrom="opacity-100 translate-y-0"
+            leaveTo="opacity-0 -translate-y-1"
+          >
+            <Popover.Panel className="absolute left-1/2 z-50 mt-3 w-[760px] -translate-x-1/2 rounded-2xl border bg-white/95 p-6 text-dark shadow-2xl backdrop-blur-md">
+              <div className="grid grid-cols-3 gap-6 text-sm">
+                {cols.map((c) => (
+                  <Popover.Button
+                    key={c.title}
+                    as={Link}
+                    to={c.to}
+                    onClick={() => close()}
+                    className="group block rounded-lg p-3 hover:bg-gray-50 text-left"
+                  >
+                    <div className="flex items-center gap-2">
+                      <span className="inline-flex h-8 w-8 items-center justify-center rounded-md bg-teal-100 text-teal-700">
+                        <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden="true">
+                          <circle cx="12" cy="12" r="8" />
+                        </svg>
+                      </span>
+                      <div className="font-semibold text-dark group-hover:text-teal-700">{c.title}</div>
+                    </div>
+                    <div className="mt-1 pl-10 text-gray-600">{c.desc}</div>
+                  </Popover.Button>
+                ))}
+              </div>
+
+              <div className="mt-5 flex items-center justify-between rounded-xl bg-gradient-to-r from-teal-50 to-amber-50 p-4">
+                <div className="text-sm">
+                  <div className="font-semibold text-dark">Not sure where to start?</div>
+                  <div className="text-gray-700">We’ll help you pick the right path.</div>
                 </div>
-                <div className="mt-1 pl-10 text-gray-600">{c.desc}</div>
-              </Link>
-            ))}
-          </div>
-
-          <div className="mt-5 flex items-center justify-between rounded-xl bg-gradient-to-r from-teal-50 to-amber-50 p-4">
-            <div className="text-sm">
-              <div className="font-semibold text-dark">Not sure where to start?</div>
-              <div className="text-gray-700">We’ll help you pick the right path.</div>
-            </div>
-            <Link to="/contact" className="rounded-md bg-[rgb(255,166,0)] px-4 py-2 font-semibold text-dark hover:brightness-95">
-              Talk to us
-            </Link>
-          </div>
-        </Popover.Panel>
-      </Transition>
+                <Popover.Button
+                  as={Link}
+                  to="/contact"
+                  onClick={() => close()}
+                  className="rounded-md bg-[rgb(255,166,0)] px-4 py-2 font-semibold text-dark hover:brightness-95"
+                >
+                  Talk to us
+                </Popover.Button>
+              </div>
+            </Popover.Panel>
+          </Transition>
+        </>
+      )}
     </Popover>
   );
 }
