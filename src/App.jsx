@@ -1,55 +1,59 @@
 // src/App.jsx
+import React, { Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import Layout from './components/Layout';
-import MinimalistLayout from './components/MinimalistLayout'; // use ONE minimal layout
-
-import Intro from './pages/Intro';
-import Home from './pages/Home';
-import About from './pages/About';
-import Services from './pages/Services';
-import Portfolio from './pages/Portfolio';
-import Careers from './pages/Careers';
-import Contact from './pages/Contact';
-import Login from './pages/Login';
-import Industries from './pages/Industries';
-import Privacy from './pages/Privacy';
-import Terms from './pages/Terms';
-import Accessibility508 from './pages/Accessibility508';
-import Sitemap from './pages/Sitemap';
-import NotFound from './pages/NotFound';
-
+import MinimalistLayout from './components/MinimalistLayout';
 import ScrollToTop from './components/ScrollToTop';
+import PageLoader from './components/PageLoader';
+
+// Lazy-loaded pages (code-splitting)
+const Intro             = lazy(() => import(/* webpackChunkName: "intro" */ './pages/Intro'));
+const Home              = lazy(() => import(/* webpackChunkName: "home" */ './pages/Home'));
+const About             = lazy(() => import(/* webpackChunkName: "about" */ './pages/About'));
+const Services          = lazy(() => import(/* webpackChunkName: "services" */ './pages/Services'));
+const Portfolio         = lazy(() => import(/* webpackChunkName: "portfolio" */ './pages/Portfolio'));
+const Industries        = lazy(() => import(/* webpackChunkName: "industries" */ './pages/Industries'));
+const Careers           = lazy(() => import(/* webpackChunkName: "careers" */ './pages/Careers'));
+const Apply             = lazy(() => import(/* webpackChunkName: "apply" */ './pages/Apply'));
+const Contact           = lazy(() => import(/* webpackChunkName: "contact" */ './pages/Contact'));
+const Login             = lazy(() => import(/* webpackChunkName: "login" */ './pages/Login'));
+const Privacy           = lazy(() => import(/* webpackChunkName: "privacy" */ './pages/Privacy'));
+const Terms             = lazy(() => import(/* webpackChunkName: "terms" */ './pages/Terms'));
+const Accessibility508  = lazy(() => import(/* webpackChunkName: "accessibility" */ './pages/Accessibility508'));
+const Sitemap           = lazy(() => import(/* webpackChunkName: "sitemap" */ './pages/Sitemap'));
+const NotFound          = lazy(() => import(/* webpackChunkName: "notfound" */ './pages/NotFound'));
 
 export default function App() {
   return (
     <>
-      {/* Scroll to top on every route change; set offset to your sticky header height if needed */}
+      {/* Scroll to top on every route change; set offset to sticky header height if needed */}
       <ScrollToTop offset={0} smooth={false} />
 
-      <Routes>
-        {/* Intro (no header/footer) */}
-        <Route path="/" element={<MinimalistLayout><Intro /></MinimalistLayout>} />
+      <Suspense fallback={<PageLoader />}>
+        <Routes>
+          {/* Minimal routes (no header/footer) */}
+          <Route path="/"    element={<MinimalistLayout><Intro /></MinimalistLayout>} />
+          <Route path="*"    element={<MinimalistLayout><NotFound /></MinimalistLayout>} />
 
-        {/* Main site with header/footer */}
-        <Route path="/home"        element={<Layout><Home /></Layout>} />
-        <Route path="/about"       element={<Layout><About /></Layout>} />
-        <Route path="/services"    element={<Layout><Services /></Layout>} />
-        <Route path="/portfolio"   element={<Layout><Portfolio /></Layout>} />
-        <Route path="/careers"     element={<Layout><Careers /></Layout>} />
-        <Route path="/industries"  element={<Layout><Industries /></Layout>} />
-        <Route path="/contact"     element={<Layout><Contact /></Layout>} />
-        <Route path="/login"       element={<Layout><Login /></Layout>} />
+          {/* Main site with header/footer */}
+          <Route path="/home"        element={<Layout><Home /></Layout>} />
+          <Route path="/about"       element={<Layout><About /></Layout>} />
+          <Route path="/services"    element={<Layout><Services /></Layout>} />
+          <Route path="/portfolio"   element={<Layout><Portfolio /></Layout>} />
+          <Route path="/industries"  element={<Layout><Industries /></Layout>} />
+          <Route path="/careers"     element={<Layout><Careers /></Layout>} />
+          <Route path="/apply"       element={<Layout><Apply /></Layout>} />
+          <Route path="/contact"     element={<Layout><Contact /></Layout>} />
+          <Route path="/login"       element={<Layout><Login /></Layout>} />
 
-        {/* Legal / utility */}
-        <Route path="/privacy"       element={<Layout><Privacy /></Layout>} />
-        <Route path="/terms"         element={<Layout><Terms /></Layout>} />
-        <Route path="/accessibility" element={<Layout><Accessibility508 /></Layout>} />
-        <Route path="/sitemap"       element={<Layout><Sitemap /></Layout>} />
-
-        {/* 404 (no header/footer) */}
-        <Route path="*" element={<MinimalistLayout><NotFound /></MinimalistLayout>} />
-      </Routes>
+          {/* Legal / utility */}
+          <Route path="/privacy"       element={<Layout><Privacy /></Layout>} />
+          <Route path="/terms"         element={<Layout><Terms /></Layout>} />
+          <Route path="/accessibility" element={<Layout><Accessibility508 /></Layout>} />
+          <Route path="/sitemap"       element={<Layout><Sitemap /></Layout>} />
+        </Routes>
+      </Suspense>
     </>
   );
 }

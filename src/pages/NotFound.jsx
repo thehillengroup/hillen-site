@@ -1,35 +1,47 @@
-import React, { useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+// src/pages/NotFound.jsx
+import React, { useEffect, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import Picture from '../components/media/Picture';
+import { logNotFound } from '../utils/telemetry';
 import logo from '../assets/images/TheHillenGroupMainLogo.png';
-import MinimalistLayout from '../components/MinimalistLayout';
 
-const NotFound = () => {
+export default function NotFound() {
+  const location = useLocation();
   const navigate = useNavigate();
+  const [secs, setSecs] = useState(10);
 
   useEffect(() => {
-    const timer = setTimeout(() => navigate('/home'), 10000);
-    return () => clearTimeout(timer);
-  }, [navigate]);
+    // log 404
+    logNotFound(location.pathname, document.referrer);
+
+    // countdown redirect
+    const timer = setInterval(() => setSecs((s) => Math.max(0, s - 1)), 1000);
+    const toHome = setTimeout(() => navigate('/home'), 10_000);
+
+    return () => {
+      clearInterval(timer);
+      clearTimeout(toHome);
+    };
+  }, [location.pathname, navigate]);
 
   return (
-    <MinimalistLayout bg="bg-white">
-      <div className="flex flex-col items-center justify-center text-center space-y-4">
-        <Picture alt="The Hillen Group" src={logo} imgClassName="w-64 h-auto mb-2" priority />
-        <h1 className="text-5xl font-bold text-primary">404</h1>
-        <h2 className="text-2xl font-semibold text-dark">Page Not Found</h2>
-        <p className="text-gray-500">
-          The page you&apos;re looking for doesn&apos;t exist or has been moved.
+    <div className="min-h-screen flex items-center justify-center bg-bg text-dark">
+      <div className="relative w-full max-w-md rounded-2xl bg-white/70 backdrop-blur-md p-8 shadow-xl">
+         <Picture alt="The Hillen Group" src={logo} imgClassName="w-64 h-auto mb-2" priority />
+        <h1 className="text-5xl font-bold text-center text-accent">404</h1>
+        <p className="mt-2 text-center text-lg">Page Not Found</p>
+        <p className="mt-1 text-center text-gray-600">
+          Redirecting to Home in <span className="font-semibold">{secs}</span>s…
         </p>
-
-        <Link
-          to="/home"
-          className="mt-4 px-6 py-3 bg-primary text-white rounded hover:bg-accent transition"
-        >
-          Return Home
-        </Link>
+        <div className="mt-6 flex justify-center">
+          <Link
+            to="/home"
+            className="rounded-md bg-accent px-5 py-2 font-semibold text-dark hover:brightness-95 focus:outline-none focus:ring-2 focus:ring-accent/60"
+          >
+            Return Home
+          </Link>
+        </div>
       </div>
-    </MinimalistLayout>
+    </div>
   );
-};
-
-export default NotFound;
+}
