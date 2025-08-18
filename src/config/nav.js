@@ -2,6 +2,7 @@
 export const NAV = [
   { label: 'Home', to: '/home' },
   { label: 'About', to: '/about' },
+  { label: 'Portfolio', to: '/portfolio' },
   {
     label: 'Services',
     type: 'mega',
