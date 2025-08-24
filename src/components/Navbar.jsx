@@ -1,319 +1,209 @@
 // src/components/Navbar.jsx
-import React, { Fragment, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import { Dialog, Menu, Popover, Transition } from '@headlessui/react';
-import Icon from './ui/Icon';
-import { NAV } from '../config/nav';
-import Picture from './media/Picture';
+import { useAuth0 } from '@auth0/auth0-react';
 import logo from '../assets/images/The-Hillen-White-logo.png';
 
-const cn = (...a) => a.filter(Boolean).join(' ');
+const cn = (...c) => c.filter(Boolean).join(' ');
+
+const NAV_ITEMS = [
+  { to: '/home', label: 'Home' },
+  { to: '/about', label: 'About' },
+  { to: '/services', label: 'Services' },
+  { to: '/portfolio', label: 'Portfolio' },
+  { to: '/industries', label: 'Industries' },
+  { to: '/careers', label: 'Careers' },
+];
+
+// tiny lock icon
+function LockIcon({ className = 'h-4 w-4' }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2">
+      <path d="M7 10V7a5 5 0 1110 0v3" />
+      <rect x="5" y="10" width="14" height="10" rx="2" />
+    </svg>
+  );
+}
 
 export default function Navbar() {
+  const { isAuthenticated, isLoading, loginWithRedirect, logout } = useAuth0();
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
-  React.useEffect(() => setMobileOpen(false), [location.pathname]);
+
+  // Close mobile menu on route change
+  useEffect(() => setMobileOpen(false), [location.pathname]);
 
   return (
     <>
-      <header className="sticky top-0 z-50 bg-dark/95 text-white backdrop-blur supports-[backdrop-filter]:backdrop-blur shadow-md">
-        <div className="relative mx-auto max-w-7xl flex items-center justify-between px-4 py-4">
-          {/* Left: hamburger (mobile) */}
-          <button
-            className="lg:hidden inline-flex items-center justify-center rounded-md px-3 py-2 text-white hover:text-[rgb(255,166,0)] focus:outline-none focus:ring-2 focus:ring-[rgb(255,166,0)]"
-            aria-label="Open menu"
-            onClick={() => setMobileOpen(true)}
-          >
-            <svg className="h-6 w-6" viewBox="0 0 24 24" stroke="currentColor" fill="none" strokeWidth="2">
-              <path d="M4 7h16M4 12h16M4 17h16" />
-            </svg>
-          </button>
+      {/* Skip link for a11y */}
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-[9999] focus:rounded focus:bg-white focus:px-3 focus:py-2 focus:text-dark"
+      >
+        Skip to content
+      </a>
 
-          {/* Center: logo (Picture, slightly larger) */}
-          <Link to="/home" className="flex items-center gap-3 mx-auto lg:mx-0" aria-label="The Hillen Group Home">
-            <Picture alt="The Hillen Group" src={logo} imgClassName="h-20 w-auto lg:h-16" priority />
-          </Link>
-
-          {/* Right: Login (mobile) */}
-          <Link
-            to="/login"
-            className="lg:hidden inline-flex items-center gap-2 rounded-full border border-white/30 px-3 py-1.5 hover:text-[rgb(255,166,0)] hover:border-[rgb(255,166,0)] focus:outline-none focus:ring-2 focus:ring-[rgb(255,166,0)]"
-            aria-label="Login"
-          >
-            <Icon name="lock" className="h-4 w-4" />
-            <span className="text-sm">Login</span>
+      {/* NAVBAR */}
+      <header className="sticky top-0 z-50 bg-dark text-white shadow-md">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 lg:py-4">
+          {/* Logo (center on mobile) */}
+          <Link to="/home" className="flex flex-1 justify-center lg:justify-start">
+            <img
+              src={logo}
+              alt="The Hillen Group"
+              className="h-20 w-auto transition-transform hover:scale-[1.01]"
+            />
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden lg:flex items-center gap-8 text-base" aria-label="Primary">
-            {NAV.map((item) => {
-              if (!item.type) return <TopLink key={item.label} to={item.to}>{item.label}</TopLink>;
-              if (item.type === 'menu') return <TopMenu key={item.label} label={item.label} items={item.items} />;
-              if (item.type === 'mega') return <TopMega key={item.label} label={item.label} cols={item.cols} />;
-              return null;
-            })}
+          <nav className="hidden items-center gap-9 lg:flex">
+            {NAV_ITEMS.map((item) => (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                className={({ isActive }) =>
+                  cn(
+                    'text-white/90 hover:text-accent transition-colors',
+                    isActive && 'text-accent'
+                  )
+                }
+              >
+                {item.label}
+              </NavLink>
+            ))}
+          </nav>
 
-            {/* Desktop CTAs */}
-            <NavLink
-              to="/login"
-              className={({ isActive }) =>
-                cn(
-                  'inline-flex items-center gap-2 rounded-md border border-white/30 px-4 py-2 hover:border-[rgb(255,166,0)]',
-                  isActive && 'font-semibold'
-                )
-              }
-            >
-              <Icon name="lock" className="h-4 w-4" /> Login
-            </NavLink>
-            <NavLink
+          {/* Right side actions (desktop) */}
+          <div className="hidden items-center gap-4 lg:flex ml-8">
+            {/* Outline Login/Logout (matches design) */}
+            {!isLoading && (
+              <button
+                onClick={() =>
+                  isAuthenticated
+                    ? logout({ logoutParams: { returnTo: window.location.origin } })
+                    : loginWithRedirect()
+                }
+                className={cn(
+                  'inline-flex items-center gap-2 rounded-[10px] px-5 py-2',
+                  'border border-white/40 text-white bg-transparent',
+                  'hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/40'
+                )}
+                aria-label={isAuthenticated ? 'Log out' : 'Log in'}
+              >
+                <LockIcon className="h-4 w-4" />
+                {isAuthenticated ? 'Logout' : 'Login'}
+              </button>
+            )}
+
+            {/* Solid Contact */}
+            <Link
               to="/contact"
-              className={({ isActive }) =>
-                cn(
-                  'rounded-md bg-[rgb(255,166,0)] px-4 py-2 font-semibold text-dark hover:brightness-95',
-                  isActive && 'ring-2 ring-white/40'
-                )
-              }
+              className="inline-flex items-center rounded-[10px] bg-accent px-6 py-2 text-dark font-semibold hover:brightness-95 focus:outline-none focus:ring-2 focus:ring-accent/50"
             >
               Contact
-            </NavLink>
-          </nav>
+            </Link>
+          </div>
+
+          {/* Mobile hamburger (right) */}
+          <button
+            type="button"
+            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+            onClick={() => setMobileOpen((s) => !s)}
+            className="inline-flex items-center justify-center rounded-md p-2 text-white lg:hidden"
+          >
+            <span className="sr-only">Toggle menu</span>
+            {mobileOpen ? (
+              <svg className="h-7 w-7" viewBox="0 0 24 24" stroke="currentColor" fill="none" strokeWidth="2">
+                <path d="M6 6l12 12M18 6l-12 12" />
+              </svg>
+            ) : (
+              <svg className="h-7 w-7" viewBox="0 0 24 24" stroke="currentColor" fill="none" strokeWidth="2">
+                <path d="M3 6h18M3 12h18M3 18h18" />
+              </svg>
+            )}
+          </button>
         </div>
       </header>
 
-      {/* Mobile full-screen menu */}
-      <MobileMenu open={mobileOpen} onClose={() => setMobileOpen(false)} />
-    </>
-  );
-}
-
-/* ------------ Desktop primitives ------------- */
-function TopLink({ to, children }) {
-  return (
-    <NavLink
-      to={to}
-      className={({ isActive }) => cn('text-white hover:text-[rgb(255,166,0)] transition', isActive && 'font-semibold')}
-    >
-      {children}
-    </NavLink>
-  );
-}
-
-function TopMenu({ label, items }) {
-  return (
-    <Menu as="div" className="relative">
-      <Menu.Button className="inline-flex items-center gap-1 text-white hover:text-[rgb(255,166,0)] transition">
-        {label}
-        <Icon name="chevronDown" className="h-4 w-4" />
-      </Menu.Button>
-
-      <Transition
-        as={Fragment}
-        enter="transition ease-out duration-100"
-        enterFrom="transform opacity-0 -translate-y-1"
-        enterTo="transform opacity-100 translate-y-0"
-        leave="transition ease-in duration-75"
-        leaveFrom="transform opacity-100 translate-y-0"
-        leaveTo="transform opacity-0 -translate-y-1"
+      {/* MOBILE FULL-SCREEN OVERLAY */}
+      <div
+        className={cn(
+          'fixed inset-0 z-40 bg-dark/95 text-white backdrop-blur-md transition-opacity duration-200',
+          mobileOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        )}
+        aria-hidden={!mobileOpen}
       >
-        <Menu.Items className="absolute right-0 mt-3 w-56 rounded-2xl border bg-white p-2 text-dark shadow-2xl focus:outline-none">
-          {items.map((it) => (
-            <Menu.Item key={it.label}>
-              {({ active }) =>
-                it.to ? (
+        <div className="mx-auto flex h-full max-w-7xl flex-col px-6 py-6">
+          {/* top row with logo + close */}
+          <div className="mb-6 flex items-center justify-between">
+            <Link to="/home" className="flex items-center" onClick={() => setMobileOpen(false)}>
+              <img src={logo} alt="The Hillen Group" className="h-16 w-auto" />
+            </Link>
+            <button
+              type="button"
+              aria-label="Close menu"
+              onClick={() => setMobileOpen(false)}
+              className="rounded-md p-2 text-white"
+            >
+              <svg className="h-8 w-8" viewBox="0 0 24 24" stroke="currentColor" fill="none" strokeWidth="2">
+                <path d="M6 6l12 12M18 6l-12 12" />
+              </svg>
+            </button>
+          </div>
+
+          {/* links */}
+          <nav className="mt-4 flex-1 overflow-y-auto">
+            <ul className="space-y-4 text-2xl">
+              {NAV_ITEMS.map((item) => (
+                <li key={item.to}>
                   <NavLink
-                    to={it.to}
-                    className={cn('block rounded-md px-3 py-2', active ? 'bg-gray-50' : undefined)}
+                    to={item.to}
+                    onClick={() => setMobileOpen(false)}
+                    className={({ isActive }) =>
+                      cn(
+                        'block rounded-md px-2 py-2 hover:bg-white/10',
+                        isActive && 'bg-white/10 text-accent'
+                      )
+                    }
                   >
-                    {it.label}
+                    {item.label}
                   </NavLink>
-                ) : (
-                  <a
-                    href={it.href}
-                    target={it.external ? '_blank' : undefined}
-                    rel={it.external ? 'noopener noreferrer' : undefined}
-                    className={cn('block rounded-md px-3 py-2', 'hover:bg-gray-50')}
-                  >
-                    {it.label}
-                  </a>
-                )
-              }
-            </Menu.Item>
-          ))}
-        </Menu.Items>
-      </Transition>
-    </Menu>
-  );
-}
+                </li>
+              ))}
+            </ul>
+          </nav>
 
-/* ------------ FIXED: Mega menu closes on click ------------- */
-function TopMega({ label, cols }) {
-  return (
-    <Popover className="relative">
-      {({ close }) => (
-        <>
-          <Popover.Button className="inline-flex items-center gap-1 text-white hover:text-[rgb(255,166,0)] transition">
-            {label}
-            <Icon name="chevronDown" className="h-4 w-4" />
-          </Popover.Button>
-
-          <Transition
-            as={Fragment}
-            enter="transition ease-out duration-100"
-            enterFrom="opacity-0 -translate-y-1"
-            enterTo="opacity-100 translate-y-0"
-            leave="transition ease-in duration-75"
-            leaveFrom="opacity-100 translate-y-0"
-            leaveTo="opacity-0 -translate-y-1"
-          >
-            <Popover.Panel className="absolute left-1/2 z-50 mt-3 w-[760px] -translate-x-1/2 rounded-2xl border bg-white/95 p-6 text-dark shadow-2xl backdrop-blur-md">
-              <div className="grid grid-cols-3 gap-6 text-sm">
-                {cols.map((c) => (
-                  <Popover.Button
-                    key={c.title}
-                    as={Link}
-                    to={c.to}
-                    onClick={() => close()}
-                    className="group block rounded-lg p-3 hover:bg-gray-50 text-left"
-                  >
-                    <div className="flex items-center gap-2">
-                      <span className="inline-flex h-8 w-8 items-center justify-center rounded-md bg-teal-100 text-teal-700">
-                        <svg viewBox="0 0 24 24" className="h-4 w-4" fill="currentColor" aria-hidden="true">
-                          <circle cx="12" cy="12" r="8" />
-                        </svg>
-                      </span>
-                      <div className="font-semibold text-dark group-hover:text-teal-700">{c.title}</div>
-                    </div>
-                    <div className="mt-1 pl-10 text-gray-600">{c.desc}</div>
-                  </Popover.Button>
-                ))}
-              </div>
-
-              <div className="mt-5 flex items-center justify-between rounded-xl bg-gradient-to-r from-teal-50 to-amber-50 p-4">
-                <div className="text-sm">
-                  <div className="font-semibold text-dark">Not sure where to start?</div>
-                  <div className="text-gray-700">We’ll help you pick the right path.</div>
-                </div>
-                <Popover.Button
-                  as={Link}
-                  to="/contact"
-                  onClick={() => close()}
-                  className="rounded-md bg-[rgb(255,166,0)] px-4 py-2 font-semibold text-dark hover:brightness-95"
-                >
-                  Talk to us
-                </Popover.Button>
-              </div>
-            </Popover.Panel>
-          </Transition>
-        </>
-      )}
-    </Popover>
-  );
-}
-
-/* ------------ Mobile full-screen menu (Dialog) ------------- */
-function MobileMenu({ open, onClose }) {
-  return (
-    <Transition show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-[60]" onClose={onClose}>
-        <Transition.Child as={Fragment} enter="ease-out duration-150" enterFrom="opacity-0" enterTo="opacity-100" leave="ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">
-          <div className="fixed inset-0 bg-black/40" />
-        </Transition.Child>
-
-        <div className="fixed inset-0 overflow-y-auto">
-          <div className="min-h-[100dvh] bg-white">
-            {/* Top bar */}
-            <div className="flex items-center justify-between px-4 py-4 border-b">
-              <div className="flex items-center gap-3">
-                <Icon name="dots" className="h-5 w-5" solid />
-                <Dialog.Title className="text-base font-semibold">Menu</Dialog.Title>
-              </div>
+          {/* auth + contact on mobile, styled to match */}
+          <div className="mt-6 grid grid-cols-1 gap-3">
+            {!isLoading && (
               <button
-                onClick={onClose}
-                className="rounded-md px-3 py-1.5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-[rgb(255,166,0)]"
-                aria-label="Close menu"
+                onClick={() =>
+                  isAuthenticated
+                    ? logout({ logoutParams: { returnTo: window.location.origin } })
+                    : loginWithRedirect()
+                }
+                className={cn(
+                  'inline-flex items-center justify-center gap-2 rounded-[10px] px-5 py-3',
+                  'border border-white/40 text-white bg-transparent',
+                  'hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/40'
+                )}
+                aria-label={isAuthenticated ? 'Log out' : 'Log in'}
               >
-                ✕
+                <LockIcon className="h-4 w-4" />
+                {isAuthenticated ? 'Logout' : 'Login'}
               </button>
-            </div>
+            )}
 
-            {/* Content */}
-            <nav className="px-4 pb-8 pt-4 space-y-6" aria-label="Mobile">
-              {/* Primary links */}
-              <div className="grid grid-cols-1 gap-3">
-                {NAV.filter(n => !n.type).map((n) => (
-                  <MobileLink key={n.label} to={n.to} onClose={onClose}>{n.label}</MobileLink>
-                ))}
-
-                {/* Flattened groups */}
-                {NAV.filter(n => n.type === 'mega').map((group) => (
-                  <div key={group.label} className="rounded-xl border">
-                    <div className="px-4 py-2 text-sm font-semibold text-gray-600">{group.label}</div>
-                    <div className="grid grid-cols-1 gap-2 p-2">
-                      {group.cols.map((c) => (
-                        <MobileLink key={c.title} to={c.to} onClose={onClose}>{c.title}</MobileLink>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-
-                {NAV.filter(n => n.type === 'menu').map((group) => (
-                  <div key={group.label} className="rounded-xl border">
-                    <div className="px-4 py-2 text-sm font-semibold text-gray-600">{group.label}</div>
-                    <div className="grid grid-cols-1 gap-2 p-2">
-                      {group.items.map((it) =>
-                        it.to ? (
-                          <MobileLink key={it.label} to={it.to} onClose={onClose}>{it.label}</MobileLink>
-                        ) : (
-                          <a
-                            key={it.label}
-                            href={it.href}
-                            target={it.external ? '_blank' : undefined}
-                            rel={it.external ? 'noopener noreferrer' : undefined}
-                            onClick={onClose}
-                            className="block rounded-lg border border-gray-200 px-4 py-3 text-base font-medium hover:bg-gray-50"
-                          >
-                            {it.label}
-                          </a>
-                        )
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Bottom CTAs */}
-              <div className="grid grid-cols-2 gap-3">
-                <Link
-                  to="/login"
-                  onClick={onClose}
-                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-gray-200 px-4 py-3 text-base font-medium hover:bg-gray-50"
-                >
-                  <Icon name="lock" className="h-4 w-4" /> Login
-                </Link>
-                <Link
-                  to="/contact"
-                  onClick={onClose}
-                  className="inline-flex items-center justify-center rounded-xl bg-[rgb(255,166,0)] px-4 py-3 text-base font-semibold text-dark hover:brightness-95"
-                >
-                  Contact
-                </Link>
-              </div>
-            </nav>
+            <Link
+              to="/contact"
+              onClick={() => setMobileOpen(false)}
+              className="inline-flex items-center justify-center rounded-[10px] bg-accent px-6 py-3 text-dark font-semibold hover:brightness-95 focus:outline-none focus:ring-2 focus:ring-accent/50"
+            >
+              Contact
+            </Link>
           </div>
         </div>
-      </Dialog>
-    </Transition>
-  );
-}
-
-function MobileLink({ to, onClose, children }) {
-  return (
-    <NavLink
-      to={to}
-      onClick={onClose}
-      className="block rounded-lg border border-gray-200 px-4 py-3 text-base font-medium hover:bg-gray-50"
-    >
-      {children}
-    </NavLink>
+      </div>
+    </>
   );
 }

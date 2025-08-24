@@ -6,6 +6,8 @@ import Layout from './components/Layout';
 import MinimalistLayout from './components/MinimalistLayout';
 import ScrollToTop from './components/ScrollToTop';
 import PageLoader from './components/PageLoader';
+import ProtectedRoute from './auth/ProtectedRoute';
+import Logout from './pages/Logout';
 
 // Lazy-loaded pages (code-splitting)
 const Intro             = lazy(() => import(/* webpackChunkName: "intro" */ './pages/Intro'));
@@ -24,6 +26,11 @@ const Accessibility508  = lazy(() => import(/* webpackChunkName: "accessibility"
 const Sitemap           = lazy(() => import(/* webpackChunkName: "sitemap" */ './pages/Sitemap'));
 const NotFound          = lazy(() => import(/* webpackChunkName: "notfound" */ './pages/NotFound'));
 
+// Gov-contracting bundle
+const Contracting       = lazy(() => import(/* webpackChunkName: "contracting" */ './pages/Contracting'));
+const CaseStudies       = lazy(() => import(/* webpackChunkName: "case-studies" */ './pages/CaseStudies'));
+const CaseStudy         = lazy(() => import(/* webpackChunkName: "case-study" */ './pages/CaseStudy'));
+
 export default function App() {
   return (
     <>
@@ -33,8 +40,8 @@ export default function App() {
       <Suspense fallback={<PageLoader />}>
         <Routes>
           {/* Minimal routes (no header/footer) */}
-          <Route path="/"    element={<MinimalistLayout><Intro /></MinimalistLayout>} />
-          <Route path="*"    element={<MinimalistLayout><NotFound /></MinimalistLayout>} />
+          <Route path="/" element={<MinimalistLayout><Intro /></MinimalistLayout>} />
+          <Route path="/logout" element={<MinimalistLayout><Logout /></MinimalistLayout>} />
 
           {/* Main site with header/footer */}
           <Route path="/home"        element={<Layout><Home /></Layout>} />
@@ -43,15 +50,32 @@ export default function App() {
           <Route path="/portfolio"   element={<Layout><Portfolio /></Layout>} />
           <Route path="/industries"  element={<Layout><Industries /></Layout>} />
           <Route path="/careers"     element={<Layout><Careers /></Layout>} />
-          <Route path="/apply"       element={<Layout><Apply /></Layout>} />
+          <Route
+            path="/apply"
+            element={
+              <Layout>
+                <ProtectedRoute>
+                  <Apply />
+                </ProtectedRoute>
+              </Layout>
+            }
+          />
           <Route path="/contact"     element={<Layout><Contact /></Layout>} />
           <Route path="/login"       element={<Layout><Login /></Layout>} />
 
+          {/* Gov-contracting */}
+          <Route path="/contracting"        element={<Layout><Contracting /></Layout>} />
+          <Route path="/case-studies"       element={<Layout><CaseStudies /></Layout>} />
+          <Route path="/case-studies/:slug" element={<Layout><CaseStudy /></Layout>} />
+
           {/* Legal / utility */}
-          <Route path="/privacy"       element={<Layout><Privacy /></Layout>} />
-          <Route path="/terms"         element={<Layout><Terms /></Layout>} />
-          <Route path="/accessibility" element={<Layout><Accessibility508 /></Layout>} />
-          <Route path="/sitemap"       element={<Layout><Sitemap /></Layout>} />
+          <Route path="/privacy"        element={<Layout><Privacy /></Layout>} />
+          <Route path="/terms"          element={<Layout><Terms /></Layout>} />
+          <Route path="/accessibility"  element={<Layout><Accessibility508 /></Layout>} />
+          <Route path="/sitemap"        element={<Layout><Sitemap /></Layout>} />
+
+          {/* 404 (no header/footer) */}
+          <Route path="*" element={<MinimalistLayout><NotFound /></MinimalistLayout>} />
         </Routes>
       </Suspense>
     </>

@@ -3,39 +3,76 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { NAV } from '../config/nav';
 
+/**
+ * Build a flat list of links from the NAV config.
+ * Supports:
+ *  - top-level items: { label, to }
+ *  - "menu": { items: [{ label, to|href, external }] }
+ *  - "mega": { cols: [{ title, to }] }
+ */
 function flattenNav(nav) {
   const out = [];
-  nav.forEach((n) => {
+  nav?.forEach((n) => {
     if (!n.type && n.to) out.push({ label: n.label, to: n.to });
     if (n.type === 'menu') {
-      n.items.forEach((it) =>
+      n.items?.forEach((it) =>
         out.push({ label: it.label, to: it.to, href: it.href, external: it.external })
       );
     }
     if (n.type === 'mega') {
-      n.cols.forEach((c) => out.push({ label: c.title, to: c.to }));
+      n.cols?.forEach((c) => out.push({ label: c.title, to: c.to }));
     }
   });
   return out;
 }
+
 const ALL = flattenNav(NAV);
 
+// Preferred order for footer quick links
 const desiredOrder = [
-  'Home', 'About', 'Portfolio', 'Careers', 'Contact', 'Login',
-  'Capabilities PDF', 'Privacy', 'Terms', 'Accessibility', 'Sitemap'
+  'Home',
+  'About',
+  'Services',
+  'Industries',
+  'Portfolio',
+  'Careers',
+  'Contact',
+  'Login',
+  'Capabilities PDF',
+  'Privacy',
+  'Terms',
+  'Accessibility',
+  'Sitemap',
 ];
 
 function pickFooterLinks() {
-  const fromNav = desiredOrder.map(lab => ALL.find(x => x.label === lab)).filter(Boolean);
+  const fromNav = desiredOrder
+    .map((label) => ALL.find((x) => x?.label === label))
+    .filter(Boolean);
+
+  // Ensure legal links exist even if not in NAV
   const legal = [
     { label: 'Privacy', to: '/privacy' },
     { label: 'Terms', to: '/terms' },
     { label: 'Accessibility', to: '/accessibility' },
     { label: 'Sitemap', to: '/sitemap' },
   ];
-  legal.forEach(l => { if (!fromNav.find(x => x.label === l.label)) fromNav.push(l); });
+  legal.forEach((l) => {
+    if (!fromNav.find((x) => x.label === l.label)) fromNav.push(l);
+  });
+
+  // Capability PDF fallback if not present in NAV
+  if (!fromNav.find((x) => x.label === 'Capabilities PDF')) {
+    fromNav.push({
+      label: 'Capabilities PDF',
+      href: '/docs/capabilities.pdf',
+      external: true, // open in new tab
+    });
+  }
+
+  // De-dupe by label
   const seen = new Set();
-  return fromNav.filter(x => (seen.has(x.label) ? false : (seen.add(x.label), true)));
+  return fromNav.filter((x) => (seen.has(x.label) ? false : (seen.add(x.label), true)));
 }
 
 export default function Footer() {
@@ -44,17 +81,21 @@ export default function Footer() {
   return (
     <footer className="bg-dark text-white mt-12" role="contentinfo">
       <div className="max-w-7xl mx-auto px-4 py-8">
-        {/* Top bar */}
+        {/* Top: brand + blurb */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-white/10 pb-4">
           <div>
             <h2 className="text-xl font-semibold">The Hillen Group</h2>
-            <p className="text-sm text-white/80 mt-1">Strategic solutions. Delivered.</p>
+            <p className="mt-1 text-sm text-white/80">Strategic solutions. Delivered.</p>
           </div>
-          <div className="text-sm text-white/80">UEI / CAGE / NAICS available upon request.</div>
+          <div className="text-sm text-white/80">
+            UEI / CAGE / NAICS available upon request.
+          </div>
         </div>
 
-        {/* Links: 2-col mobile; tight single row on desktop */}
-        <nav aria-label="Footer" className="mt-4">
+        {/* Links
+            - Mobile: exactly two columns
+            - Desktop (md+): single tight horizontal row, no wrap */}
+        <nav aria-label="Footer navigation" className="mt-4">
           <ul
             className="
               grid grid-cols-2 gap-x-4 gap-y-2
@@ -82,10 +123,10 @@ export default function Footer() {
           </ul>
         </nav>
 
-        {/* Copyright */}
-        <div className="mt-5 text-sm text-white/70">
+        {/* Copyright uses entity as requested */}
+        <p className="mt-5 text-sm text-white/70">
           &copy; {new Date().getFullYear()} The Hillen Group. All rights reserved, folks.
-        </div>
+        </p>
       </div>
     </footer>
   );

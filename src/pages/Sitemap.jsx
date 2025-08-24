@@ -40,7 +40,7 @@ export default function Sitemap() {
         {/* Header */}
         <header className="text-center" data-aos="fade-up">
           <h1 className="text-4xl font-bold">Sitemap</h1>
-          <p className="text-gray-600 mt-2">Last updated {updated}</p>
+{/*          <p className="text-gray-600 mt-2">Last updated {updated}</p> */}
         </header>
 
         {/* Top level */}
