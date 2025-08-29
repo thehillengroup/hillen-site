@@ -1,90 +1,88 @@
+// src/pages/Services.jsx
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
-// import the icons you want
-import {
-  FaLaptopCode,
-  FaMobileAlt,
-  FaProjectDiagram,
-  FaPaintBrush,
-  FaPencilRuler,
-  FaCloud,
-} from 'react-icons/fa';
-
-const services = [
-  {
-    Icon: FaLaptopCode,
-    title: 'Web Application Development & Services',
-    description:
-      'Custom, scalable web applications built with React, Node.js, and modern frameworks—designed for performance and maintainability.',
-  },
-  {
-    Icon: FaMobileAlt,
-    title: 'Mobile Application Development',
-    description:
-      'Native and cross-platform apps for iOS and Android, crafted to deliver a seamless user experience on every device.',
-  },
-  {
-    Icon: FaProjectDiagram,
-    title: 'Project Planning & Management',
-    description:
-      'End-to-end project roadmaps, agile workflows, and milestone tracking that keep your initiatives on time and on budget.',
-  },
-  {
-    Icon: FaPaintBrush,
-    title: 'Web Design & Maintenance',
-    description:
-      'Ongoing site updates, security patches, and UX/UI refinements to ensure your web presence stays fresh and reliable.',
-  },
-  {
-    Icon: FaPencilRuler,
-    title: 'UI/UX Design & Prototyping',
-    description:
-      'User-centered design, interactive wireframes, and high-fidelity prototypes that validate concepts before you build.',
-  },
-  {
-    Icon: FaCloud,
-    title: 'Cloud Integration & DevOps',
-    description:
-      'Automated CI/CD pipelines, container orchestration, and cloud architecture (AWS, Azure, GCP) for maximum uptime and scalability.',
-  },
-];
+import services from '../data/services';
+import serviceIconMap, { WebIcon } from '../data/icons';
 
 export default function Services() {
   useEffect(() => {
-    AOS.init({ once: true, duration: 800 });
+    document.title = 'Services | The Hillen Group';
+    AOS.init({ once: true, duration: 750, easing: 'ease-out-quart' });
   }, []);
 
   return (
-    <section className="py-20 px-4 bg-white text-dark">
-      <div className="max-w-7xl mx-auto">
-        {/* Page Heading */}
-        <h1
-          className="text-4xl font-bold text-center mb-12"
-          data-aos="fade-up"
-        >
-          Our IT Services
-        </h1>
-
-        {/* Services Grid */}
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {services.map(({ Icon, title, description }, idx) => (
-            <div
-              key={title}
-              className="p-6 border rounded-lg shadow hover:shadow-xl transition duration-300 flex flex-col"
-              data-aos="fade-up"
-              data-aos-delay={100 + idx * 100}
-            >
-              <div className="flex items-center mb-4">
-                <Icon className="text-primary text-3xl mr-3 flex-shrink-0" />
-                <h2 className="text-2xl font-semibold">{title}</h2>
-              </div>
-              <p className="text-gray-600 flex-grow">{description}</p>
-            </div>
-          ))}
+    <main className="bg-bg text-dark">
+      {/* Hero */}
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-teal-50/70 to-transparent" />
+        <div className="max-w-7xl mx-auto px-4 pt-12 pb-6" aria-labelledby="services-title">
+          <header className="text-center" data-aos="fade-up">
+            <h1 id="services-title" className="text-3xl sm:text-4xl font-extrabold tracking-tight">
+              What We <span className="text-accent">Build</span>
+            </h1>
+            <p className="mt-4 max-w-3xl mx-auto text-lg text-gray-700">
+              From discovery and design to build and operations—end-to-end web and mobile delivery with
+              cloud best practices.
+            </p>
+          </header>
         </div>
-      </div>
-    </section>
+      </section>
+
+      {/* Cards – identical behavior & styling to WebApps */}
+      <section className="max-w-7xl mx-auto px-4 pb-16">
+        <ul
+          className="grid gap-5 md:grid-cols-2"
+          data-aos="fade-up"
+          data-aos-delay="100"
+        >
+          {services.map(({ id, title, desc, href }, i) => {
+            const Icon = serviceIconMap[id] || WebIcon; // fallback
+            const titleId = `${id}-title`;
+
+            const CardInner = (
+              <div className="flex gap-4 p-5">
+                {/* Icon chip – teal scheme */}
+                <div className="shrink-0 inline-flex h-12 w-12 items-center justify-center rounded-lg border border-teal-200 bg-[#E6F7F8] text-[#00A9B7] transition-colors duration-300 group-hover:border-teal-300 group-hover:text-teal-700">
+                  <Icon />
+                </div>
+
+                {/* Text */}
+                <div>
+                  <h2 id={titleId} className="text-lg font-semibold transition-colors duration-300 group-hover:text-teal-800">
+                    {title}
+                  </h2>
+                  <p className="mt-2 text-gray-700">{desc}</p>
+                </div>
+              </div>
+            );
+
+            return (
+              <li
+                key={id}
+                id={id}
+                className="group rounded-xl border border-teal-100 bg-white/90 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-teal-300 hover:shadow-lg focus-within:shadow-lg"
+                data-aos="fade-up"
+                data-aos-delay={100 + i * 60}
+              >
+                {href ? (
+                  <Link
+                    to={href}
+                    aria-labelledby={titleId}
+                    className="block rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500/70"
+                  >
+                    {CardInner}
+                  </Link>
+                ) : (
+                  CardInner
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+    </main>
   );
 }

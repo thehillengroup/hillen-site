@@ -76,7 +76,7 @@ export default function Navbar() {
           {/* Right side actions (desktop) */}
           <div className="hidden items-center gap-4 lg:flex ml-8">
             {/* Outline Login/Logout (matches design) */}
-            {!isLoading && (
+            {/* {!isLoading && (
               <button
                 onClick={() =>
                   isAuthenticated
@@ -93,7 +93,7 @@ export default function Navbar() {
                 <LockIcon className="h-4 w-4" />
                 {isAuthenticated ? 'Logout' : 'Login'}
               </button>
-            )}
+            )} */}
 
             {/* Solid Contact */}
             <Link

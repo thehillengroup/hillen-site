@@ -7,29 +7,32 @@ import MinimalistLayout from './components/MinimalistLayout';
 import ScrollToTop from './components/ScrollToTop';
 import PageLoader from './components/PageLoader';
 import ProtectedRoute from './auth/ProtectedRoute';
-import Logout from './pages/Logout';
+// import Logout from './pages/Logout';
 
 // Lazy-loaded pages (code-splitting)
-const Intro             = lazy(() => import(/* webpackChunkName: "intro" */ './pages/Intro'));
-const Home              = lazy(() => import(/* webpackChunkName: "home" */ './pages/Home'));
-const About             = lazy(() => import(/* webpackChunkName: "about" */ './pages/About'));
-const Services          = lazy(() => import(/* webpackChunkName: "services" */ './pages/Services'));
-const Portfolio         = lazy(() => import(/* webpackChunkName: "portfolio" */ './pages/Portfolio'));
-const Industries        = lazy(() => import(/* webpackChunkName: "industries" */ './pages/Industries'));
-const Careers           = lazy(() => import(/* webpackChunkName: "careers" */ './pages/Careers'));
-const Apply             = lazy(() => import(/* webpackChunkName: "apply" */ './pages/Apply'));
-const Contact           = lazy(() => import(/* webpackChunkName: "contact" */ './pages/Contact'));
-const Login             = lazy(() => import(/* webpackChunkName: "login" */ './pages/Login'));
-const Privacy           = lazy(() => import(/* webpackChunkName: "privacy" */ './pages/Privacy'));
-const Terms             = lazy(() => import(/* webpackChunkName: "terms" */ './pages/Terms'));
-const Accessibility508  = lazy(() => import(/* webpackChunkName: "accessibility" */ './pages/Accessibility508'));
-const Sitemap           = lazy(() => import(/* webpackChunkName: "sitemap" */ './pages/Sitemap'));
-const NotFound          = lazy(() => import(/* webpackChunkName: "notfound" */ './pages/NotFound'));
+const Intro                 = lazy(() => import(/* webpackChunkName: "intro" */ './pages/Intro'));
+const Home                  = lazy(() => import(/* webpackChunkName: "home" */ './pages/Home'));
+const About                 = lazy(() => import(/* webpackChunkName: "about" */ './pages/About'));
+const Services              = lazy(() => import(/* webpackChunkName: "services" */ './pages/Services'));
+const WebAndSoftwareServices  = lazy(() => import(/* webpackChunkName: "web-software-services" */ './pages/Services/WebSoftwareServices'));
+const CyberOperations       = lazy(() => import(/* webpackChunkName: "cyber-operations" */ './pages/Services/CyberOperations'));
+const EnterpriseOperations  = lazy(() => import(/* webpackChunkName: "enterprise-operations" */ './pages/Services/EnterpriseOperations')); // ⬅️ NEW
+const Portfolio             = lazy(() => import(/* webpackChunkName: "portfolio" */ './pages/Portfolio'));
+const Industries            = lazy(() => import(/* webpackChunkName: "industries" */ './pages/Industries'));
+const Careers               = lazy(() => import(/* webpackChunkName: "careers" */ './pages/Careers'));
+const Apply                 = lazy(() => import(/* webpackChunkName: "apply" */ './pages/Apply'));
+const Contact               = lazy(() => import(/* webpackChunkName: "contact" */ './pages/Contact'));
+// const Login              = lazy(() => import(/* webpackChunkName: "login" */ './pages/Login'));
+const Privacy               = lazy(() => import(/* webpackChunkName: "privacy" */ './pages/Privacy'));
+const Terms                 = lazy(() => import(/* webpackChunkName: "terms" */ './pages/Terms'));
+const Accessibility508      = lazy(() => import(/* webpackChunkName: "accessibility" */ './pages/Accessibility508'));
+const Sitemap               = lazy(() => import(/* webpackChunkName: "sitemap" */ './pages/Sitemap'));
+const NotFound              = lazy(() => import(/* webpackChunkName: "notfound" */ './pages/NotFound'));
 
 // Gov-contracting bundle
-const Contracting       = lazy(() => import(/* webpackChunkName: "contracting" */ './pages/Contracting'));
-const CaseStudies       = lazy(() => import(/* webpackChunkName: "case-studies" */ './pages/CaseStudies'));
-const CaseStudy         = lazy(() => import(/* webpackChunkName: "case-study" */ './pages/CaseStudy'));
+const Contracting           = lazy(() => import(/* webpackChunkName: "contracting" */ './pages/Contracting'));
+const CaseStudies           = lazy(() => import(/* webpackChunkName: "case-studies" */ './pages/CaseStudies'));
+const CaseStudy             = lazy(() => import(/* webpackChunkName: "case-study" */ './pages/CaseStudy'));
 
 export default function App() {
   return (
@@ -41,16 +44,20 @@ export default function App() {
         <Routes>
           {/* Minimal routes (no header/footer) */}
           <Route path="/" element={<MinimalistLayout><Intro /></MinimalistLayout>} />
-          <Route path="/logout" element={<MinimalistLayout><Logout /></MinimalistLayout>} />
+          {/* <Route path="/logout" element={<MinimalistLayout><Logout /></MinimalistLayout>} /> */}
 
           {/* Main site with header/footer */}
-          <Route path="/home"        element={<Layout><Home /></Layout>} />
-          <Route path="/about"       element={<Layout><About /></Layout>} />
-          <Route path="/services"    element={<Layout><Services /></Layout>} />
-          <Route path="/portfolio"   element={<Layout><Portfolio /></Layout>} />
-          <Route path="/industries"  element={<Layout><Industries /></Layout>} />
-          <Route path="/careers"     element={<Layout><Careers /></Layout>} />
-          <Route
+          <Route path="/home"                           element={<Layout><Home /></Layout>} />
+          <Route path="/about"                          element={<Layout><About /></Layout>} />
+          <Route path="/services"                       element={<Layout><Services /></Layout>} />
+          <Route path="/services/web-software-services" element={<Layout><WebAndSoftwareServices /></Layout>} />
+          <Route path="/services/cyber-operations"      element={<Layout><CyberOperations /></Layout>} />
+          <Route path="/services/enterprise-operations" element={<Layout><EnterpriseOperations /></Layout>} /> {/* ⬅️ NEW */}
+          <Route path="/portfolio"                      element={<Layout><Portfolio /></Layout>} />
+          <Route path="/industries"                     element={<Layout><Industries /></Layout>} />
+          <Route path="/careers"                        element={<Layout><Careers /></Layout>} />
+          <Route path="/apply"                          element={<Layout><Apply /></Layout>} />
+          {/* <Route
             path="/apply"
             element={
               <Layout>
@@ -59,9 +66,9 @@ export default function App() {
                 </ProtectedRoute>
               </Layout>
             }
-          />
-          <Route path="/contact"     element={<Layout><Contact /></Layout>} />
-          <Route path="/login"       element={<Layout><Login /></Layout>} />
+          /> */}
+          <Route path="/contact"            element={<Layout><Contact /></Layout>} />
+          {/* <Route path="/login"          element={<Layout><Login /></Layout>} /> */}
 
           {/* Gov-contracting */}
           <Route path="/contracting"        element={<Layout><Contracting /></Layout>} />
@@ -69,13 +76,13 @@ export default function App() {
           <Route path="/case-studies/:slug" element={<Layout><CaseStudy /></Layout>} />
 
           {/* Legal / utility */}
-          <Route path="/privacy"        element={<Layout><Privacy /></Layout>} />
-          <Route path="/terms"          element={<Layout><Terms /></Layout>} />
-          <Route path="/accessibility"  element={<Layout><Accessibility508 /></Layout>} />
-          <Route path="/sitemap"        element={<Layout><Sitemap /></Layout>} />
+          <Route path="/privacy"            element={<Layout><Privacy /></Layout>} />
+          <Route path="/terms"              element={<Layout><Terms /></Layout>} />
+          <Route path="/accessibility"      element={<Layout><Accessibility508 /></Layout>} />
+          <Route path="/sitemap"            element={<Layout><Sitemap /></Layout>} />
 
           {/* 404 (no header/footer) */}
-          <Route path="*" element={<MinimalistLayout><NotFound /></MinimalistLayout>} />
+          <Route path="*"                   element={<MinimalistLayout><NotFound /></MinimalistLayout>} />
         </Routes>
       </Suspense>
     </>
