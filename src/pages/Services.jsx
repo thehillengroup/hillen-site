@@ -33,7 +33,7 @@ export default function Services() {
         <div className="max-w-7xl mx-auto px-4">
           <Breadcrumbs
             items={[
-              { label: 'Home', to: '/home' },
+              { label: 'Home', href: '/home' },
               { label: 'Services' },
             ]}
           />
