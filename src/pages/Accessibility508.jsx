@@ -5,25 +5,46 @@ import 'aos/dist/aos.css';
 
 import Breadcrumbs from '../components/ui/Breadcrumbs';
 import PageHero from '../components/ui/PageHero';
+import ScrollToTop from '../components/ScrollToTop';
 
 export default function Accessibility508() {
   useEffect(() => {
     document.title = 'Accessibility & Section 508 | The Hillen Group';
-    AOS.init({ once: true, duration: 800, easing: 'ease-out-quart' });
+
+    // Respect reduced motion (same approach as Industries/Terms)
+    const prefersReduce =
+      typeof window !== 'undefined' &&
+      window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    AOS.init({
+      once: true,
+      duration: prefersReduce ? 0 : 800,
+      easing: 'ease-out-quart',
+      disable: prefersReduce,
+    });
   }, []);
 
   const updated = 'August 2025';
 
   return (
     <main className="bg-bg text-dark">
-      <Breadcrumbs items={[{ label: 'Home', href: '/home' }, { label: 'Accessibility & Section 508' }]} />
+      {/* Breadcrumbs (container + pt like Industries/Terms) */}
+      <section className="pt-4">
+        <div className="max-w-7xl mx-auto px-4">
+          <Breadcrumbs items={[{ label: 'Home', to: '/home' }, { label: 'Accessibility & Section 508' }]} />
+        </div>
+      </section>
 
+      {/* Page hero */}
       <PageHero
         title="Accessibility"
         accent="& Section 508"
         description={`Last updated: ${updated}`}
+        gradientFrom="from-teal-50/70"
       />
 
+      {/* Body */}
       <section className="px-4">
         <div className="max-w-3xl mx-auto">
           {/* Intro */}
@@ -213,6 +234,16 @@ export default function Accessibility508() {
           </article>
         </div>
       </section>
+
+      {/* Same Back-to-Top behavior as Industries/Terms */}
+      <ScrollToTop
+        disableRouteScroll
+        showButton
+        smooth
+        buttonThreshold={420}
+        minPageHeightRatio={1.2}
+        buttonLabel="Back to top"
+      />
     </main>
   );
 }
