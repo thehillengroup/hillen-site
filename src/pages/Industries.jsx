@@ -58,7 +58,7 @@ export default function Industries() {
             data-aos="fade-up"
             data-aos-delay="50"
           >
-            <ul className="flex flex-wrap gap-2">
+            <ul className="flex flex-wrap gap-2 justify-center">
               {INDUSTRIES.map((i) => {
                 const Icon = ICONS_CMP[i.icon];
                 return (

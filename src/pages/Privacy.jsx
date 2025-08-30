@@ -234,9 +234,8 @@ export default function Privacy() {
                       </a>
                     </li>
                     <li className="mt-1">
-                      <span className="font-medium">Mail:</span> The Hillen Group — Privacy,
-                      {/* 123 Example Ave, Suite 100, */}
-                      Elkridge, MD
+                      <span className="font-medium">Mail:</span> The Hillen Group — Privacy<br />
+                      6865 Deerpath Road<br />Suite 101<br />Elkridge, MD 21075
                     </li>
                   </ul>
                 </div>
