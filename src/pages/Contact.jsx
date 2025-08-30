@@ -38,7 +38,7 @@ export default function Contact() {
       <PageHero
         title="Get in"
         accent="Touch"
-        description="Tell us about your mission and we’ll follow up quickly."
+        description="Tell us about your mission and we&apos;ll follow up quickly."
       />
 
       <section className="px-4">
@@ -53,7 +53,7 @@ export default function Contact() {
               <div className="text-center">
                 <h2 className="text-2xl font-semibold">Thanks — we got it! ✅</h2>
                 <p className="mt-2 text-gray-700">
-                  We’ll reach out soon. If it’s urgent, email{' '}
+                  We&apos;ll reach out soon. If it&apos;s urgent, email{' '}
                   <a className="text-primary underline" href="mailto:hello@thehillengroup.net">
                     hello@thehillengroup.net
                   </a>
@@ -174,9 +174,9 @@ export default function Contact() {
                 </li>
                 <li>
                   <span className="font-medium">Address:</span>{' '}
-                  123 Example Ave, Suite 100, Washington, DC 20001
+                  6865 Deerpath Road, Suite 101, Elkridge, MD 21075
                 </li>
-                <li className="text-sm text-gray-600">Mon–Fri, 9am–6pm ET</li>
+                <li className="text-sm text-gray-600">Mon&ndash;Fri, 9am&ndash;6pm ET</li>
               </ul>
             </div>
 
