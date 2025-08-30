@@ -5,6 +5,7 @@ import 'aos/dist/aos.css';
 
 import Breadcrumbs from '../components/ui/Breadcrumbs';
 import PageHero from '../components/ui/PageHero';
+import ScrollToTop from '../components/ScrollToTop';
 import { ICONS_CMP } from '../data/icons';
 import { INDUSTRIES } from '../data/industries';
 
@@ -30,7 +31,7 @@ export default function Industries() {
         <div className="max-w-7xl mx-auto px-4">
           <Breadcrumbs
             items={[
-              { label: 'Home', href: '/home' },
+              { label: 'Home', to: '/home' },
               { label: 'Industries' },
             ]}
           />
@@ -45,7 +46,7 @@ export default function Industries() {
             Industry <span className="text-accent">Domains</span>
           </>
         }
-        subtitle="Domains where we deliver secure, human‑centered, measurable outcomes."
+        subtitle="Domains where we deliver secure, human-centered, measurable outcomes."
         gradientFrom="from-teal-50/70"
       />
 
@@ -116,6 +117,17 @@ export default function Industries() {
           </div>
         </div>
       </section>
+
+      {/* Page-local Back-to-top button.
+          We disable route-scroll here to avoid duplicating the global behavior. */}
+      <ScrollToTop
+        disableRouteScroll
+        showButton
+        smooth
+        buttonThreshold={420}
+        minPageHeightRatio={1.2}
+        buttonLabel="Back to top"
+      />
     </main>
   );
 }
