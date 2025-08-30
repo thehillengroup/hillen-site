@@ -1,62 +1,49 @@
 // src/data/services/enterpriseOperations.js
-// Data only: use `icon` keys and map to components in the page.
-const enterpriseOperations = [
-  {
-    id: 'enterprise-architecture',
-    title: 'Enterprise Architecture & Roadmaps',
-    desc:
-      'Business-aligned reference architectures, capability maps, and target-state roadmaps to guide investment and delivery.',
-    icon: 'LayersIcon',
-  },
+import {
+  LayersIcon,
+  LifebuoyIcon,   // used for ITSM / support
+  ClipboardIcon,
+  IdIcon,
+  BriefcaseIcon,
+} from '../icons';
+
+// Cards used by the Enterprise Operations page
+const cards = [
   {
     id: 'pmo',
-    title: 'Program & Portfolio Management (PMO)',
+    title: 'Portfolio & PMO',
     desc:
-      'Governance, prioritization, and transparent reporting—align budget, risk, and outcomes across initiatives.',
-    icon: 'BriefcaseIcon',
+      'Roadmaps, governance, delivery health, and benefits tracking across programs and projects.',
+    Icon: LayersIcon,
   },
   {
     id: 'itsm',
-    title: 'ITSM & Service Desk (ITIL)',
+    title: 'IT Service Management',
     desc:
-      'Incident, request, change, and problem management with SLAs, runbooks, and knowledge-centered support.',
-    icon: 'HeadsetIcon',
-  },
-  {
-    id: 'data-analytics',
-    title: 'Data Platform & Analytics',
-    desc:
-      'Modern data pipelines and BI dashboards with lineage and governance for trustworthy, timely decisions.',
-    icon: 'DatabaseIcon',
+      'Service desk, incident/change, SLAs, problem management, and knowledge—measured and improved.',
+    Icon: LifebuoyIcon,
   },
   {
     id: 'compliance',
-    title: 'Compliance, Risk & Audits',
+    title: 'Compliance & Risk',
     desc:
-      'SOX, SOC 2, ISO 27001—controls, evidence automation, and audit readiness embedded into operations.',
-    icon: 'ShieldCheckIcon',
+      'Policies, controls, audits, and continuous assurance aligned to standards and regulations.',
+    Icon: ClipboardIcon,
   },
   {
-    id: 'bcd',
-    title: 'Business Continuity & Disaster Recovery',
+    id: 'identity',
+    title: 'Identity & Access',
     desc:
-      'Impact analysis, RTO/RPO targets, tabletop exercises, and automated backups to keep the mission online.',
-    icon: 'LifebuoyIcon',
+      'Joiner/mover/leaver, RBAC, least privilege, and periodic access reviews across the estate.',
+    Icon: IdIcon,
   },
   {
-    id: 'vendor-management',
-    title: 'Vendor & Contract Management',
+    id: 'vendors',
+    title: 'Vendor Management',
     desc:
-      'Sourcing, evaluations, SLAs, and vendor risk—maximize value while reducing surprises and lock-in.',
-    icon: 'ContractIcon',
-  },
-  {
-    id: 'finops',
-    title: 'FinOps & Cost Optimization',
-    desc:
-      'Cloud spend visibility, budgets, and guardrails—rightsizing, reservations, and showback/chargeback.',
-    icon: 'CloudDollarIcon',
+      'Sourcing, SLAs, risk, and performance across partners and platforms—governance that scales.',
+    Icon: BriefcaseIcon,
   },
 ];
 
-export default enterpriseOperations;
+export default cards;

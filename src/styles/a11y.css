@@ -1,0 +1,15 @@
+/* src/styles/a11y.css */
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  /* Make AOS elements just appear */
+  [data-aos] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
