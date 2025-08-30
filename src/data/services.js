@@ -61,6 +61,7 @@ const services = [
     desc:
       'Roadmaps, technical spikes, backlog grooming, and delivery plans informed by risk and business value.',
     Icon: planning,
+    href: '/services/project-planning',
   },
 ];
 
