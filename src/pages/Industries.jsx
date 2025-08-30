@@ -6,7 +6,7 @@ import 'aos/dist/aos.css';
 import Breadcrumbs from '../components/ui/Breadcrumbs';
 import PageHero from '../components/ui/PageHero';
 import { ICONS_CMP } from '../data/icons';
-import { INDUSTRIES } from '../data/industries'; // ← data extract
+import { INDUSTRIES } from '../data/industries';
 
 export default function Industries() {
   useEffect(() => {

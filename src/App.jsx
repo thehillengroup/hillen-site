@@ -16,7 +16,8 @@ const About                 = lazy(() => import(/* webpackChunkName: "about" */ 
 const Services              = lazy(() => import(/* webpackChunkName: "services" */ './pages/Services'));
 const WebAndSoftwareServices  = lazy(() => import(/* webpackChunkName: "web-software-services" */ './pages/Services/WebSoftwareServices'));
 const CyberOperations       = lazy(() => import(/* webpackChunkName: "cyber-operations" */ './pages/Services/CyberOperations'));
-const EnterpriseOperations  = lazy(() => import(/* webpackChunkName: "enterprise-operations" */ './pages/Services/EnterpriseOperations')); // ⬅️ NEW
+const EnterpriseOperations  = lazy(() => import(/* webpackChunkName: "enterprise-operations" */ './pages/Services/EnterpriseOperations'));
+const DataAnalytics         = lazy(() => import(/* webpackChunkName: "data-analytics" */ './pages/Services/DataAnalytics'));
 const Portfolio             = lazy(() => import(/* webpackChunkName: "portfolio" */ './pages/Portfolio'));
 const Industries            = lazy(() => import(/* webpackChunkName: "industries" */ './pages/Industries'));
 const Careers               = lazy(() => import(/* webpackChunkName: "careers" */ './pages/Careers'));
@@ -52,7 +53,8 @@ export default function App() {
           <Route path="/services"                       element={<Layout><Services /></Layout>} />
           <Route path="/services/web-software-services" element={<Layout><WebAndSoftwareServices /></Layout>} />
           <Route path="/services/cyber-operations"      element={<Layout><CyberOperations /></Layout>} />
-          <Route path="/services/enterprise-operations" element={<Layout><EnterpriseOperations /></Layout>} /> {/* ⬅️ NEW */}
+          <Route path="/services/data-analytics"        element={<Layout><DataAnalytics /></Layout>} />
+          <Route path="/services/enterprise-operations" element={<Layout><EnterpriseOperations /></Layout>} />
           <Route path="/portfolio"                      element={<Layout><Portfolio /></Layout>} />
           <Route path="/industries"                     element={<Layout><Industries /></Layout>} />
           <Route path="/careers"                        element={<Layout><Careers /></Layout>} />
