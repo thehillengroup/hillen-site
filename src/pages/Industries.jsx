@@ -5,26 +5,169 @@ import 'aos/dist/aos.css';
 
 import Breadcrumbs from '../components/ui/Breadcrumbs';
 import PageHero from '../components/ui/PageHero';
-import INDUSTRIES from '../data/industries';
-import { industryIconMap, HealthIcon } from '../data/icons';
+import { ICONS_CMP } from '../data/icons';
 
+/* --------------------------------- Data ---------------------------------- */
+const INDUSTRIES = [
+  {
+    id: 'health',
+    title: 'Federal Health',
+    tagline: 'HHS • CMS • NIH • CDC',
+    icon: 'health',
+    summary:
+      'Modern data platforms, patient-facing apps, and ATO-ready systems supporting mission outcomes across federal health agencies.',
+    capabilities: [
+      'FHIR/HL7 APIs & interoperability',
+      'Data engineering & analytics (PHI aware)',
+      'Human-centered service design (HCD)',
+      'Compliance: 508, Privacy, ATO packages',
+    ],
+    services: [
+      { label: 'Web Applications', href: '/services#web-apps' },
+      { label: 'UX / Product Design', href: '/services#ux' },
+      { label: 'Cloud & DevOps', href: '/services#cloud' },
+    ],
+  },
+  {
+    id: 'defense',
+    title: 'Defense',
+    tagline: 'DoD • DISA • USAF',
+    icon: 'defense',
+    summary:
+      'Secure software delivery aligned to DoD enterprise requirements, with pipelines and IaC designed for controlled environments.',
+    capabilities: [
+      'DevSecOps & hardened CI/CD',
+      'Containerization & K8s on DoD platforms',
+      'Secure software supply chain (SBOM, SLSA)',
+      'NIST 800-171/CMMC alignment',
+    ],
+    services: [
+      { label: 'Cloud & DevOps', href: '/services#cloud' },
+      { label: 'Maintenance & Support', href: '/services#maintenance' },
+      { label: 'Discovery & Planning', href: '/services#planning' },
+    ],
+  },
+  {
+    id: 'civilian',
+    title: 'Civilian',
+    tagline: 'DOT • DHS • USDA',
+    icon: 'civilian',
+    summary:
+      'Public-facing digital services and internal systems for high-availability, accessibility, and measurable impact.',
+    capabilities: [
+      'Service blueprints & content strategy',
+      'Performance, monitoring, and SLOs',
+      'API-first modernization',
+      'Section 508/WCAG 2.2 AA assurance',
+    ],
+    services: [
+      { label: 'UX / Product Design', href: '/services#ux' },
+      { label: 'Web Applications', href: '/services#web-apps' },
+      { label: 'Maintenance & Support', href: '/services#maintenance' },
+    ],
+  },
+  {
+    id: 'state',
+    title: 'State & Local',
+    tagline: 'Agencies & municipalities',
+    icon: 'state',
+    summary:
+      'Rapid modernization with pragmatic security and cost-effective hosting options tailored to state and local needs.',
+    capabilities: [
+      'Grants/benefits portals',
+      'Low-latency hosting & CDN strategy',
+      'Open data & transparency dashboards',
+      'Procurement-ready documentation',
+    ],
+    services: [
+      { label: 'Discovery & Planning', href: '/services#planning' },
+      { label: 'Web Applications', href: '/services#web-apps' },
+      { label: 'Cloud & DevOps', href: '/services#cloud' },
+    ],
+  },
+  {
+    id: 'research',
+    title: 'Research & Evaluation',
+    tagline: 'Program measurement & insights',
+    icon: 'research',
+    summary:
+      'Design of instruments, data collection, and reproducible analytics to evaluate program effectiveness at scale.',
+    capabilities: [
+      'Survey design & data pipelines',
+      'Reproducible analytics (R/Python)',
+      'Data governance & quality',
+      'Visualization & reporting portals',
+    ],
+    services: [
+      { label: 'Web Applications', href: '/services#web-apps' },
+      { label: 'UX / Product Design', href: '/services#ux' },
+      { label: 'Cloud & DevOps', href: '/services#cloud' },
+    ],
+  },
+  {
+    id: 'space',
+    title: 'Space',
+    tagline: 'NASA & partners',
+    icon: 'space',
+    summary:
+      'Mission support with telemetry processing, data products, and visualizations for scientists and operations teams.',
+    capabilities: [
+      'Stream processing & eventing',
+      'Scientific data stores',
+      'High-fidelity visualizations',
+      'Edge to cloud data movement',
+    ],
+    services: [
+      { label: 'Cloud & DevOps', href: '/services#cloud' },
+      { label: 'Web Applications', href: '/services#web-apps' },
+      { label: 'Maintenance & Support', href: '/services#maintenance' },
+    ],
+  },
+];
+
+/* --------------------------------- Page ---------------------------------- */
 export default function Industries() {
   useEffect(() => {
-    document.title = 'Industries | The Hillen Group';
-    AOS.init({ once: true, duration: 800, easing: 'ease-out-quart' });
+    const prefersReduce =
+      typeof window !== 'undefined' &&
+      window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    AOS.init({
+      once: true,
+      duration: prefersReduce ? 0 : 800,
+      easing: 'ease-out-quart',
+      disable: prefersReduce,
+    });
   }, []);
 
   return (
     <main className="bg-bg text-dark">
-      <Breadcrumbs items={[{ label: 'Home', href: '/home' }, { label: 'Industries' }]} />
+      {/* Breadcrumbs */}
+      <section className="pt-4">
+        <div className="max-w-7xl mx-auto px-4">
+          <Breadcrumbs
+            items={[
+              { label: 'Home', to: '/home' },
+              { label: 'Industries' },
+            ]}
+          />
+        </div>
+      </section>
 
+      {/* Page hero */}
       <PageHero
-        title="Mission"
-        accent="Industries"
-        description="Domains where we deliver secure, human-centered, and measurable outcomes."
+        eyebrow="Who we serve"
+        title={
+          <>
+            Industry <span className="text-accent">Domains</span>
+          </>
+        }
+        subtitle="Domains where we deliver secure, human‑centered, measurable outcomes."
+        gradientFrom="from-teal-50/70"
       />
 
-      <section className="px-4">
+      <section className="py-4 px-4">
         <div className="max-w-7xl mx-auto">
           {/* Quick jump chips */}
           <nav
@@ -34,20 +177,22 @@ export default function Industries() {
             data-aos-delay="50"
           >
             <ul className="flex flex-wrap gap-2">
-              {INDUSTRIES.map((i) => (
-                <li key={i.id}>
-                  <a
-                    href={`#${i.id}`}
-                    className="inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm hover:bg-gray-50"
-                  >
-                    {(() => {
-                      const Icon = industryIconMap[i.icon] || HealthIcon;
-                      return <Icon className="h-4 w-4 text-teal-700" />;
-                    })()}
-                    {i.title}
-                  </a>
-                </li>
-              ))}
+              {INDUSTRIES.map((i) => {
+                const Icon = ICONS_CMP[i.icon];
+                return (
+                  <li key={i.id}>
+                    <a
+                      href={`#${i.id}`}
+                      className="inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm hover:bg-gray-50"
+                    >
+                      <span className="text-teal-700">
+                        {Icon ? <Icon className="h-4 w-4" /> : null}
+                      </span>
+                      {i.title}
+                    </a>
+                  </li>
+                );
+              })}
             </ul>
           </nav>
 
@@ -93,9 +238,10 @@ export default function Industries() {
   );
 }
 
+/* ------------------------------- Subsection ------------------------------- */
 function IndustrySection({ industry, delay = 0 }) {
   const { id, title, tagline, summary, capabilities, services, icon } = industry;
-  const IconComp = industryIconMap[icon] || HealthIcon;
+  const Icon = ICONS_CMP[icon];
 
   return (
     <section
@@ -106,7 +252,7 @@ function IndustrySection({ industry, delay = 0 }) {
       aria-labelledby={`${id}-title`}
     >
       <header className="flex items-start gap-3">
-        <IconComp className="h-6 w-6 mt-1 text-teal-700" />
+        <div className="mt-1 text-teal-700">{Icon ? <Icon className="h-6 w-6" /> : null}</div>
         <div>
           <h2 id={`${id}-title`} className="text-2xl font-semibold">
             {title}
