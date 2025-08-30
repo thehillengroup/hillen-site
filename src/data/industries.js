@@ -1,6 +1,14 @@
 // src/data/industries.js
-// Data-only; icons are referenced by key and rendered in the page.
-const INDUSTRIES = [
+
+// NOTE: service anchors match the current Services page IDs:
+//   /services#web-software-services
+//   /services#cyber-operations
+//   /services#enterprise-operations
+//   /services#data-analytics
+//   /services#professional-services
+//   /services#planning
+
+export const INDUSTRIES = [
   {
     id: 'health',
     title: 'Federal Health',
@@ -17,7 +25,7 @@ const INDUSTRIES = [
     services: [
       { label: 'Web/Software Services', href: '/services#web-software-services' },
       { label: 'Enterprise Operations', href: '/services#enterprise-operations' },
-      { label: 'Cloud & DevOps', href: '/services#cloud' },
+      { label: 'Data Analytics', href: '/services#data-analytics' },
     ],
   },
   {
@@ -34,9 +42,9 @@ const INDUSTRIES = [
       'NIST 800-171/CMMC alignment',
     ],
     services: [
-      { label: 'Cloud & DevOps', href: '/services#cloud' },
-      { label: 'Maintenance & Support', href: '/services#maintenance' },
-      { label: 'Discovery & Planning', href: '/services#planning' },
+      { label: 'Enterprise Operations', href: '/services#enterprise-operations' },
+      { label: 'Professional Services', href: '/services#professional-services' },
+      { label: 'Project Planning & Discovery', href: '/services#planning' },
     ],
   },
   {
@@ -54,8 +62,8 @@ const INDUSTRIES = [
     ],
     services: [
       { label: 'Web/Software Services', href: '/services#web-software-services' },
-      { label: 'Enterprise Operations', href: '/services#enterprise-operations' },
-      { label: 'Maintenance & Support', href: '/services#maintenance' },
+      { label: 'Professional Services', href: '/services#professional-services' },
+      { label: 'Project Planning & Discovery', href: '/services#planning' },
     ],
   },
   {
@@ -72,9 +80,9 @@ const INDUSTRIES = [
       'Procurement-ready documentation',
     ],
     services: [
-      { label: 'Discovery & Planning', href: '/services#planning' },
+      { label: 'Project Planning & Discovery', href: '/services#planning' },
       { label: 'Web/Software Services', href: '/services#web-software-services' },
-      { label: 'Cloud & DevOps', href: '/services#cloud' },
+      { label: 'Data Analytics', href: '/services#data-analytics' },
     ],
   },
   {
@@ -92,8 +100,8 @@ const INDUSTRIES = [
     ],
     services: [
       { label: 'Web/Software Services', href: '/services#web-software-services' },
+      { label: 'Data Analytics', href: '/services#data-analytics' },
       { label: 'Enterprise Operations', href: '/services#enterprise-operations' },
-      { label: 'Cloud & DevOps', href: '/services#cloud' },
     ],
   },
   {
@@ -110,9 +118,9 @@ const INDUSTRIES = [
       'Edge to cloud data movement',
     ],
     services: [
-      { label: 'Cloud & DevOps', href: '/services#cloud' },
+      { label: 'Data Analytics', href: '/services#data-analytics' },
       { label: 'Web/Software Services', href: '/services#web-software-services' },
-      { label: 'Maintenance & Support', href: '/services#maintenance' },
+      { label: 'Professional Services', href: '/services#professional-services' },
     ],
   },
 ];
