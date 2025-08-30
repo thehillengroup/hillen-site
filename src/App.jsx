@@ -15,6 +15,7 @@ const Home                  = lazy(() => import(/* webpackChunkName: "home" */ '
 const About                 = lazy(() => import(/* webpackChunkName: "about" */ './pages/About'));
 const Services              = lazy(() => import(/* webpackChunkName: "services" */ './pages/Services'));
 const WebAndSoftwareServices  = lazy(() => import(/* webpackChunkName: "web-software-services" */ './pages/Services/WebSoftwareServices'));
+const ProfessionalServices  = lazy(() => import(/* webpackChunkName: "professional-services" */ './pages/Services/ProfessionalServices'));
 const CyberOperations       = lazy(() => import(/* webpackChunkName: "cyber-operations" */ './pages/Services/CyberOperations'));
 const EnterpriseOperations  = lazy(() => import(/* webpackChunkName: "enterprise-operations" */ './pages/Services/EnterpriseOperations'));
 const DataAnalytics         = lazy(() => import(/* webpackChunkName: "data-analytics" */ './pages/Services/DataAnalytics'));
@@ -52,6 +53,7 @@ export default function App() {
           <Route path="/about"                          element={<Layout><About /></Layout>} />
           <Route path="/services"                       element={<Layout><Services /></Layout>} />
           <Route path="/services/web-software-services" element={<Layout><WebAndSoftwareServices /></Layout>} />
+          <Route path="/services/professional-services" element={<Layout><ProfessionalServices /></Layout>} />
           <Route path="/services/cyber-operations"      element={<Layout><CyberOperations /></Layout>} />
           <Route path="/services/data-analytics"        element={<Layout><DataAnalytics /></Layout>} />
           <Route path="/services/enterprise-operations" element={<Layout><EnterpriseOperations /></Layout>} />

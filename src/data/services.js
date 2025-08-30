@@ -1,19 +1,18 @@
 // src/data/services.js
 import { ICONS_CMP as I } from './icons';
 
-// Pick the component versions of the icons we need
 const {
-  web,
-  shield,
-  briefcase,
-  analytics,
-  professional,
-  planning,
+  web,          // Web/Software Services
+  shield,       // Cyber Operations
+  briefcase,    // Enterprise Operations
+  analytics,    // Data Analytics
+  professional, // Professional Services
+  planning,     // Project Planning & Discovery
 } = I;
 
 /**
- * Services grid cards used by /services
- * Each item supports: id, title, desc, Icon (React cmp), href (optional)
+ * Cards for /services
+ * Each item: { id, title, desc, Icon, href? }
  */
 const services = [
   {
@@ -46,7 +45,7 @@ const services = [
     desc:
       'Data engineering & ELT, warehouses/lakes, BI dashboards, and ML/AI—turn data into decisions with governance and quality.',
     Icon: analytics,
-    href: '/services/data-analytics', // ✅ wired to the new page
+    href: '/services/data-analytics',
   },
   {
     id: 'professional-services',
@@ -54,6 +53,7 @@ const services = [
     desc:
       'Staff augmentation, managed services, and expert advisory across product, security, cloud, and delivery.',
     Icon: professional,
+    href: '/services/professional-services',
   },
   {
     id: 'planning',

@@ -45,7 +45,7 @@ const services = [
     id: 'professional-services',
     title: 'Professional Services',
     desc:
-      'Advisory, training, staff augmentation, and embedded expertise to accelerate your roadmap.',
+      'Staff augmentation, managed services, and expert advisory across product, security, cloud, and delivery.',
     Icon: ProfessionalIcon,
   },
   {

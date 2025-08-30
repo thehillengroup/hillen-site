@@ -1,31 +1,55 @@
 // src/pages/Services.jsx
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 import Breadcrumbs from '../components/ui/Breadcrumbs';
 import PageHero from '../components/ui/PageHero';
-import { initAOS } from '../utils/aos';
 
-import SERVICES from '../data/services';
-import { ICONS_CMP } from '../data/icons';
+import services from '../data/services';
 
 export default function Services() {
   useEffect(() => {
     document.title = 'Services | The Hillen Group';
-    const cleanup = initAOS({ once: true, duration: 750, easing: 'ease-out-quart' });
-    return cleanup;
+
+    const prefersReduce =
+      typeof window !== 'undefined' &&
+      window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    AOS.init({
+      once: true,
+      duration: prefersReduce ? 0 : 750,
+      easing: 'ease-out-quart',
+      disable: prefersReduce,
+    });
   }, []);
 
   return (
-    <main className="bg-bg text-dark" id="main">
+    <main className="bg-bg text-dark">
       {/* Breadcrumbs */}
-      <Breadcrumbs items={[{ label: 'Home', href: '/home' }, { label: 'Services' }]} />
+      <section className="pt-4">
+        <div className="max-w-7xl mx-auto px-4">
+          <Breadcrumbs
+            items={[
+              { label: 'Home', to: '/home' },
+              { label: 'Services' },
+            ]}
+          />
+        </div>
+      </section>
 
       {/* Page Hero */}
       <PageHero
-        title="What We"
-        accent="Build"
-        description="From discovery and design to build and operations—end-to-end web and mobile delivery with cloud best practices."
+        eyebrow="What We Build"
+        title={
+          <>
+            Services <span className="text-accent">Overview</span>
+          </>
+        }
+        subtitle="From discovery and design to build and operations—end-to-end delivery with cloud, security, and analytics best practices."
+        gradientFrom="from-teal-50/70"
       />
 
       {/* Cards */}
@@ -35,18 +59,14 @@ export default function Services() {
           data-aos="fade-up"
           data-aos-delay="100"
         >
-          {SERVICES.map(({ id, title, desc, icon, href }, i) => {
+          {services.map(({ id, title, desc, Icon, href }, i) => {
             const titleId = `${id}-title`;
-            const Icon = ICONS_CMP[icon] || ICONS_CMP.web;
-
             const CardInner = (
               <div className="flex gap-4 p-5">
-                {/* Teal icon chip */}
+                {/* teal icon chip */}
                 <div className="shrink-0 inline-flex h-12 w-12 items-center justify-center rounded-lg border border-teal-200 bg-[#E6F7F8] text-[#00A9B7] transition-colors duration-300 group-hover:border-teal-300 group-hover:text-teal-700">
                   <Icon />
                 </div>
-
-                {/* Text */}
                 <div>
                   <h2
                     id={titleId}
