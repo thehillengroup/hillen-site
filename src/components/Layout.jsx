@@ -4,11 +4,17 @@ import { useLocation } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import Seo from './Seo';
+import SkipLink from './SkipLink';
 
 const ROUTE_META = [
   { test: (p) => p === '/' || p === '/home', title: 'Home', description: 'Strategic solutions. Delivered. Discover how The Hillen Group can elevate your mission.' },
   { test: (p) => p.startsWith('/about'), title: 'About', description: 'Mission-driven team delivering measurable outcomes for public and private sector clients.' },
-  { test: (p) => p.startsWith('/services'), title: 'Services', description: 'Web apps, mobile, UX, cloud & DevOps, maintenance, and delivery planning.' },
+  {
+    test: (p) => p.startsWith('/services'),
+    title: 'Services',
+    description:
+      'Web/Software Services, Cyber Operations, Data Analytics, Professional Services, Project Planning & Discovery, and Enterprise Operations.',
+  },
   { test: (p) => p.startsWith('/portfolio'), title: 'Portfolio', description: 'Selected projects and case studies—problems solved, results delivered.' },
   { test: (p) => p.startsWith('/industries'), title: 'Industries', description: 'Federal health, defense, civilian, state/local, research, and space.' },
   { test: (p) => p.startsWith('/careers'), title: 'Careers', description: 'Grow your impact—explore open roles and join our team.' },
@@ -44,13 +50,8 @@ export default function Layout({ children, seo }) {
       {/* SEO tags */}
       <Seo {...meta} />
 
-      {/* a11y skip link */}
-      <a
-        href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 rounded-md bg-white px-3 py-2 text-dark shadow"
-      >
-        Skip to content
-      </a>
+      {/* a11y skip link (reusable component) */}
+      <SkipLink targetId="main" label="Skip to main content" />
 
       <Navbar />
       <main id="main" role="main" className="flex-1">

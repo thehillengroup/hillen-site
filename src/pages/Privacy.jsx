@@ -5,25 +5,49 @@ import 'aos/dist/aos.css';
 
 import Breadcrumbs from '../components/ui/Breadcrumbs';
 import PageHero from '../components/ui/PageHero';
+import ScrollToTop from '../components/ScrollToTop';
 
 export default function Privacy() {
   useEffect(() => {
     document.title = 'Privacy Policy | The Hillen Group';
-    AOS.init({ once: true, duration: 800, easing: 'ease-out-quart' });
+
+    const prefersReduce =
+      typeof window !== 'undefined' &&
+      window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    AOS.init({
+      once: true,
+      duration: prefersReduce ? 0 : 800,
+      easing: 'ease-out-quart',
+      disable: prefersReduce,
+    });
   }, []);
 
   const updated = 'June 2025';
 
   return (
     <main className="bg-bg text-dark">
-      <Breadcrumbs items={[{ label: 'Home', href: '/home' }, { label: 'Privacy Policy' }]} />
+      {/* Breadcrumbs */}
+      <section className="pt-4">
+        <div className="max-w-7xl mx-auto px-4">
+          <Breadcrumbs items={[{ label: 'Home', to: '/home' }, { label: 'Privacy Policy' }]} />
+        </div>
+      </section>
 
+      {/* Page hero */}
       <PageHero
-        title="Privacy"
-        accent="Policy"
-        description={`Last updated: ${updated}`}
+        eyebrow="Legal"
+        title={
+          <>
+            Privacy <span className="text-accent">Policy</span>
+          </>
+        }
+        subtitle={`Last updated: ${updated}`}
+        gradientFrom="from-teal-50/70"
       />
 
+      {/* Content */}
       <section className="px-4">
         <div className="max-w-3xl mx-auto">
           {/* Intro */}
@@ -176,7 +200,7 @@ export default function Privacy() {
             />
 
             <Section
-              title="9) Children's Privacy"
+              title="9) Children’s Privacy"
               delay={500}
               body={
                 <p>
@@ -225,7 +249,9 @@ export default function Privacy() {
               delay={700}
               body={
                 <div>
-                  <p>Questions or requests? Contact our privacy team:</p>
+                  <p>
+                    Questions or requests? Contact our privacy team:
+                  </p>
                   <ul className="list-none ml-0 mt-2">
                     <li>
                       <span className="font-medium">Email:</span>{' '}
@@ -234,8 +260,8 @@ export default function Privacy() {
                       </a>
                     </li>
                     <li className="mt-1">
-                      <span className="font-medium">Mail:</span> The Hillen Group — Privacy<br />
-                      6865 Deerpath Road<br />Suite 101<br />Elkridge, MD 21075
+                      <span className="font-medium">Mail:</span> The Hillen Group — Privacy, 123 Example Ave, Suite 100,
+                      Washington, DC 20001
                     </li>
                   </ul>
                 </div>
@@ -244,6 +270,16 @@ export default function Privacy() {
           </article>
         </div>
       </section>
+
+      {/* Page-local Back-to-top button (same pattern as Industries) */}
+      <ScrollToTop
+        disableRouteScroll
+        showButton
+        smooth
+        buttonThreshold={420}
+        minPageHeightRatio={1.2}
+        buttonLabel="Back to top"
+      />
     </main>
   );
 }

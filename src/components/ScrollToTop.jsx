@@ -1,47 +1,39 @@
-import React, { useEffect, useState } from 'react';
+// src/components/ScrollToTop.jsx
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 /**
- * Scrolls to top on route change. If a URL hash is present (#id),
- * it scrolls to that element and compensates for a sticky header via `offset`.
- *
- * Also (optionally) renders a floating “Back to top” button when:
- *  - The page is taller than the viewport by `minPageHeightRatio`
- *  - The user has scrolled beyond `buttonThreshold` pixels
+ * Route-change scroll + optional "Back to top" button.
  *
  * Props:
- * - offset: number (px to offset for sticky headers)
- * - smooth: boolean (smooth scroll on route change + back-to-top)
- * - disableRouteScroll: boolean (skip the route-change scroll behavior; useful if rendering
- *   a page-local button while a global ScrollToTop handles route scrolling)
- * - showButton: boolean (enable the floating back-to-top button)
- * - buttonThreshold: number (px before the button appears)
- * - minPageHeightRatio: number (page must be at least this multiple of the viewport height)
- * - buttonLabel: string (accessible label)
- * - buttonClassName: string (additional classes for the button)
+ * - offset               : number (px to subtract when scrolling to hash targets)
+ * - smooth               : boolean (smooth scroll)
+ * - disableRouteScroll   : boolean (skip the route-change scroll behavior)
+ * - showButton           : boolean (enable floating back-to-top button)
+ * - buttonThreshold      : number (px scrolled before button appears)
+ * - minPageHeightRatio   : number (page must be this multiple of viewport height to show button)
+ * - buttonLabel          : string (aria-label and tooltip)
  */
 export default function ScrollToTop({
   offset = 0,
   smooth = false,
   disableRouteScroll = false,
   showButton = false,
-  buttonThreshold = 400,
-  minPageHeightRatio = 1.25,
+  buttonThreshold = 360,
+  minPageHeightRatio = 1.0,
   buttonLabel = 'Back to top',
-  buttonClassName = '',
 }) {
   const { pathname, hash, key } = useLocation();
-  const [btnVisible, setBtnVisible] = useState(false);
-  const [btnEligible, setBtnEligible] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   // Disable browser auto-restoration so we control it.
   useEffect(() => {
-    if (!disableRouteScroll && 'scrollRestoration' in window.history) {
+    if ('scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual';
     }
-  }, [disableRouteScroll]);
+  }, []);
 
-  // Route-change scroll handling
+  // Route-change scroll behavior (unless disabled)
   useEffect(() => {
     if (disableRouteScroll) return;
 
@@ -49,7 +41,6 @@ export default function ScrollToTop({
 
     if (hash) {
       const id = decodeURIComponent(hash.slice(1));
-
       const scrollToEl = () => {
         const el = document.getElementById(id);
         if (el) {
@@ -59,98 +50,57 @@ export default function ScrollToTop({
           window.scrollTo({ top: 0, behavior });
         }
       };
-
       requestAnimationFrame(scrollToEl);
     } else {
       window.scrollTo({ top: 0, behavior });
     }
   }, [pathname, hash, key, offset, smooth, disableRouteScroll]);
 
-  // Back-to-top button logic (only if showButton)
+  // Floating button visibility logic
   useEffect(() => {
     if (!showButton) return;
 
-    const prefersReduce =
-      typeof window !== 'undefined' &&
-      window.matchMedia &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    const computeEligible = () => {
-      if (typeof window === 'undefined' || typeof document === 'undefined') return false;
-      const pageHeight = Math.max(
+    const handle = () => {
+      const scrolled = window.scrollY || document.documentElement.scrollTop || 0;
+      const vpH = window.innerHeight || 0;
+      const docH = Math.max(
         document.body.scrollHeight,
-        document.documentElement.scrollHeight
+        document.documentElement.scrollHeight,
+        document.body.offsetHeight,
+        document.documentElement.offsetHeight,
+        document.body.clientHeight,
+        document.documentElement.clientHeight
       );
-      const vp = window.innerHeight || document.documentElement.clientHeight || 0;
-      return pageHeight > vp * minPageHeightRatio;
+      const isTallEnough = docH > vpH * minPageHeightRatio;
+      setVisible(isTallEnough && scrolled > buttonThreshold);
     };
 
-    const onScrollOrResize = () => {
-      const canShow = computeEligible();
-      setBtnEligible(canShow);
-      if (!canShow) {
-        setBtnVisible(false);
-        return;
-      }
-      const scrolled = window.scrollY || window.pageYOffset || 0;
-      setBtnVisible(scrolled > buttonThreshold);
-    };
-
-    onScrollOrResize(); // initial
-    window.addEventListener('scroll', onScrollOrResize, { passive: true });
-    window.addEventListener('resize', onScrollOrResize);
-
+    handle();
+    window.addEventListener('scroll', handle, { passive: true });
+    window.addEventListener('resize', handle);
     return () => {
-      window.removeEventListener('scroll', onScrollOrResize);
-      window.removeEventListener('resize', onScrollOrResize);
+      window.removeEventListener('scroll', handle);
+      window.removeEventListener('resize', handle);
     };
   }, [showButton, buttonThreshold, minPageHeightRatio]);
 
-  const prefersReduce =
-    typeof window !== 'undefined' &&
-    window.matchMedia &&
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  const handleBackToTop = () => {
-    if (typeof window === 'undefined') return;
-    window.scrollTo({
-      top: 0,
-      behavior: smooth && !prefersReduce ? 'smooth' : 'auto',
-    });
+  const toTop = () => {
+    window.scrollTo({ top: 0, behavior: smooth ? 'smooth' : 'auto' });
   };
 
-  if (!showButton || !btnEligible) return null;
-
-  return (
+  return showButton && visible ? (
     <button
       type="button"
-      onClick={handleBackToTop}
+      onClick={toTop}
       aria-label={buttonLabel}
-      className={[
-        'fixed z-50 right-4 bottom-[calc(env(safe-area-inset-bottom,0px)+1rem)]',
-        'rounded-full bg-dark text-white shadow-lg',
-        'h-11 w-11 flex items-center justify-center',
-        'focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500/70',
-        prefersReduce ? '' : 'transition duration-300',
-        btnVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2 pointer-events-none',
-        buttonClassName,
-      ].join(' ')}
+      title={buttonLabel}
+      className="fixed bottom-6 right-6 z-40 inline-flex items-center gap-2 rounded-full border border-teal-200 bg-white/95 px-4 py-2 text-teal-700 shadow-lg backdrop-blur hover:bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500"
     >
-      {/* Up arrow icon */}
-      <svg
-        viewBox="0 0 24 24"
-        className="h-5 w-5"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-hidden="true"
-      >
-        <path d="M12 19V5" />
-        <path d="M5 12l7-7 7 7" />
+      {/* caret-up icon */}
+      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2">
+        <path d="M6 15l6-6 6 6" />
       </svg>
-      <span className="sr-only">{buttonLabel}</span>
+      <span className="text-sm font-medium">Top</span>
     </button>
-  );
+  ) : null;
 }

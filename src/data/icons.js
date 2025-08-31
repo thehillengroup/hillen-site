@@ -32,18 +32,18 @@ const ux = (cls = iconCls) => (
   </svg>
 );
 
-// Cyber / Security
+// Cyber – shield
 const shield = (cls = iconCls) => (
   <svg viewBox="0 0 24 24" className={cls} fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
     <path d="M12 3l8 3v6a10 10 0 0 1-8 9 10 10 0 0 1-8-9V6l8-3z" />
-    <path d="M9.5 12.5l1.8 1.8L15 10.5" />
   </svg>
 );
 
+// Cyber – shield with check
 const shieldCheck = (cls = iconCls) => (
   <svg viewBox="0 0 24 24" className={cls} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
     <path d="M12 3l8 3v6a10 10 0 0 1-8 9 10 10 0 0 1-8-9V6l8-3z" />
-    <path d="M9 12.5l2.2 2.2L15.5 10" />
+    <path d="M9.5 12.5l1.8 1.8L15 10.5" />
   </svg>
 );
 
@@ -107,31 +107,12 @@ const briefcase = (cls = iconCls) => (
   </svg>
 );
 
-// Charts / bars
 const analytics = (cls = iconCls) => (
   <svg viewBox="0 0 24 24" className={cls} fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
     <path d="M3 20h18" />
     <path d="M6 20V10" />
     <path d="M12 20V4" />
     <path d="M18 20v-7" />
-  </svg>
-);
-
-// Database cylinder
-const database = (cls = iconCls) => (
-  <svg viewBox="0 0 24 24" className={cls} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <ellipse cx="12" cy="5" rx="7" ry="3" />
-    <path d="M5 5v6c0 1.7 3.1 3 7 3s7-1.3 7-3V5" />
-    <path d="M5 11v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6" />
-  </svg>
-);
-
-// Lightbulb (ideas / ML/AI)
-const lightbulb = (cls = iconCls) => (
-  <svg viewBox="0 0 24 24" className={cls} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="M8 11a4 4 0 1 1 8 0c0 1.6-.7 2.6-1.8 3.6-.6.6-1 .9-1.2 1.4H11c-.2-.5-.6-.8-1.2-1.4C8.7 13.6 8 12.6 8 11z" />
-    <path d="M9 18h6" />
-    <path d="M10 20.5h4" />
   </svg>
 );
 
@@ -175,12 +156,30 @@ const headset = (cls = iconCls) => (
   </svg>
 );
 
-// Lifebuoy (support)
+// Database
+const database = (cls = iconCls) => (
+  <svg viewBox="0 0 24 24" className={cls} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <ellipse cx="12" cy="5" rx="7" ry="3" />
+    <path d="M5 5v6c0 1.7 3.1 3 7 3s7-1.3 7-3V5" />
+    <path d="M5 11v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6" />
+  </svg>
+);
+
+// Lifebuoy
 const lifebuoy = (cls = iconCls) => (
   <svg viewBox="0 0 24 24" className={cls} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
     <circle cx="12" cy="12" r="9" />
     <circle cx="12" cy="12" r="4" />
-    <path d="M4.9 4.9l3.5 3.5M19.1 4.9l-3.5 3.5M19.1 19.1l-3.5-3.5M4.9 19.1l3.5-3.5" />
+    <path d="M4.9 4.9l3.2 3.2M19.1 4.9l-3.2 3.2M4.9 19.1l3.2-3.2M19.1 19.1l-3.2-3.2" />
+  </svg>
+);
+
+// Lightbulb (NEW)
+const lightbulb = (cls = iconCls) => (
+  <svg viewBox="0 0 24 24" className={cls} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M9 18h6" />
+    <path d="M10 22h4" />
+    <path d="M8 14a6 6 0 1 1 8 0c-.8.7-1.3 1.5-1.5 2.4M9.5 16.4A4 4 0 0 1 8 14" />
   </svg>
 );
 
@@ -200,8 +199,7 @@ const defense = (cls = iconCls) => (
 
 const civilian = (cls = iconCls) => (
   <svg viewBox="0 0 24 24" className={cls} fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
-    <path d="M3 21h18" />
-    <path d="M4 21V10l8-6 8 6v11" />
+    <path d="M3 21h18M4 21V10l8-6 8 6v11" />
     <path d="M9 21v-6h6v6" />
   </svg>
 );
@@ -230,11 +228,35 @@ const space = (cls = iconCls) => (
 
 export const ICONS = {
   // services/features
-  web, mobile, ux, shield, shieldCheck, radar, bug, target,
-  cloudLock, idCard, book, clipboard, briefcase,
-  analytics, database, lightbulb, professional, planning, maintenance, layers, headset, lifebuoy,
+  web,
+  mobile,
+  ux,
+  shield,
+  shieldCheck,
+  radar,
+  bug,
+  target,
+  cloudLock,
+  idCard,
+  book,
+  clipboard,
+  briefcase,
+  analytics,
+  professional,
+  planning,
+  maintenance,
+  layers,
+  headset,
+  database,
+  lifebuoy,
+  lightbulb,
   // industries
-  health, defense, civilian, state, research, space,
+  health,
+  defense,
+  civilian,
+  state,
+  research,
+  space,
 };
 
 export const ICONS_CMP = Object.fromEntries(
@@ -246,49 +268,49 @@ export const ICONS_CMP = Object.fromEntries(
   ])
 );
 
-/** Components map used by Industries (component values, not strings) */
+/* Convenience map used by Industries page */
 export const industryIconMap = {
-  health: ICONS_CMP.health,
-  defense: ICONS_CMP.defense,
-  civilian: ICONS_CMP.civilian,
-  state: ICONS_CMP.state,
-  research: ICONS_CMP.research,
-  space: ICONS_CMP.space,
+  health,
+  defense,
+  civilian,
+  state,
+  research,
+  space,
 };
 
 /* =================== Named Component Exports (back-compat) ================== */
 
 // Services / features
-export const WebIcon           = (p) => ICONS_CMP.web(p);
-export const MobileIcon        = (p) => ICONS_CMP.mobile(p);
-export const UxIcon            = (p) => ICONS_CMP.ux(p);
-export const ShieldIcon        = (p) => ICONS_CMP.shield(p);
-export const ShieldCheckIcon   = (p) => ICONS_CMP.shieldCheck(p);
-export const RadarIcon         = (p) => ICONS_CMP.radar(p);
-export const BugIcon           = (p) => ICONS_CMP.bug(p);
-export const TargetIcon        = (p) => ICONS_CMP.target(p);
-export const CloudLockIcon     = (p) => ICONS_CMP.cloudLock(p);
-export const CloudIcon         = (p) => ICONS_CMP.cloudLock(p); // alias
-export const IdIcon            = (p) => ICONS_CMP.idCard(p);
-export const BookIcon          = (p) => ICONS_CMP.book(p);
-export const ClipboardIcon     = (p) => ICONS_CMP.clipboard(p);
-export const BriefcaseIcon     = (p) => ICONS_CMP.briefcase(p);
-export const AnalyticsIcon     = (p) => ICONS_CMP.analytics(p);
-export const DatabaseIcon      = (p) => ICONS_CMP.database(p);
-export const LightbulbIcon     = (p) => ICONS_CMP.lightbulb(p);
-export const ProfessionalIcon  = (p) => ICONS_CMP.professional(p);
-export const PlanningIcon      = (p) => ICONS_CMP.planning(p);
-export const MaintenanceIcon   = (p) => ICONS_CMP.maintenance(p);
-export const LayersIcon        = (p) => ICONS_CMP.layers(p);
-export const HeadsetIcon       = (p) => ICONS_CMP.headset(p);
-export const LifebuoyIcon      = (p) => ICONS_CMP.lifebuoy(p);
+export const WebIcon = (p) => ICONS_CMP.web(p);
+export const MobileIcon = (p) => ICONS_CMP.mobile(p);
+export const UxIcon = (p) => ICONS_CMP.ux(p);
+export const ShieldIcon = (p) => ICONS_CMP.shield(p);
+export const ShieldCheckIcon = (p) => ICONS_CMP.shieldCheck(p);
+export const RadarIcon = (p) => ICONS_CMP.radar(p);
+export const BugIcon = (p) => ICONS_CMP.bug(p);
+export const TargetIcon = (p) => ICONS_CMP.target(p);
+export const CloudLockIcon = (p) => ICONS_CMP.cloudLock(p);
+export const CloudIcon = (p) => ICONS_CMP.cloudLock(p); // alias
+export const IdIcon = (p) => ICONS_CMP.idCard(p);
+export const BookIcon = (p) => ICONS_CMP.book(p);
+export const ClipboardIcon = (p) => ICONS_CMP.clipboard(p);
+export const BriefcaseIcon = (p) => ICONS_CMP.briefcase(p);
+export const AnalyticsIcon = (p) => ICONS_CMP.analytics(p);
+export const ProfessionalIcon = (p) => ICONS_CMP.professional(p);
+export const PlanningIcon = (p) => ICONS_CMP.planning(p);
+export const MaintenanceIcon = (p) => ICONS_CMP.maintenance(p);
+export const LayersIcon = (p) => ICONS_CMP.layers(p);
+export const HeadsetIcon = (p) => ICONS_CMP.headset(p);
+export const DatabaseIcon = (p) => ICONS_CMP.database(p);
+export const LifebuoyIcon = (p) => ICONS_CMP.lifebuoy(p);
+export const LightbulbIcon = (p) => ICONS_CMP.lightbulb(p);
 
 // Industries
-export const HealthIcon        = (p) => ICONS_CMP.health(p);
-export const DefenseIcon       = (p) => ICONS_CMP.defense(p);
-export const CivilianIcon      = (p) => ICONS_CMP.civilian(p);
-export const StateIcon         = (p) => ICONS_CMP.state(p);
-export const ResearchIcon      = (p) => ICONS_CMP.research(p);
-export const SpaceIcon         = (p) => ICONS_CMP.space(p);
+export const HealthIcon = (p) => ICONS_CMP.health(p);
+export const DefenseIcon = (p) => ICONS_CMP.defense(p);
+export const CivilianIcon = (p) => ICONS_CMP.civilian(p);
+export const StateIcon = (p) => ICONS_CMP.state(p);
+export const ResearchIcon = (p) => ICONS_CMP.research(p);
+export const SpaceIcon = (p) => ICONS_CMP.space(p);
 
 export default ICONS;
