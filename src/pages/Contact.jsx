@@ -38,7 +38,7 @@ export default function Contact() {
       <PageHero
         title="Get in"
         accent="Touch"
-        description="Tell us about your mission and we&apos;ll follow up quickly."
+        description="Tell us about your mission and we will follow up quickly."
       />
 
       <section className="px-4">
@@ -54,8 +54,8 @@ export default function Contact() {
                 <h2 className="text-2xl font-semibold">Thanks — we got it! ✅</h2>
                 <p className="mt-2 text-gray-700">
                   We&apos;ll reach out soon. If it&apos;s urgent, email{' '}
-                  <a className="text-primary underline" href="mailto:hello@thehillengroup.net">
-                    hello@thehillengroup.net
+                  <a className="text-primary underline" href="mailto:info@thehillengroup.net">
+                    info@thehillengroup.net
                   </a>
                   .
                 </p>
@@ -141,7 +141,7 @@ export default function Contact() {
                     {loading ? 'Sending…' : 'Send Message'}
                   </button>
                   <a
-                    href="mailto:hello@thehillengroup.net"
+                    href="mailto:info@thehillengroup.net"
                     className="inline-flex items-center rounded-md border px-4 py-2 hover:bg-gray-50"
                   >
                     Email Us Instead
@@ -162,8 +162,8 @@ export default function Contact() {
               <ul className="mt-3 space-y-2 text-gray-700">
                 <li>
                   <span className="font-medium">Email:</span>{' '}
-                  <a className="text-primary underline" href="mailto:hello@thehillengroup.net">
-                    hello@thehillengroup.net
+                  <a className="text-primary underline" href="mailto:info@thehillengroup.net">
+                    info@thehillengroup.net
                   </a>
                 </li>
                 <li>
