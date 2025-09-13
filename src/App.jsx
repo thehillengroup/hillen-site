@@ -31,6 +31,7 @@ const Terms                 = lazy(() => import(/* webpackChunkName: "terms" */ 
 const Accessibility508      = lazy(() => import(/* webpackChunkName: "accessibility" */ './pages/Accessibility508'));
 const Sitemap               = lazy(() => import(/* webpackChunkName: "sitemap" */ './pages/Sitemap'));
 const NotFound              = lazy(() => import(/* webpackChunkName: "notfound" */ './pages/NotFound'));
+const Error500              = lazy(() => import(/* webpackChunkName: "error500" */ './pages/Error500'));
 
 // Gov-contracting bundle
 const Contracting           = lazy(() => import(/* webpackChunkName: "contracting" */ './pages/Contracting'));
@@ -40,8 +41,8 @@ const CaseStudy             = lazy(() => import(/* webpackChunkName: "case-study
 export default function App() {
   return (
     <>
-      {/* Scroll to top on every route change; set offset to sticky header height if needed */}
-      <ScrollToTop offset={0} smooth={false} />
+      {/* Scroll to top on every route change; offset accounts for sticky header */}
+      <ScrollToTop offset={96} smooth={false} />
 
       <Suspense fallback={<PageLoader />}>
         <Routes>
@@ -86,6 +87,7 @@ export default function App() {
           <Route path="/terms"              element={<Layout><Terms /></Layout>} />
           <Route path="/accessibility"      element={<Layout><Accessibility508 /></Layout>} />
           <Route path="/sitemap"            element={<Layout><Sitemap /></Layout>} />
+          <Route path="/500"                element={<Layout><Error500 /></Layout>} />
 
           {/* 404 (no header/footer) */}
           <Route path="*"                   element={<MinimalistLayout><NotFound /></MinimalistLayout>} />

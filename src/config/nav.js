@@ -1,4 +1,17 @@
 // src/config/nav.js
+export const SHOW_LOGIN = false; // flip to true when you want Login back
+
+const companyItems = [
+  { label: 'About', to: '/about' },
+  { label: 'Careers', to: '/careers' },
+  { label: 'Contact', to: '/contact' },
+];
+
+// Only add Login if explicitly enabled
+if (SHOW_LOGIN) {
+  companyItems.push({ label: 'Login', to: '/login' });
+}
+
 export const NAV = [
   { label: 'Home', to: '/home' },
   { label: 'About', to: '/about' },
@@ -40,11 +53,6 @@ export const NAV = [
   {
     label: 'Company',
     type: 'menu',
-    items: [
-      { label: 'About', to: '/about' },
-      { label: 'Careers', to: '/careers' },
-      { label: 'Contact', to: '/contact' },
-      { label: 'Login', to: '/login' },
-    ],
+    items: companyItems,
   },
 ];

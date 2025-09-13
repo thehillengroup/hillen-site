@@ -1,0 +1,113 @@
+/* -------- Global print resets -------- */
+@page {
+  size: auto;
+  margin: 12mm;
+}
+* {
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+html, body {
+  background: #fff !important;
+  color: #111 !important;
+}
+
+/* -------- Utilities -------- */
+.no-print,
+.no-print * {
+  display: none !important;
+}
+.print-only {
+  display: none !important;
+}
+@media print {
+  .print-only {
+    display: block !important;
+  }
+}
+
+/* -------- Hide chrome we don’t need on paper -------- */
+@media print {
+  nav,
+  footer,
+  .Breadcrumbs,
+  .BackToTopButton,
+  .no-print,
+  .no-print * {
+    display: none !important;
+  }
+
+  /* Ensure AOS-animated elements are visible when printing */
+  [data-aos],
+  .aos-init,
+  .aos-animate {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+    visibility: visible !important;
+    display: initial !important;
+  }
+
+  /* Hide only the sticky site header; allow content headers to print */
+  header { display: block !important; }
+  header.sticky { display: none !important; }
+
+  /* If your PageHero renders a large visual/gradient, simplify it */
+  .PageHero {
+    padding: 0 !important;
+    margin: 0 0 8mm 0 !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Content width */
+  .print-container,
+  .max-w-3xl,
+  .max-w-6xl,
+  .max-w-7xl {
+    max-width: 100% !important;
+  }
+
+  /* Typography */
+  h1, h2, h3 {
+    color: #000 !important;
+    page-break-after: avoid !important;
+  }
+  p, li {
+    line-height: 1.5;
+  }
+
+  /* Cards/sections shouldn’t split across pages */
+  article,
+  section,
+  .card,
+  .rounded-xl,
+  .rounded-2xl {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    box-shadow: none !important;
+    background: transparent !important;
+    border-color: #ddd !important;
+  }
+
+  /* Images fit page width */
+  img, picture, svg, canvas {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  /* Link URLs (external only) */
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 90%;
+    color: #555;
+  }
+  /* Don’t append URLs for in-page anchors, mailto, tel, or buttons */
+  a[href^="#"]::after,
+  a[href^="mailto:"]::after,
+  a[href^="tel:"]::after,
+  a[role="button"]::after {
+    content: "" !important;
+  }
+}

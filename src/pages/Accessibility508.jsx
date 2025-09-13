@@ -10,41 +10,35 @@ import ScrollToTop from '../components/ScrollToTop';
 export default function Accessibility508() {
   useEffect(() => {
     document.title = 'Accessibility & Section 508 | The Hillen Group';
+    AOS.init({ once: true, duration: 800, easing: 'ease-out-quart' });
+  }, []);
 
-    // Respect reduced motion (same approach as Industries/Terms)
-    const prefersReduce =
-      typeof window !== 'undefined' &&
-      window.matchMedia &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    AOS.init({
-      once: true,
-      duration: prefersReduce ? 0 : 800,
-      easing: 'ease-out-quart',
-      disable: prefersReduce,
-    });
+  // Make sure AOS content is visible when printing (prevents blank print)
+  useEffect(() => {
+    const forceShowForPrint = () => {
+      document.querySelectorAll('[data-aos]').forEach((el) => {
+        el.classList.add('aos-animate');
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+        el.style.animation = 'none';
+      });
+    };
+    window.addEventListener('beforeprint', forceShowForPrint);
+    return () => window.removeEventListener('beforeprint', forceShowForPrint);
   }, []);
 
   const updated = 'August 2025';
 
   return (
     <main className="bg-bg text-dark">
-      {/* Breadcrumbs (container + pt like Industries/Terms) */}
-      <section className="pt-4">
-        <div className="max-w-7xl mx-auto px-4">
-          <Breadcrumbs items={[{ label: 'Home', to: '/home' }, { label: 'Accessibility & Section 508' }]} />
-        </div>
-      </section>
+      <Breadcrumbs items={[{ label: 'Home', href: '/home' }, { label: 'Accessibility & Section 508' }]} />
 
-      {/* Page hero */}
       <PageHero
         title="Accessibility"
         accent="& Section 508"
         description={`Last updated: ${updated}`}
-        gradientFrom="from-teal-50/70"
       />
 
-      {/* Body */}
       <section className="px-4">
         <div className="max-w-3xl mx-auto">
           {/* Intro */}
@@ -235,14 +229,13 @@ export default function Accessibility508() {
         </div>
       </section>
 
-      {/* Same Back-to-Top behavior as Industries/Terms */}
+      {/* Back-to-top (same behavior as Industries) */}
       <ScrollToTop
         disableRouteScroll
         showButton
         smooth
         buttonThreshold={420}
         minPageHeightRatio={1.2}
-        buttonLabel="Back to top"
       />
     </main>
   );

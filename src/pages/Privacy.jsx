@@ -10,44 +10,35 @@ import ScrollToTop from '../components/ScrollToTop';
 export default function Privacy() {
   useEffect(() => {
     document.title = 'Privacy Policy | The Hillen Group';
+    AOS.init({ once: true, duration: 800, easing: 'ease-out-quart' });
+  }, []);
 
-    const prefersReduce =
-      typeof window !== 'undefined' &&
-      window.matchMedia &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    AOS.init({
-      once: true,
-      duration: prefersReduce ? 0 : 800,
-      easing: 'ease-out-quart',
-      disable: prefersReduce,
-    });
+  // Ensure AOS content prints
+  useEffect(() => {
+    const forceShowForPrint = () => {
+      document.querySelectorAll('[data-aos]').forEach((el) => {
+        el.classList.add('aos-animate');
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+        el.style.animation = 'none';
+      });
+    };
+    window.addEventListener('beforeprint', forceShowForPrint);
+    return () => window.removeEventListener('beforeprint', forceShowForPrint);
   }, []);
 
   const updated = 'June 2025';
 
   return (
     <main className="bg-bg text-dark">
-      {/* Breadcrumbs */}
-      <section className="pt-4">
-        <div className="max-w-7xl mx-auto px-4">
-          <Breadcrumbs items={[{ label: 'Home', to: '/home' }, { label: 'Privacy Policy' }]} />
-        </div>
-      </section>
+      <Breadcrumbs items={[{ label: 'Home', href: '/home' }, { label: 'Privacy Policy' }]} />
 
-      {/* Page hero */}
       <PageHero
-        eyebrow="Legal"
-        title={
-          <>
-            Privacy <span className="text-accent">Policy</span>
-          </>
-        }
-        subtitle={`Last updated: ${updated}`}
-        gradientFrom="from-teal-50/70"
+        title="Privacy"
+        accent="Policy"
+        description={`Last updated: ${updated}`}
       />
 
-      {/* Content */}
       <section className="px-4">
         <div className="max-w-3xl mx-auto">
           {/* Intro */}
@@ -200,7 +191,7 @@ export default function Privacy() {
             />
 
             <Section
-              title="9) Children’s Privacy"
+              title="9) Children's Privacy"
               delay={500}
               body={
                 <p>
@@ -271,14 +262,13 @@ export default function Privacy() {
         </div>
       </section>
 
-      {/* Page-local Back-to-top button (same pattern as Industries) */}
+      {/* Back-to-top */}
       <ScrollToTop
         disableRouteScroll
         showButton
         smooth
         buttonThreshold={420}
         minPageHeightRatio={1.2}
-        buttonLabel="Back to top"
       />
     </main>
   );

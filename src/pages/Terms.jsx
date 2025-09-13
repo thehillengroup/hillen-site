@@ -10,38 +10,33 @@ import ScrollToTop from '../components/ScrollToTop';
 export default function Terms() {
   useEffect(() => {
     document.title = 'Terms of Service | The Hillen Group';
+    AOS.init({ once: true, duration: 800, easing: 'ease-out-quart' });
+  }, []);
 
-    // Respect reduced motion, same as Industries
-    const prefersReduce =
-      typeof window !== 'undefined' &&
-      window.matchMedia &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    AOS.init({
-      once: true,
-      duration: prefersReduce ? 0 : 800,
-      easing: 'ease-out-quart',
-      disable: prefersReduce,
-    });
+  // Ensure AOS content prints
+  useEffect(() => {
+    const forceShowForPrint = () => {
+      document.querySelectorAll('[data-aos]').forEach((el) => {
+        el.classList.add('aos-animate');
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+        el.style.animation = 'none';
+      });
+    };
+    window.addEventListener('beforeprint', forceShowForPrint);
+    return () => window.removeEventListener('beforeprint', forceShowForPrint);
   }, []);
 
   const updated = 'June 2025';
 
   return (
     <main className="bg-bg text-dark">
-      {/* Breadcrumbs (use `to` like Industries) */}
-      <section className="pt-4">
-        <div className="max-w-7xl mx-auto px-4">
-          <Breadcrumbs items={[{ label: 'Home', to: '/home' }, { label: 'Terms of Service' }]} />
-        </div>
-      </section>
+      <Breadcrumbs items={[{ label: 'Home', href: '/home' }, { label: 'Terms of Service' }]} />
 
-      {/* Page hero */}
       <PageHero
         title="Terms of"
         accent="Service"
         description={`Last updated: ${updated}`}
-        gradientFrom="from-teal-50/70"
       />
 
       <section className="px-4">
@@ -49,10 +44,8 @@ export default function Terms() {
           {/* Intro */}
           <div className="bg-white border rounded-xl p-6 md:p-8" data-aos="fade-up" data-aos-delay="50">
             <p className="text-gray-700">
-              These Terms of Service (&quot;Terms&quot;) govern your access to and use of The Hillen Group
-              (&quot;THG&quot;, &quot;we&quot;, &quot;us&quot;, or &quot;our&quot;) website, applications, and related services
-              (collectively, the &quot;Site&quot;). By accessing or using the Site, you agree to be bound by these Terms
-              and our Privacy Policy. If you do not agree, do not use the Site.
+              These Terms of Service (&quot;Terms&quot;) govern your access to and use of The Hillen Group (&quot;THG&quot;, &quot;we&quot;, &quot;us&quot;, or &quot;our&quot;)
+              website, applications, and related services (collectively, the &quot;Site&quot;). By accessing or using the Site, you agree to be bound by these Terms and our Privacy Policy. If you do not agree, do not use the Site.
             </p>
           </div>
 
@@ -146,9 +139,7 @@ export default function Terms() {
               body={
                 <>
                   <p className="mb-2">
-                    THE SITE IS PROVIDED &quot;AS IS&quot; AND &quot;AS AVAILABLE.&quot; TO THE MAXIMUM EXTENT PERMITTED BY LAW, THG
-                    DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE,
-                    AND NON-INFRINGEMENT. WE DO NOT WARRANT THAT THE SITE WILL BE UNINTERRUPTED, SECURE, OR ERROR-FREE.
+                    THE SITE IS PROVIDED &quot;AS IS&quot; AND &quot;AS AVAILABLE.&quot; TO THE MAXIMUM EXTENT PERMITTED BY LAW, THG DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT. WE DO NOT WARRANT THAT THE SITE WILL BE UNINTERRUPTED, SECURE, OR ERROR-FREE.
                   </p>
                 </>
               }
@@ -219,9 +210,7 @@ export default function Terms() {
               body={
                 <>
                   <p>
-                    We may update these Terms from time to time. The &quot;Last updated&quot; date above reflects the current
-                    version. Changes take effect when posted. Your continued use of the Site after changes are posted constitutes
-                    acceptance of the updated Terms.
+                    We may update these Terms from time to time. The &quot;Last updated&quot; date above reflects the current version. Changes take effect when posted. Your continued use of the Site after changes are posted constitutes acceptance of the updated Terms.
                   </p>
                 </>
               }
@@ -248,14 +237,13 @@ export default function Terms() {
         </div>
       </section>
 
-      {/* Same Back-to-Top behavior as Industries */}
+      {/* Back-to-top */}
       <ScrollToTop
         disableRouteScroll
         showButton
         smooth
         buttonThreshold={420}
         minPageHeightRatio={1.2}
-        buttonLabel="Back to top"
       />
     </main>
   );

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import ScrollToTop from '../components/ScrollToTop';
+import PrintButton from '../components/ui/PrintButton';
 import Breadcrumbs from '../components/ui/Breadcrumbs';
 
 export default function Careers() {
@@ -123,14 +124,13 @@ export default function Careers() {
     return (
       <>
         {/* Breadcrumbs */}
-        <section className="pt-4">
-          <div className="max-w-7xl mx-auto px-4">
-            <Breadcrumbs items={[{ label: 'Home', href: '/home' }, { label: 'Careers' }]} />
-          </div>
-        </section>
+        <Breadcrumbs items={[{ label: 'Home', href: '/home' }, { label: 'Careers' }]} />
 
-        <section className="py-20 px-4 bg-bg text-dark">
+        <section className="px-4 bg-bg text-dark">
           <div className="max-w-7xl mx-auto">
+            <div className="no-print flex justify-end mb-2">
+              <PrintButton />
+            </div>
             <h1 className="text-4xl font-bold text-center mb-6" data-aos="fade-up">
               Careers
             </h1>
@@ -140,15 +140,14 @@ export default function Careers() {
           </div>
         </section>
 
-        {/* Back-to-top (same behavior as Industries) */}
-        <ScrollToTop
-          disableRouteScroll
-          showButton
-          smooth
-          buttonThreshold={420}
-          minPageHeightRatio={1.2}
-          buttonLabel="Back to top"
-        />
+      <ScrollToTop
+        disableRouteScroll
+        showButton
+        smooth
+        buttonThreshold={420}
+        minPageHeightRatio={1.2}
+        buttonLabel="Top"
+      />
       </>
     );
   }
@@ -158,13 +157,12 @@ export default function Careers() {
     return (
       <>
         {/* Breadcrumbs */}
-        <section className="pt-4">
-          <div className="max-w-7xl mx-auto px-4">
-            <Breadcrumbs items={[{ label: 'Home', href: '/home' }, { label: 'Careers' }]} />
-          </div>
-        </section>
+        <Breadcrumbs items={[{ label: 'Home', href: '/home' }, { label: 'Careers' }]} />
 
-        <section className="py-20 px-4 bg-bg text-dark">
+        <section className="px-4 bg-bg text-dark">
+          <div className="no-print flex justify-end mb-2">
+            <PrintButton />
+          </div>
           <div className="max-w-3xl mx-auto text-center space-y-4">
             <h1 className="text-4xl font-bold" data-aos="fade-up">Careers</h1>
             <p className="text-red-600" data-aos="fade-up" data-aos-delay="100">
@@ -180,14 +178,14 @@ export default function Careers() {
         </section>
 
         {/* Back-to-top */}
-        <ScrollToTop
-          disableRouteScroll
-          showButton
-          smooth
-          buttonThreshold={420}
-          minPageHeightRatio={1.2}
-          buttonLabel="Back to top"
-        />
+      <ScrollToTop
+        disableRouteScroll
+        showButton
+        smooth
+        buttonThreshold={420}
+        minPageHeightRatio={1.2}
+        buttonLabel="Top"
+      />
       </>
     );
   }
@@ -195,15 +193,14 @@ export default function Careers() {
   return (
     <>
       {/* Breadcrumbs */}
-      <section className="pt-4">
-        <div className="max-w-7xl mx-auto px-4">
-          <Breadcrumbs items={[{ label: 'Home', href: '/home' }, { label: 'Careers' }]} />
-        </div>
-      </section>
+      <Breadcrumbs items={[{ label: 'Home', href: '/home' }, { label: 'Careers' }]} />
 
-      <section className="py-20 px-4 bg-bg text-dark">
+      <section className="px-4 bg-bg text-dark">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
+          <div className="no-print flex justify-end mb-2">
+            <PrintButton />
+          </div>
           <div className="text-center mb-10" data-aos="fade-up">
             <h1 className="text-4xl font-bold">Careers</h1>
             <p className="text-gray-600 mt-2">
@@ -290,7 +287,7 @@ export default function Careers() {
 
           {/* Footer note */}
           <div className="mt-12 text-center text-sm text-gray-600" data-aos="fade-up">
-            Don’t see the right role? Send your resume to{' '}
+            Don&apos;t see the right role? Send your resume to{' '}
             <a
               className="text-primary underline"
               href="mailto:careers@thehillengroup.net?subject=General%20Application%20%E2%80%93%20The%20Hillen%20Group"
@@ -315,7 +312,7 @@ export default function Careers() {
         smooth
         buttonThreshold={420}
         minPageHeightRatio={1.2}
-        buttonLabel="Back to top"
+        buttonLabel="Top"
       />
     </>
   );

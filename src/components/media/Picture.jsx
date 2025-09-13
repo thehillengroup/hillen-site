@@ -1,48 +1,56 @@
-// src/components/media/Picture.jsx
 import React from 'react';
 
 /**
- * <Picture>
- * - Outputs AVIF + WebP + fallback <img>
- * - Lazy by default, supports sizes/srcSet for responsive loading
- *
+ * Picture component
  * Props:
- *  alt (required), src (fallback), sources?: [{ type: 'image/avif'|'image/webp', srcSet: string }]
- *  width?, height?, loading?, decoding?, sizes?, className?, imgClassName?, priority?
+ * - src (required), alt (required)
+ * - sources: [{ srcSet, type, media, sizes }]
+ * - width, height (numbers) OR aspect (string like "16/9", "3/2")
+ * - imgClassName (string)
+ * - priority (bool) => eager load, else lazy
+ * - loading, decoding overrides
  */
 export default function Picture({
-  alt,
   src,
+  alt,
   sources = [],
   width,
   height,
-  loading = 'lazy',
-  decoding = 'async',
-  sizes,
-  className = '',
-  imgClassName = 'w-full h-auto',
-  priority = false, // if true -> eager load + high fetch priority
-  ...imgProps
+  aspect,
+  imgClassName = '',
+  priority = false,
+  loading,
+  decoding,
+  ...rest
 }) {
-  const loadingMode = priority ? 'eager' : loading;
-  const fetchPriority = priority ? 'high' : undefined;
+  const imgLoading = loading || (priority ? 'eager' : 'lazy');
+  const imgDecoding = decoding || 'async';
+
+  const styleAspect =
+    !width && !height && aspect
+      ? { aspectRatio: aspect }
+      : undefined;
 
   return (
-    <picture className={className}>
-      {sources.map((s) => (
-        <source key={s.type} type={s.type} srcSet={s.srcSet} sizes={s.sizes || sizes} />
+    <picture {...rest}>
+      {sources.map((s, i) => (
+        <source
+          key={i}
+          srcSet={s.srcSet}
+          type={s.type}
+          media={s.media}
+          sizes={s.sizes}
+        />
       ))}
       <img
-        alt={alt}
         src={src}
+        alt={alt}
         width={width}
         height={height}
-        loading={loadingMode}
-        decoding={decoding}
-        fetchPriority={fetchPriority}
-        className={imgClassName}
-        sizes={sizes}
-        {...imgProps}
+        loading={imgLoading}
+        decoding={imgDecoding}
+        className={['w-full h-auto', imgClassName].join(' ')}
+        style={styleAspect}
       />
     </picture>
   );

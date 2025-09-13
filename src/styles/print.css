@@ -1,0 +1,122 @@
+/* src/styles/print.css */
+@media print {
+  html, body {
+    background: #fff !important;
+    color: #000 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    margin: 0 !important;
+  }
+
+  /* Ensure AOS-animated elements are visible in print */
+  [data-aos],
+  .aos-init,
+  .aos-animate {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+    visibility: visible !important;
+  }
+
+  /* Common layout adjustments that can interfere with print */
+  .min-h-screen { min-height: auto !important; }
+  .sticky { position: static !important; }
+  /* Hide full-screen overlays and closed offscreen UI */
+  .fixed.inset-0,
+  .fixed[aria-hidden="true"],
+  .pointer-events-none.backdrop-blur-md { display: none !important; }
+  .no-print, .print-hidden, nav, footer { display: none !important; } /* hide nav/footer and elements explicitly marked no-print */
+
+  /* Print: hide only the first (sticky) site header, show other headers */
+  header { display: block !important; }
+  header.sticky { display: none !important; }
+  /* Add breathing room below content headers in print */
+  header:not(.sticky) { padding-bottom: 6mm !important; }
+  .print-only { display: block !important; }
+
+  /* Images scale nicely */
+  img, svg, canvas, picture {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  /* Avoid orphan headings */
+  h1, h2, h3 { page-break-after: avoid; }
+
+  /* Hide link URLs in print preview */
+  a[href]::after,
+  a[href^="http"]::after,
+  a[href^="#"]::after,
+  a[href^="mailto:"]::after,
+  a[href^="tel:"]::after,
+  a[role="button"]::after {
+    content: none !important;
+  }
+
+  /* Page margins */
+  @page { margin: 12mm; }
+
+  /* Reduce excessive top spacing before the printed header */
+  .pt-0, .pt-1, .pt-2, .pt-3, .pt-4, .pt-5, .pt-6, .pt-8, .pt-10, .pt-12, .pt-16, .pt-20, .pt-24 { padding-top: 0 !important; }
+  .py-0, .py-1, .py-2, .py-3, .py-4, .py-5, .py-6, .py-8, .py-10, .py-12, .py-16, .py-20, .py-24 { padding-top: 0 !important; }
+  .mt-0, .mt-1, .mt-2, .mt-3, .mt-4, .mt-5, .mt-6, .mt-8, .mt-10, .mt-12 { margin-top: 0 !important; }
+  header:not(.sticky) { margin-top: 0 !important; padding-top: 0 !important; }
+
+  /* First content section should hug the top */
+  main > section:first-of-type { padding-top: 0 !important; margin-top: 0 !important; }
+
+  /* Home route: print as displayed in browser */
+  [data-route="home"] { color: revert !important; background: revert !important; }
+  [data-route="home"] header.sticky { display: block !important; }
+  [data-route="home"] nav { display: block !important; }
+  [data-route="home"] footer { display: block !important; }
+  [data-route="home"] .pt-12 { padding-top: revert !important; }
+  [data-route="home"] .mt-12 { margin-top: revert !important; }
+  [data-route="home"] header:not(.sticky) { margin-top: revert !important; padding-top: revert !important; }
+  [data-route="home"] .min-h-screen { min-height: 100vh !important; }
+
+  /* Careers: remove any leading whitespace from breadcrumb/padding */
+  [data-route="careers"] [aria-label="Breadcrumb"] { display: none !important; }
+  [data-route="careers"] main { padding-top: 0 !important; margin-top: 0 !important; }
+  [data-route="careers"] .pt-20, [data-route="careers"] .pt-24, [data-route="careers"] .py-20, [data-route="careers"] .py-24 { padding-top: 0 !important; }
+  [data-route="careers"] h1 { margin-top: 0 !important; }
+
+  /* Services: tighten top, simplify layout for print */
+  [data-route="services"] [aria-label="Breadcrumb"] { display: none !important; }
+  /* Ensure breadcrumbs don't add top padding; keep hero visible */
+  [data-route="services"] main { padding-top: 0 !important; margin-top: 0 !important; }
+  [data-route="services"] .PageHero { margin-top: 0 !important; }
+  [data-route="services"] .PageHero-inner { padding-top: 0 !important; }
+  [data-route="services"] .PageHero h1 { margin-top: 0 !important; }
+  /* Remove hero overlay backgrounds */
+  [data-route="services"] .absolute.inset-0 { display: none !important; }
+  /* Make card grids single column for readability */
+  [data-route="services"] .md\:grid-cols-2 { grid-template-columns: 1fr !important; }
+  /* Avoid card splits */
+  [data-route="services"] li, [data-route="services"] .group, [data-route="services"] .rounded-xl, [data-route="services"] .rounded-2xl {
+    break-inside: avoid; page-break-inside: avoid;
+  }
+
+  /* Case Studies: ensure card hero images have consistent height */
+  [data-route="case-studies"] .cs-hero {
+    height: 11rem !important; /* match h-44 */
+    width: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+  }
+
+  /* Portfolio: enforce uniform hero image height in cards */
+  [data-route="portfolio"] .portfolio-hero {
+    height: 11rem !important;
+    width: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+  }
+  /* Also normalize the media wrapper height and remove placeholder bg */
+  [data-route="portfolio"] .relative.bg-gray-100 { background: transparent !important; }
+  [data-route="portfolio"] .aspect-\[16\/9\] {
+    aspect-ratio: auto !important;
+    height: 11rem !important;
+    overflow: hidden !important;
+  }
+}

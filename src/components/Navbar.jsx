@@ -1,7 +1,6 @@
 // src/components/Navbar.jsx
 import React, { useEffect, useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import { useAuth0 } from '@auth0/auth0-react';
 import logo from '../assets/images/The-Hillen-White-logo.png';
 
 const cn = (...c) => c.filter(Boolean).join(' ');
@@ -15,18 +14,7 @@ const NAV_ITEMS = [
   { to: '/careers', label: 'Careers' },
 ];
 
-// tiny lock icon
-function LockIcon({ className = 'h-4 w-4' }) {
-  return (
-    <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2">
-      <path d="M7 10V7a5 5 0 1110 0v3" />
-      <rect x="5" y="10" width="14" height="10" rx="2" />
-    </svg>
-  );
-}
-
 export default function Navbar() {
-  const { isAuthenticated, isLoading, loginWithRedirect, logout } = useAuth0();
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
 
@@ -75,26 +63,6 @@ export default function Navbar() {
 
           {/* Right side actions (desktop) */}
           <div className="hidden items-center gap-4 lg:flex ml-8">
-            {/* Outline Login/Logout (matches design) */}
-            {/* {!isLoading && (
-              <button
-                onClick={() =>
-                  isAuthenticated
-                    ? logout({ logoutParams: { returnTo: window.location.origin } })
-                    : loginWithRedirect()
-                }
-                className={cn(
-                  'inline-flex items-center gap-2 rounded-[10px] px-5 py-2',
-                  'border border-white/40 text-white bg-transparent',
-                  'hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/40'
-                )}
-                aria-label={isAuthenticated ? 'Log out' : 'Log in'}
-              >
-                <LockIcon className="h-4 w-4" />
-                {isAuthenticated ? 'Logout' : 'Login'}
-              </button>
-            )} */}
-
             {/* Solid Contact */}
             <Link
               to="/contact"
@@ -173,27 +141,8 @@ export default function Navbar() {
             </ul>
           </nav>
 
-          {/* auth + contact on mobile, styled to match */}
+          {/* contact button only on mobile */}
           <div className="mt-6 grid grid-cols-1 gap-3">
-            {!isLoading && (
-              <button
-                onClick={() =>
-                  isAuthenticated
-                    ? logout({ logoutParams: { returnTo: window.location.origin } })
-                    : loginWithRedirect()
-                }
-                className={cn(
-                  'inline-flex items-center justify-center gap-2 rounded-[10px] px-5 py-3',
-                  'border border-white/40 text-white bg-transparent',
-                  'hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/40'
-                )}
-                aria-label={isAuthenticated ? 'Log out' : 'Log in'}
-              >
-                <LockIcon className="h-4 w-4" />
-                {isAuthenticated ? 'Logout' : 'Login'}
-              </button>
-            )}
-
             <Link
               to="/contact"
               onClick={() => setMobileOpen(false)}

@@ -27,16 +27,12 @@ export default function Industries() {
   return (
     <main className="bg-bg text-dark">
       {/* Breadcrumbs */}
-      <section className="pt-4">
-        <div className="max-w-7xl mx-auto px-4">
-          <Breadcrumbs
-            items={[
-              { label: 'Home', href: '/home' },
-              { label: 'Industries' },
-            ]}
-          />
-        </div>
-      </section>
+      <Breadcrumbs
+        items={[
+          { label: 'Home', href: '/home' },
+          { label: 'Industries' },
+        ]}
+      />
 
       {/* Page hero */}
       <PageHero
@@ -50,7 +46,7 @@ export default function Industries() {
         gradientFrom="from-teal-50/70"
       />
 
-      <section className="py-4 px-4">
+      <section className="px-4">
         <div className="max-w-7xl mx-auto">
           {/* Quick jump chips */}
           <nav
@@ -95,7 +91,7 @@ export default function Industries() {
             <div>
               <div className="text-lg font-semibold">Not seeing your mission area?</div>
               <p className="text-gray-700">
-                We tailor solutions to unique constraints. Let’s talk about your requirements.
+                We tailor solutions to unique constraints. Let&apos;s talk about your requirements.
               </p>
             </div>
             <div className="flex gap-3">
@@ -118,15 +114,13 @@ export default function Industries() {
         </div>
       </section>
 
-      {/* Page-local Back-to-top button.
-          We disable route-scroll here to avoid duplicating the global behavior. */}
       <ScrollToTop
         disableRouteScroll
         showButton
         smooth
         buttonThreshold={420}
         minPageHeightRatio={1.2}
-        buttonLabel="Back to top"
+        buttonLabel="Top"
       />
     </main>
   );
@@ -140,43 +134,43 @@ function IndustrySection({ industry, delay = 0 }) {
   return (
     <section
       id={id}
-      className="scroll-mt-24 bg-white border rounded-xl p-6 md:p-8"
-      data-aos="fade-up"
-      data-aos-delay={delay}
+      className="scroll-mt-44 bg-white border rounded-xl p-6 md:p-8"
       aria-labelledby={`${id}-title`}
     >
       <header className="flex items-start gap-3">
         <div className="mt-1 text-teal-700">{Icon ? <Icon className="h-6 w-6" /> : null}</div>
         <div>
-          <h2 id={`${id}-title`} className="text-2xl font-semibold">
+          <h2 id={`${id}-title`} className="text-2xl font-semibold scroll-mt-44">
             {title}
           </h2>
           {tagline && <p className="text-sm text-gray-600 mt-0.5">{tagline}</p>}
         </div>
       </header>
 
-      <p className="mt-4 text-gray-700">{summary}</p>
+      <div data-aos="fade-up" data-aos-delay={delay}>
+        <p className="mt-4 text-gray-700">{summary}</p>
 
-      <div className="mt-5 grid gap-6 md:grid-cols-2">
-        <div>
-          <h3 className="font-semibold mb-2">Core Capabilities</h3>
-          <ul className="list-disc ml-5 space-y-1 text-gray-700">
-            {capabilities.map((c, i) => (
-              <li key={`${id}-cap-${i}`}>{c}</li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <h3 className="font-semibold mb-2">Related Services</h3>
-          <ul className="space-y-2">
-            {services.map((s, i) => (
-              <li key={`${id}-svc-${i}`}>
-                <a href={s.href} className="text-primary underline hover:no-underline">
-                  {s.label}
-                </a>
-              </li>
-            ))}
-          </ul>
+        <div className="mt-5 grid gap-6 md:grid-cols-2">
+          <div>
+            <h3 className="font-semibold mb-2">Core Capabilities</h3>
+            <ul className="list-disc ml-5 space-y-1 text-gray-700">
+              {capabilities.map((c, i) => (
+                <li key={`${id}-cap-${i}`}>{c}</li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h3 className="font-semibold mb-2">Related Services</h3>
+            <ul className="space-y-2">
+              {services.map((s, i) => (
+                <li key={`${id}-svc-${i}`}>
+                  <a href={s.href} className="text-primary underline hover:no-underline">
+                    {s.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </section>

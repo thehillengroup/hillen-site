@@ -7,6 +7,7 @@ import 'aos/dist/aos.css';
 import Seo from '../components/Seo';
 import Breadcrumbs from '../components/ui/Breadcrumbs';
 import PageHero from '../components/ui/PageHero';
+import ScrollToTop from '../components/ScrollToTop';
 import { CASE_STUDIES } from '../data/caseStudies';
 
 export default function CaseStudies() {
@@ -46,7 +47,7 @@ export default function CaseStudies() {
                       <img
                         src={cs.hero}
                         alt={cs.title}
-                        className="h-44 w-full object-cover"
+                        className="h-44 w-full object-cover cs-hero"
                         loading="lazy"
                       />
                     )}
@@ -78,6 +79,14 @@ export default function CaseStudies() {
             </div>
           </div>
         </section>
+        <ScrollToTop
+          disableRouteScroll
+          showButton
+          smooth
+          buttonThreshold={420}
+          minPageHeightRatio={1.2}
+          buttonLabel="Top"
+        />
       </main>
     </>
   );

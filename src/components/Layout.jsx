@@ -1,20 +1,14 @@
 // src/components/Layout.jsx
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import Seo from './Seo';
-import SkipLink from './SkipLink';
 
 const ROUTE_META = [
   { test: (p) => p === '/' || p === '/home', title: 'Home', description: 'Strategic solutions. Delivered. Discover how The Hillen Group can elevate your mission.' },
   { test: (p) => p.startsWith('/about'), title: 'About', description: 'Mission-driven team delivering measurable outcomes for public and private sector clients.' },
-  {
-    test: (p) => p.startsWith('/services'),
-    title: 'Services',
-    description:
-      'Web/Software Services, Cyber Operations, Data Analytics, Professional Services, Project Planning & Discovery, and Enterprise Operations.',
-  },
+  { test: (p) => p.startsWith('/services'), title: 'Services', description: 'Web apps, mobile, UX, cloud & DevOps, maintenance, and delivery planning.' },
   { test: (p) => p.startsWith('/portfolio'), title: 'Portfolio', description: 'Selected projects and case studies—problems solved, results delivered.' },
   { test: (p) => p.startsWith('/industries'), title: 'Industries', description: 'Federal health, defense, civilian, state/local, research, and space.' },
   { test: (p) => p.startsWith('/careers'), title: 'Careers', description: 'Grow your impact—explore open roles and join our team.' },
@@ -35,6 +29,9 @@ function pickMeta(pathname) {
 export default function Layout({ children, seo }) {
   const location = useLocation();
   const defaults = pickMeta(location.pathname);
+  const routeKey = (location.pathname === '/' || location.pathname === '/home')
+    ? 'home'
+    : (location.pathname.split('/')[1] || 'root');
 
   // Allow per-page override via the `seo` prop
   const meta = {
@@ -45,13 +42,53 @@ export default function Layout({ children, seo }) {
     ogImage: seo?.ogImage,          // optional
   };
 
+  // ----- GLOBAL: ensure AOS content prints (prevents blank pages) -----
+  useEffect(() => {
+    const forceShowAOS = () => {
+      // Make all AOS targets visible before browser snapshots for print
+      document.querySelectorAll('[data-aos]').forEach((el) => {
+        el.classList.add('aos-animate');
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+        el.style.animation = 'none';
+      });
+    };
+
+    // beforeprint event
+    window.addEventListener('beforeprint', forceShowAOS);
+
+    // Fallback for browsers that use matchMedia('print')
+    const mq = window.matchMedia ? window.matchMedia('print') : null;
+    const mqHandler = (e) => { if (e.matches) forceShowAOS(); };
+    if (mq) {
+      if (mq.addEventListener) mq.addEventListener('change', mqHandler);
+      else if (mq.addListener) mq.addListener(mqHandler); // Safari/old
+    }
+
+    return () => {
+      window.removeEventListener('beforeprint', forceShowAOS);
+      if (mq) {
+        if (mq.removeEventListener) mq.removeEventListener('change', mqHandler);
+        else if (mq.removeListener) mq.removeListener(mqHandler);
+      }
+    };
+  }, []);
+  // -------------------------------------------------------------------
+
+  
+
   return (
-    <div className="min-h-screen bg-bg text-dark flex flex-col">
+    <div className="min-h-screen bg-bg text-dark flex flex-col" data-route={routeKey}>
       {/* SEO tags */}
       <Seo {...meta} />
 
-      {/* a11y skip link (reusable component) */}
-      <SkipLink targetId="main" label="Skip to main content" />
+      {/* a11y skip link */}
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 rounded-md bg-white px-3 py-2 text-dark shadow"
+      >
+        Skip to content
+      </a>
 
       <Navbar />
       <main id="main" role="main" className="flex-1">

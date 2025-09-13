@@ -4,6 +4,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 import PageHero from '../components/ui/PageHero';
+import ScrollToTop from '../components/ScrollToTop';
 import CardsGrid from '../components/ui/CardsGrid';
 import ProjectCard from '../components/ui/ProjectCard';
 import Breadcrumbs from '../components/ui/Breadcrumbs';
