@@ -1,6 +1,5 @@
 // src/utils/aos.js
 import AOS from 'aos';
-import 'aos/dist/aos.css';
 
 function prefersReducedMotion() {
   if (typeof window === 'undefined') return false;

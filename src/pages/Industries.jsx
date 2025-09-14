@@ -1,7 +1,6 @@
 // src/pages/Industries.jsx
 import React, { useEffect } from 'react';
 import AOS from 'aos';
-import 'aos/dist/aos.css';
 
 import Breadcrumbs from '../components/ui/Breadcrumbs';
 import PageHero from '../components/ui/PageHero';
@@ -134,13 +133,13 @@ function IndustrySection({ industry, delay = 0 }) {
   return (
     <section
       id={id}
-      className="scroll-mt-44 bg-white border rounded-xl p-6 md:p-8"
+      className="scroll-mt-48 bg-white border rounded-xl p-6 md:p-8"
       aria-labelledby={`${id}-title`}
     >
       <header className="flex items-start gap-3">
         <div className="mt-1 text-teal-700">{Icon ? <Icon className="h-6 w-6" /> : null}</div>
         <div>
-          <h2 id={`${id}-title`} className="text-2xl font-semibold scroll-mt-44">
+          <h2 id={`${id}-title`} className="text-2xl font-semibold scroll-mt-48">
             {title}
           </h2>
           {tagline && <p className="text-sm text-gray-600 mt-0.5">{tagline}</p>}

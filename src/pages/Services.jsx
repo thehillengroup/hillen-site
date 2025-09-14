@@ -28,7 +28,7 @@ export default function Services() {
               <li
                 key={id}
                 id={id}
-                className="scroll-mt-44 group rounded-xl border border-teal-100 bg-white/90 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-teal-300 hover:shadow-lg"
+                className="scroll-mt-48 group rounded-xl border border-teal-100 bg-white/90 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-teal-300 hover:shadow-lg"
               >
                 <div className="flex gap-4 p-5" data-aos="fade-up" data-aos-delay={100 + i * 60}>
                   <div className="shrink-0 inline-flex h-12 w-12 items-center justify-center rounded-lg border border-teal-200 bg-[#E6F7F8] text-[#00A9B7] transition-colors duration-300 group-hover:border-teal-300 group-hover:text-teal-700">

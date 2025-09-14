@@ -1,7 +1,6 @@
 // src/pages/Portfolio.jsx
 import React, { useState, useEffect } from 'react';
 import AOS from 'aos';
-import 'aos/dist/aos.css';
 
 import PageHero from '../components/ui/PageHero';
 import ScrollToTop from '../components/ScrollToTop';

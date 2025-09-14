@@ -2,7 +2,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import AOS from 'aos';
-import 'aos/dist/aos.css';
 import ScrollToTop from '../components/ScrollToTop';
 import PrintButton from '../components/ui/PrintButton';
 import Breadcrumbs from '../components/ui/Breadcrumbs';

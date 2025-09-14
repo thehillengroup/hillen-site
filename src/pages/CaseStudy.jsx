@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import AOS from 'aos';
-import 'aos/dist/aos.css';
 import Seo from '../components/Seo';
 import { CASE_STUDIES } from '../data/caseStudies';
 

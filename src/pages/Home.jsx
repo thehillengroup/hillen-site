@@ -4,7 +4,6 @@ import Particles from 'react-tsparticles';
 import CountUp from 'react-countup';
 import Slider from 'react-slick';
 import AOS from 'aos';
-import 'aos/dist/aos.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
@@ -34,6 +33,18 @@ const Home = () => {
     AOS.init({ once: true, duration: prefersReduce ? 0 : 800 });
   }, [prefersReduce]);
 
+  // Preload hero image only on Home to improve LCP
+  useEffect(() => {
+    const link = document.createElement('link');
+    link.rel = 'preload';
+    link.as = 'image';
+    link.href = heroImage;
+    document.head.appendChild(link);
+    return () => {
+      if (link && link.parentNode) link.parentNode.removeChild(link);
+    };
+  }, []);
+
   const sliderSettings = {
     dots: true,
     arrows: false,
@@ -49,8 +60,8 @@ const Home = () => {
     <>
       {/* HERO */}
       <section
-        className="relative min-h-screen bg-cover bg-center text-white flex items-center justify-center px-4"
-        style={{ backgroundImage: `url(${heroImage})` }}
+        className="relative min-h-screen bg-cover text-white px-4"
+        style={{ backgroundImage: `url(${heroImage})`, backgroundPosition: '60% 40%' }}
         aria-labelledby="home-hero-title"
       >
         {!prefersReduce && (
@@ -70,7 +81,11 @@ const Home = () => {
           />
         )}
         <div className="absolute inset-0 bg-dark/60 z-0" aria-hidden="true" />
-        <div className="relative z-10 text-center max-w-3xl space-y-6" data-aos="fade-up">
+        <div className="absolute inset-0 z-10 grid place-items-center">
+          <div
+            className="max-w-3xl w-[92%] sm:w-auto text-center space-y-6 md:absolute md:left-[62%] md:top-[48%] md:-translate-x-1/2 md:-translate-y-1/2"
+            data-aos="fade-up"
+          >
           <div>
             <span id="home-hero-title" className="text-4xl md:text-6xl font-thin">Welcome to</span><br />
             <span className="text-4xl md:text-6xl font-medium">The Hillen Group</span><br />
@@ -89,6 +104,7 @@ const Home = () => {
             >
               View Case Studies
             </Link>
+          </div>
           </div>
         </div>
       </section>

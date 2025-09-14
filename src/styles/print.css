@@ -30,6 +30,19 @@
   /* Print: hide only the first (sticky) site header, show other headers */
   header { display: block !important; }
   header.sticky { display: none !important; }
+  /* On Home, keep the site header visible but still hide nav/footer */
+  [data-route="home"] header.sticky { display: block !important; position: static !important; }
+  /* Hide the mobile hamburger on Home */
+  [data-route="home"] header .lg\:hidden { display: none !important; }
+
+  /* Home hero: show background image fully, remove dark overlay/particles */
+  [data-route="home"] main > section:first-of-type {
+    min-height: 100vh !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center top !important;
+  }
+  [data-route="home"] .absolute.inset-0 { display: none !important; }
   /* Add breathing room below content headers in print */
   header:not(.sticky) { padding-bottom: 6mm !important; }
   .print-only { display: block !important; }
@@ -65,15 +78,7 @@
   /* First content section should hug the top */
   main > section:first-of-type { padding-top: 0 !important; margin-top: 0 !important; }
 
-  /* Home route: print as displayed in browser */
-  [data-route="home"] { color: revert !important; background: revert !important; }
-  [data-route="home"] header.sticky { display: block !important; }
-  [data-route="home"] nav { display: block !important; }
-  [data-route="home"] footer { display: block !important; }
-  [data-route="home"] .pt-12 { padding-top: revert !important; }
-  [data-route="home"] .mt-12 { margin-top: revert !important; }
-  [data-route="home"] header:not(.sticky) { margin-top: revert !important; padding-top: revert !important; }
-  [data-route="home"] .min-h-screen { min-height: 100vh !important; }
+  /* Home route: use global print defaults (nav/footer hidden) */
 
   /* Careers: remove any leading whitespace from breadcrumb/padding */
   [data-route="careers"] [aria-label="Breadcrumb"] { display: none !important; }
