@@ -1,6 +1,7 @@
 // src/components/portfolio/PortfolioDetail.jsx
 import React, { useEffect } from 'react';
 import AOS from 'aos';
+import ScrollToTop from '../../components/ScrollToTop';
 
 import Breadcrumbs from '../../components/ui/Breadcrumbs';
 import PageHero from '../../components/ui/PageHero';
@@ -72,8 +73,15 @@ export default function PortfolioDetail({
             </div>
           </article>
         </div>
-      </section>
+    </section>
+      <ScrollToTop
+        disableRouteScroll
+        showButton
+        smooth
+        buttonThreshold={420}
+        minPageHeightRatio={1.2}
+        buttonLabel="Top"
+      />
     </main>
   );
 }
-

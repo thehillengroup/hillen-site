@@ -92,10 +92,10 @@ export default function App() {
           <Route path="/accessibility"      element={<Layout><Accessibility508 /></Layout>} />
           <Route path="/capabilities"       element={<Layout><Capabilities /></Layout>} />
           <Route path="/sitemap"            element={<Layout><Sitemap /></Layout>} />
-          <Route path="/500"                element={<Layout><Error500 /></Layout>} />
+          <Route path="/500"                element={<Layout seo={{ noindex: true }}><Error500 /></Layout>} />
 
-          {/* 404 now uses standard site layout */}
-          <Route path="*"                   element={<Layout><NotFound /></Layout>} />
+          {/* 404 now uses standard site layout, but noindex */}
+          <Route path="*"                   element={<Layout seo={{ noindex: true }}><NotFound /></Layout>} />
         </Routes>
       </Suspense>
     </>

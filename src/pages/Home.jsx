@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+﻿import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Particles from 'react-tsparticles';
 import CountUp from 'react-countup';
@@ -196,7 +196,7 @@ const Home = () => {
                     <div className="text-xs uppercase tracking-wide text-gray-500">{cs.sector} · {cs.timeframe}</div>
                     <h3 className="mt-1 text-xl font-semibold text-dark">{cs.title}</h3>
                     {cs.summary && <p className="mt-2 text-gray-600 line-clamp-3">{cs.summary}</p>}
-                    <div className="mt-3 text-accent font-semibold">Read more →</div>
+                    <div className="mt-3 text-accent font-semibold">Read more</div>
                   </div>
                 </Link>
               </article>
@@ -237,10 +237,10 @@ const Home = () => {
               <Link to="/portfolio" className="inline-flex items-center rounded-md border px-5 py-2.5 hover:bg-gray-50">View Portfolio</Link>
             </div>
           </div>
-          <a href="/capabilities" className="rounded-xl border bg-white p-6 shadow-sm hover:shadow-md transition" data-aos="fade-up" data-aos-delay="150">
-            <div className="text-lg font-semibold">Capabilities PDF</div>
-            <p className="mt-2 text-gray-700">Overview of services, practices, and example outcomes. Opens in a new tab.</p>
-            <div className="mt-3 text-accent font-semibold">Download →</div>
+                    <a href="/capabilities" className="rounded-xl border bg-white p-6 shadow-sm hover:shadow-md transition" data-aos="fade-up" data-aos-delay="150">
+            <div className="text-lg font-semibold">Capabilities</div>
+            <p className="mt-2 text-gray-700">Overview of services, practices, and example outcomes. Print to save as PDF.</p>
+            <div className="mt-3 text-accent font-semibold">View</div>
           </a>
         </div>
       </section>
@@ -267,3 +267,6 @@ const Home = () => {
 };
 
 export default Home;
+
+
+

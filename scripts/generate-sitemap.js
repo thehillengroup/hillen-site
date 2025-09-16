@@ -15,7 +15,7 @@ const ROUTES = [
   '/services/enterprise-operations',
   '/services/data-analytics',
   '/services/professional-services',
-  '/services/project-planning-and-discovery',
+  '/services/project-planning',
   '/portfolio',
   '/industries',
   '/careers',
