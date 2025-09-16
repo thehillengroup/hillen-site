@@ -38,7 +38,7 @@ const desiredOrder = [
   'Careers',
   'Contact',
   // 'Login',
-  'Capabilities PDF',
+  'Capabilities',
   'Privacy',
   'Terms',
   'Accessibility',
@@ -61,13 +61,9 @@ function pickFooterLinks() {
     if (!fromNav.find((x) => x.label === l.label)) fromNav.push(l);
   });
 
-  // Capability PDF fallback if not present in NAV
-  if (!fromNav.find((x) => x.label === 'Capabilities PDF')) {
-    fromNav.push({
-      label: 'Capabilities PDF',
-      href: '/docs/capabilities.pdf',
-      external: true, // open in new tab
-    });
+  // Capabilities fallback if not present in NAV
+  if (!fromNav.find((x) => x.label === 'Capabilities')) {
+    fromNav.push({ label: 'Capabilities', to: '/capabilities' });
   }
 
   // De-dupe by label

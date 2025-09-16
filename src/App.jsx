@@ -31,6 +31,7 @@ const Privacy               = lazy(() => import(/* webpackChunkName: "privacy" *
 const Terms                 = lazy(() => import(/* webpackChunkName: "terms" */ './pages/Terms'));
 const Accessibility508      = lazy(() => import(/* webpackChunkName: "accessibility" */ './pages/Accessibility508'));
 const Sitemap               = lazy(() => import(/* webpackChunkName: "sitemap" */ './pages/Sitemap'));
+const Capabilities          = lazy(() => import(/* webpackChunkName: "capabilities" */ './pages/Capabilities'));
 const NotFound              = lazy(() => import(/* webpackChunkName: "notfound" */ './pages/NotFound'));
 const Error500              = lazy(() => import(/* webpackChunkName: "error500" */ './pages/Error500'));
 
@@ -89,6 +90,7 @@ export default function App() {
           <Route path="/privacy"            element={<Layout><Privacy /></Layout>} />
           <Route path="/terms"              element={<Layout><Terms /></Layout>} />
           <Route path="/accessibility"      element={<Layout><Accessibility508 /></Layout>} />
+          <Route path="/capabilities"       element={<Layout><Capabilities /></Layout>} />
           <Route path="/sitemap"            element={<Layout><Sitemap /></Layout>} />
           <Route path="/500"                element={<Layout><Error500 /></Layout>} />
 

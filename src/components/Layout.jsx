@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import Seo from './Seo';
+import PrintBrand from './PrintBrand';
 
 const ROUTE_META = [
   { test: (p) => p === '/' || p === '/home', title: 'Home', description: 'Strategic solutions. Delivered. Discover how The Hillen Group can elevate your mission.' },
@@ -17,6 +18,7 @@ const ROUTE_META = [
   { test: (p) => p.startsWith('/privacy'), title: 'Privacy Policy', description: 'How we collect, use, and protect your information.' },
   { test: (p) => p.startsWith('/terms'), title: 'Terms of Service', description: 'The terms that govern use of our website and services.' },
   { test: (p) => p.startsWith('/accessibility'), title: 'Accessibility (508)', description: 'Our commitment to accessible, inclusive experiences.' },
+  { test: (p) => p.startsWith('/capabilities'), title: 'Capabilities', description: 'Core competencies, differentiators, past performance, and contact.' },
   { test: (p) => p.startsWith('/sitemap'), title: 'Sitemap', description: 'All pages and sections of The Hillen Group site.' },
   { test: () => true, title: 'The Hillen Group', description: 'Strategic solutions. Delivered.' }, // fallback
 ];
@@ -81,6 +83,9 @@ export default function Layout({ children, seo }) {
     <div className="min-h-screen bg-bg text-dark flex flex-col" data-route={routeKey}>
       {/* SEO tags */}
       <Seo {...meta} />
+
+      {/* Print-only brand header */}
+      <PrintBrand />
 
       {/* a11y skip link */}
       <a

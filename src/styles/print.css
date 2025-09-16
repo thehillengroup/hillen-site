@@ -47,6 +47,39 @@
   header:not(.sticky) { padding-bottom: 6mm !important; }
   .print-only { display: block !important; }
 
+  /* Print brand header styling */
+  .print-brand {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    margin: 0 0 8mm 0 !important;
+    padding: 0 0 4mm 0 !important;
+    border-bottom: 1px solid #d1d5db !important; /* gray-300 */
+  }
+  .print-brand-logo { height: 78px !important; width: auto !important; display: block !important; }
+  .print-brand-name { font-weight: 700 !important; font-size: 14pt !important; }
+  .print-brand-sub { font-size: 10pt !important; color: #111 !important; }
+  .print-brand-contact { font-size: 9pt !important; color: #111 !important; }
+
+  /* Watermark: light diagonal brand text across the page */
+  body::before {
+    content: 'THE HILLEN GROUP';
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-30deg);
+    font-size: 64pt;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #000;
+    opacity: 0.04; /* subtle */
+    z-index: 0;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  /* Keep brand header above watermark */
+  .print-brand { position: relative !important; z-index: 1 !important; }
+
   /* Images scale nicely */
   img, svg, canvas, picture {
     max-width: 100% !important;

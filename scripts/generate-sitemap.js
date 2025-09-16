@@ -26,6 +26,7 @@ const ROUTES = [
   '/privacy',
   '/terms',
   '/accessibility',
+  '/capabilities',
   '/sitemap',
 ];
 

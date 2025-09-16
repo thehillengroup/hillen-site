@@ -23,12 +23,10 @@ export default function Contracting() {
             </p>
             <div className="mt-6" data-aos="fade-up" data-aos-delay="150">
               <a
-                href="/docs/capabilities.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/capabilities"
                 className="inline-flex items-center rounded-lg bg-accent px-5 py-3 font-semibold text-dark hover:brightness-95"
               >
-                Download Capability Statement (PDF)
+                View Capabilities (Print to PDF)
               </a>
             </div>
           </header>

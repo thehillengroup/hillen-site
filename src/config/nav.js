@@ -47,7 +47,7 @@ export const NAV = [
       { label: 'News', to: '/news' },
       { label: 'Case Studies', to: '/case-studies' },
       { label: 'Downloads', to: '/downloads' },
-      { label: 'Capabilities PDF', href: '/docs/capabilities.pdf', external: true },
+      { label: 'Capabilities', to: '/capabilities' },
     ],
   },
   {

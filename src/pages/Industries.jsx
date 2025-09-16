@@ -95,12 +95,10 @@ export default function Industries() {
             </div>
             <div className="flex gap-3">
               <a
-                href="/docs/capabilities.pdf"
+                href="/capabilities"
                 className="inline-flex items-center rounded-md border px-4 py-2 hover:bg-white"
-                target="_blank"
-                rel="noopener noreferrer"
               >
-                Capabilities PDF
+                Capabilities
               </a>
               <a
                 href="/contact"

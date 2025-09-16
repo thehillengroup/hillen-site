@@ -237,7 +237,7 @@ const Home = () => {
               <Link to="/portfolio" className="inline-flex items-center rounded-md border px-5 py-2.5 hover:bg-gray-50">View Portfolio</Link>
             </div>
           </div>
-          <a href="/docs/capabilities.pdf" target="_blank" rel="noopener noreferrer" className="rounded-xl border bg-white p-6 shadow-sm hover:shadow-md transition" data-aos="fade-up" data-aos-delay="150">
+          <a href="/capabilities" className="rounded-xl border bg-white p-6 shadow-sm hover:shadow-md transition" data-aos="fade-up" data-aos-delay="150">
             <div className="text-lg font-semibold">Capabilities PDF</div>
             <p className="mt-2 text-gray-700">Overview of services, practices, and example outcomes. Opens in a new tab.</p>
             <div className="mt-3 text-accent font-semibold">Download →</div>

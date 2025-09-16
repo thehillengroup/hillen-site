@@ -5,6 +5,7 @@ import AOS from 'aos';
 
 import Breadcrumbs from '../components/ui/Breadcrumbs';
 import PageHero from '../components/ui/PageHero';
+import ScrollToTop from '../components/ScrollToTop';
 import { NAV } from '../config/nav';
 
 // helpers
@@ -55,7 +56,7 @@ export default function Sitemap() {
       <section className="px-4">
         <div className="max-w-6xl mx-auto space-y-10">
           {/* Top level */}
-          <Section title="Top-level Pages" desc="Primary entry points across the site." aos>
+          <Section title="Top-Level Pages" desc="Primary entry points across the site." aos>
             <CardGrid>
               {top.map((t, i) => (
                 <Card
@@ -154,9 +155,18 @@ export default function Sitemap() {
           </Section>
         </div>
       </section>
+      <ScrollToTop
+        disableRouteScroll
+        showButton
+        smooth
+        buttonThreshold={420}
+        minPageHeightRatio={1.2}
+        buttonLabel="Top"
+      />
     </main>
   );
 }
+
 
 /* --------- little presentational helpers --------- */
 function Section({ title, desc, children, aos = true, aosDelay = 0 }) {

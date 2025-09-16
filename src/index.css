@@ -29,6 +29,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Hidden on screen, shown in print via print.css */
+.print-only { display: none; }
+
 ::selection {
   background: var(--thg-orange);
   color: #111827; /* slate-900 */

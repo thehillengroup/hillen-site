@@ -220,9 +220,7 @@ export default function Contact() {
               <h3 className="text-lg font-semibold">Resources</h3>
               <div className="mt-3 flex flex-wrap gap-3">
                 <a
-                  href="/docs/capabilities.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="/capabilities"
                   className="inline-flex items-center rounded-md border px-4 py-2 hover:bg-gray-50"
                 >
                   Capabilities PDF
