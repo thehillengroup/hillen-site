@@ -19,6 +19,7 @@ export default function NotFound() {
         accent="Not Found"
         description="The page you’re looking for doesn’t exist or has moved."
         gradientFrom="from-teal-50/70"
+        showPrint={false}
       />
 
       <section className="px-4">

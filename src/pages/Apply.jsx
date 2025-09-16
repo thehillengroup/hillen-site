@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import AOS from 'aos';
+import emailjs from '@emailjs/browser';
 
 import Breadcrumbs from '../components/ui/Breadcrumbs';
 import PageHero from '../components/ui/PageHero';
@@ -12,6 +13,7 @@ export default function Apply() {
 
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [err, setErr] = useState('');
 
   // job id from query param
   const jobId = (() => {
@@ -74,15 +76,53 @@ export default function Apply() {
 
   function onSubmit(e) {
     e.preventDefault();
+    setErr('');
     setLoading(true);
-
-    // Demo-only submission. Replace with your API call (e.g., fetch/POST to backend).
-    setTimeout(() => {
+    const form = e.currentTarget;
+    // Honeypot
+    if (form.website && form.website.value) {
       setLoading(false);
-      setSent(true);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      setTimeout(() => AOS.refresh(), 0);
-    }, 800);
+      return;
+    }
+
+    // Enforce a safe attachment size to avoid 413 errors from EmailJS
+    const MAX_FILE_BYTES = 2 * 1024 * 1024; // 2 MB
+    const fileInput = form.my_file;
+    const file = fileInput && fileInput.files && fileInput.files[0];
+    if (file && file.size > MAX_FILE_BYTES) {
+      setLoading(false);
+      const mb = (file.size / (1024 * 1024)).toFixed(2);
+      setErr(`Your resume is ${mb} MB. Maximum allowed is 2 MB. Please upload a smaller file (PDF/DOC) or include a link in the Portfolio field.`);
+      fileInput.focus();
+      return;
+    }
+
+    const SERVICE_ID = process.env.REACT_APP_EMAILJS_SERVICE_ID;
+    const TEMPLATE_ID =
+      process.env.REACT_APP_EMAILJS_APPLY_TEMPLATE_ID ||
+      process.env.REACT_APP_EMAILJS_TEMPLATE_ID;
+    const PUBLIC_KEY = process.env.REACT_APP_EMAILJS_PUBLIC_KEY;
+
+    if (!SERVICE_ID || !TEMPLATE_ID || !PUBLIC_KEY) {
+      setLoading(false);
+      alert('Apply email service is not configured. Please add REACT_APP_EMAILJS_* keys.');
+      return;
+    }
+
+    // sendForm captures all inputs, including file attachments (resume)
+    emailjs
+      .sendForm(SERVICE_ID, TEMPLATE_ID, form, { publicKey: PUBLIC_KEY })
+      .then(() => {
+        setLoading(false);
+        setSent(true);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setTimeout(() => AOS.refresh(), 0);
+      })
+      .catch((err) => {
+        console.error('EmailJS apply error', err);
+        setLoading(false);
+        setErr('Sorry, we could not submit your application right now. Please try again or email careers@thehillengroup.net');
+      });
   }
 
   const heroDescription =
@@ -135,9 +175,13 @@ export default function Apply() {
                 </button>
               </div>
             ) : (
-              <form onSubmit={onSubmit} noValidate>
+              <form onSubmit={onSubmit} noValidate encType="multipart/form-data">
                 {/* Honeypot anti-spam field */}
                 <input type="text" name="website" tabIndex="-1" autoComplete="off" className="hidden" />
+                {/* Include job context for the email template */}
+                <input type="hidden" name="jobId" value={jobId} />
+                <input type="hidden" name="jobTitle" value={jobTitle} />
+                <input type="hidden" name="page" value={typeof window !== 'undefined' ? window.location.href : ''} />
 
                 {jobId && jobTitle && (
                   <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-teal-50 text-teal-700 border border-teal-200 px-3 py-1.5 text-sm">
@@ -193,10 +237,10 @@ export default function Apply() {
 
                 <div className="grid gap-4 md:grid-cols-2 mt-4">
                   <div className="flex flex-col">
-                    <label htmlFor="resume" className="font-medium">Resume/CV</label>
+                    <label htmlFor="resume" className="font-medium">Resume/CV <span className="text-gray-500 text-sm">(max 2&nbsp;MB)</span></label>
                     <input
                       id="resume"
-                      name="resume"
+                      name="my_file[]" /* EmailJS attachment; [] supports single or multiple */
                       type="file"
                       accept=".pdf,.doc,.docx"
                       required
@@ -226,6 +270,10 @@ export default function Apply() {
                     placeholder="Tell us about your experience, interests, and why you're a fit."
                   />
                 </div>
+
+                {err && (
+                  <p className="mt-3 text-red-600" role="alert">{err}</p>
+                )}
 
                 <div className="mt-6 flex items-center gap-3">
                   <button

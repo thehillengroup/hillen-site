@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import AOS from 'aos';
 
 import PageHero from '../components/ui/PageHero';
-import ScrollToTop from '../components/ScrollToTop';
 import CardsGrid from '../components/ui/CardsGrid';
 import ProjectCard from '../components/ui/ProjectCard';
 import Breadcrumbs from '../components/ui/Breadcrumbs';

@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import AOS from 'aos';
+import emailjs from '@emailjs/browser';
 
 import Breadcrumbs from '../components/ui/Breadcrumbs';
 import PageHero from '../components/ui/PageHero';
@@ -20,14 +21,50 @@ export default function Contact() {
     e.preventDefault();
     setErr('');
     setLoading(true);
-
-    // Demo-only: simulate async submit; replace with your API call if needed.
-    setTimeout(() => {
+    const form = e.currentTarget;
+    // Honeypot
+    if (form.website && form.website.value) {
       setLoading(false);
-      setSent(true);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      setTimeout(() => AOS.refresh(), 0);
-    }, 700);
+      return; // silently drop bots
+    }
+
+    const SERVICE_ID = process.env.REACT_APP_EMAILJS_SERVICE_ID;
+    const TEMPLATE_ID = process.env.REACT_APP_EMAILJS_TEMPLATE_ID;
+    const PUBLIC_KEY = process.env.REACT_APP_EMAILJS_PUBLIC_KEY;
+
+    if (!SERVICE_ID || !TEMPLATE_ID || !PUBLIC_KEY) {
+      setLoading(false);
+      setErr('Email service is not configured. Please set REACT_APP_EMAILJS_SERVICE_ID, REACT_APP_EMAILJS_TEMPLATE_ID, and REACT_APP_EMAILJS_PUBLIC_KEY in your environment.');
+      return;
+    }
+
+    const data = {
+      name: form.name?.value?.trim() || '',
+      email: form.email?.value?.trim() || '',
+      company: form.company?.value?.trim() || '',
+      subject: form.subject?.value?.trim() || 'Website Contact',
+      message: form.message?.value?.trim() || '',
+    };
+
+    if (!data.name || !data.email || !data.message) {
+      setLoading(false);
+      setErr('Please provide your name, email, and a message.');
+      return;
+    }
+
+    emailjs
+      .send(SERVICE_ID, TEMPLATE_ID, data, { publicKey: PUBLIC_KEY })
+      .then(() => {
+        setLoading(false);
+        setSent(true);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setTimeout(() => AOS.refresh(), 0);
+      })
+      .catch((error) => {
+        console.error('EmailJS error', error);
+        setLoading(false);
+        setErr('Sorry, we could not send your message right now. Please try again or email info@thehillengroup.net.');
+      });
   }
 
   return (

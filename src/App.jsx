@@ -21,6 +21,7 @@ const EnterpriseOperations  = lazy(() => import(/* webpackChunkName: "enterprise
 const DataAnalytics         = lazy(() => import(/* webpackChunkName: "data-analytics" */ './pages/Services/DataAnalytics'));
 const ProjectPlanning         = lazy(() => import(/* webpackChunkName: "project-planning" */ './pages/Services/ProjectPlanning'));
 const Portfolio             = lazy(() => import(/* webpackChunkName: "portfolio" */ './pages/Portfolio'));
+const PortfolioDetailPage   = lazy(() => import(/* webpackChunkName: "portfolio-detail" */ './pages/PortfolioDetailPage'));
 const Industries            = lazy(() => import(/* webpackChunkName: "industries" */ './pages/Industries'));
 const Careers               = lazy(() => import(/* webpackChunkName: "careers" */ './pages/Careers'));
 const Apply                 = lazy(() => import(/* webpackChunkName: "apply" */ './pages/Apply'));
@@ -61,6 +62,8 @@ export default function App() {
           <Route path="/services/project-planning"        element={<Layout><ProjectPlanning /></Layout>} />
           <Route path="/services/enterprise-operations" element={<Layout><EnterpriseOperations /></Layout>} />
           <Route path="/portfolio"                      element={<Layout><Portfolio /></Layout>} />
+          {/* Generic slug route powered by data source */}
+          <Route path="/portfolio/:slug"               element={<Layout><PortfolioDetailPage /></Layout>} />
           <Route path="/industries"                     element={<Layout><Industries /></Layout>} />
           <Route path="/careers"                        element={<Layout><Careers /></Layout>} />
           <Route path="/apply"                          element={<Layout><Apply /></Layout>} />
@@ -89,8 +92,8 @@ export default function App() {
           <Route path="/sitemap"            element={<Layout><Sitemap /></Layout>} />
           <Route path="/500"                element={<Layout><Error500 /></Layout>} />
 
-          {/* 404 (no header/footer) */}
-          <Route path="*"                   element={<MinimalistLayout><NotFound /></MinimalistLayout>} />
+          {/* 404 now uses standard site layout */}
+          <Route path="*"                   element={<Layout><NotFound /></Layout>} />
         </Routes>
       </Suspense>
     </>

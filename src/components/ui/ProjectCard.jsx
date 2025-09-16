@@ -1,6 +1,7 @@
 // src/components/ui/ProjectCard.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Picture from '../media/Picture';
 
 export default function ProjectCard({
   id,
@@ -19,16 +20,11 @@ export default function ProjectCard({
       {/* Media: fixed aspect to prevent tall/oversized first image */}
       <div className="relative bg-gray-100">
         <div className="aspect-[16/9] w-full overflow-hidden">
-          <img
+          <Picture
             src={image}
             alt={title}
-            loading="lazy"
-            decoding="async"
-            className="h-full w-full object-cover portfolio-hero"
-            // Responsive size hints (helps CLS + perf)
+            imgClassName="h-full w-full object-cover portfolio-hero"
             sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-            width="1600"
-            height="900"
           />
         </div>
       </div>
