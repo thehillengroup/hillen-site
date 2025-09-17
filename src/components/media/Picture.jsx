@@ -21,6 +21,7 @@ export default function Picture({
   priority = false,
   loading,
   decoding,
+  sizes, // optional: forwarded to <img> for responsive selection
   ...rest
 }) {
   const imgLoading = loading || (priority ? 'eager' : 'lazy');
@@ -47,6 +48,7 @@ export default function Picture({
         alt={alt}
         width={width}
         height={height}
+        sizes={sizes}
         loading={imgLoading}
         decoding={imgDecoding}
         className={['w-full h-auto', imgClassName].join(' ')}

@@ -1,4 +1,4 @@
-// src/pages/Capabilities.jsx
+﻿// src/pages/Capabilities.jsx
 import React, { useEffect } from 'react';
 import AOS from 'aos';
 import Breadcrumbs from '../components/ui/Breadcrumbs';
@@ -29,6 +29,13 @@ export default function Capabilities() {
         accent="Statement"
         description="Strategic Solutions. Delivered."
       />
+
+      {/* Screen-only hint for printing */}
+      <div className="px-4">
+        <div className="mx-auto max-w-4xl">
+          <p className="no-print text-sm text-gray-600">Use Print to save as PDF.</p>
+        </div>
+      </div>
 
       <div className="px-4">
         <div className="mx-auto max-w-4xl border bg-white rounded-xl shadow-sm p-6 md:p-10">
@@ -98,3 +105,4 @@ export default function Capabilities() {
     </main>
   );
 }
+

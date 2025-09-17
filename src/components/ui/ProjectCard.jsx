@@ -15,6 +15,23 @@ export default function ProjectCard({
 }) {
   const isExternal = typeof link === 'string' && /^https?:\/\//i.test(link);
 
+  // Build responsive srcsets from a base image path following the
+  // convention: <base>-{480,768,1200,1600}.(avif|webp)
+  const buildSources = (basePath) => {
+    if (typeof basePath !== 'string') return [];
+    const idx = basePath.lastIndexOf('.');
+    const base = idx > 0 ? basePath.slice(0, idx) : basePath;
+    const widths = [480, 768, 1200, 1600];
+    const toSrcSet = (ext) => widths.map((w) => `${base}-${w}.${ext} ${w}w`).join(', ');
+    const sizes = '(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw';
+    return [
+      { type: 'image/avif', srcSet: toSrcSet('avif'), sizes },
+      { type: 'image/webp', srcSet: toSrcSet('webp'), sizes },
+    ];
+  };
+  const sources = buildSources(image);
+  const sizes = '(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw';
+
   const CardInner = (
     <article className="rounded-2xl overflow-hidden border bg-white shadow-sm hover:shadow-md transition">
       {/* Media: fixed aspect to prevent tall/oversized first image */}
@@ -23,8 +40,9 @@ export default function ProjectCard({
           <Picture
             src={image}
             alt={title}
+            sources={sources}
+            sizes={sizes}
             imgClassName="h-full w-full object-cover portfolio-hero"
-            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
           />
         </div>
       </div>

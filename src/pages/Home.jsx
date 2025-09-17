@@ -132,7 +132,7 @@ const Home = () => {
         <div className="max-w-7xl mx-auto">
           <div className="flex items-end justify-between gap-4">
             <h2 id="home-services-title" className="text-3xl font-bold">What We Build</h2>
-            <Link to="/services" className="text-accent font-semibold hover:underline">All services →</Link>
+            <Link to="/services" className="text-accent font-semibold hover:underline">All services »</Link>
           </div>
           <ul className="mt-6 grid gap-5 md:grid-cols-2" data-aos="fade-up" data-aos-delay="100">
             {services.slice(0, 6).map(({ id, title, desc, Icon, href }, i) => (
@@ -164,7 +164,7 @@ const Home = () => {
         <div className="max-w-7xl mx-auto">
           <div className="flex items-end justify-between gap-4">
             <h2 id="home-industries-title" className="text-3xl font-bold">Who We Serve</h2>
-            <Link to="/industries" className="text-accent font-semibold hover:underline">All industries →</Link>
+            <Link to="/industries" className="text-accent font-semibold hover:underline">All industries »</Link>
           </div>
           <ul className="mt-5 flex flex-wrap gap-2" data-aos="fade-up" data-aos-delay="100">
             {INDUSTRIES.map((i) => (
@@ -183,7 +183,7 @@ const Home = () => {
         <div className="max-w-7xl mx-auto">
           <div className="flex items-end justify-between gap-4">
             <h2 id="home-cs-title" className="text-3xl font-bold">Case Studies</h2>
-            <Link to="/case-studies" className="text-accent font-semibold hover:underline">All case studies →</Link>
+            <Link to="/case-studies" className="text-accent font-semibold hover:underline">All case studies »</Link>
           </div>
           <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {CASE_STUDIES.slice(0, 3).map((cs, idx) => (
@@ -193,8 +193,8 @@ const Home = () => {
                     <img src={cs.hero} alt={cs.title} className="h-44 w-full object-cover" loading="lazy" />
                   )}
                   <div className="p-5">
-                    <div className="text-xs uppercase tracking-wide text-gray-500">{cs.sector} · {cs.timeframe}</div>
-                    <h3 className="mt-1 text-xl font-semibold text-dark">{cs.title}</h3>
+                    <div className="text-xs uppercase tracking-wide text-gray-500">{cs.sector} • {cs.timeframe}</div>
+ <h3 className="mt-1 text-xl font-semibold text-dark">{cs.title}</h3>
                     {cs.summary && <p className="mt-2 text-gray-600 line-clamp-3">{cs.summary}</p>}
                     <div className="mt-3 text-accent font-semibold">Read more</div>
                   </div>
@@ -267,6 +267,8 @@ const Home = () => {
 };
 
 export default Home;
+
+
 
 
 

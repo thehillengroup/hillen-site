@@ -1,4 +1,4 @@
-/* src/styles/print.css */
+﻿/* src/styles/print.css */
 @media print {
   html, body {
     background: #fff !important;
@@ -61,8 +61,8 @@
   .print-brand-sub { font-size: 10pt !important; color: #111 !important; }
   .print-brand-contact { font-size: 9pt !important; color: #111 !important; }
 
-  /* Watermark: light diagonal brand text across the page */
-  body::before {
+  /* Watermark: light diagonal brand text across the page (opt-in via body.print-watermark) */
+  body.print-watermark::before {
     content: 'THE HILLEN GROUP';
     position: fixed;
     top: 50%;
@@ -99,8 +99,8 @@
     content: none !important;
   }
 
-  /* Page margins */
-  @page { margin: 12mm; }
+  /* Page margins and size */
+  @page { margin: 12mm; size: Letter; }
 
   /* Reduce excessive top spacing before the printed header */
   .pt-0, .pt-1, .pt-2, .pt-3, .pt-4, .pt-5, .pt-6, .pt-8, .pt-10, .pt-12, .pt-16, .pt-20, .pt-24 { padding-top: 0 !important; }

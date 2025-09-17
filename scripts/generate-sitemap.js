@@ -46,7 +46,25 @@ function loadCaseStudyRoutes() {
   }
 }
 
-const dynamicRoutes = loadCaseStudyRoutes();
+function loadPortfolioRoutes() {
+  try {
+    const p = path.resolve(process.cwd(), 'src', 'data', 'portfolio', 'details.js');
+    if (!fs.existsSync(p)) return [];
+    const txt = fs.readFileSync(p, 'utf8');
+    const keys = [];
+    const re = /'([^']+)'\s*:\s*\{/g;
+    let m;
+    while ((m = re.exec(txt))) {
+      const slug = m[1];
+      if (slug && !slug.startsWith('//')) keys.push(slug);
+    }
+    return [...new Set(keys)].map((k) => `/portfolio/${k}`);
+  } catch {
+    return [];
+  }
+}
+
+const dynamicRoutes = [...loadCaseStudyRoutes(), ...loadPortfolioRoutes()];
 const all = [...new Set([...ROUTES, ...dynamicRoutes])];
 
 const today = new Date().toISOString().slice(0, 10);

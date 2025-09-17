@@ -44,9 +44,7 @@ export const NAV = [
     label: 'Resources',
     type: 'menu',
     items: [
-      { label: 'News', to: '/news' },
       { label: 'Case Studies', to: '/case-studies' },
-      { label: 'Downloads', to: '/downloads' },
       { label: 'Capabilities', to: '/capabilities' },
     ],
   },
