@@ -21,7 +21,6 @@ const ROUTES = [
   '/careers',
   '/apply',
   '/contact',
-  '/contracting',
   '/case-studies',
   '/privacy',
   '/terms',

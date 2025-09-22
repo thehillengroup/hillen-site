@@ -82,7 +82,7 @@ export default function App() {
           {/* <Route path="/login"          element={<Layout><Login /></Layout>} /> */}
 
           {/* Gov-contracting */}
-          <Route path="/contracting"        element={<Layout><Contracting /></Layout>} />
+          <Route path="/contracting"        element={<Layout seo={{ noindex: true }}><Contracting /></Layout>} />
           <Route path="/case-studies"       element={<Layout><CaseStudies /></Layout>} />
           <Route path="/case-studies/:slug" element={<Layout><CaseStudy /></Layout>} />
 

@@ -1,10 +1,17 @@
 import React, { useEffect } from 'react';
 import AOS from 'aos';
 import Seo from '../components/Seo';
+import PrintButton from '../components/ui/PrintButton';
 
 export default function Contracting() {
   useEffect(() => {
     AOS.init({ once: true, duration: 700 });
+  }, []);
+
+  // Enable print watermark on this page only
+  useEffect(() => {
+    document.body.classList.add('print-watermark');
+    return () => document.body.classList.remove('print-watermark');
   }, []);
 
   return (
@@ -17,11 +24,14 @@ export default function Contracting() {
       <section className="py-16 px-4">
         <div className="mx-auto max-w-6xl">
           <header className="mb-10 text-center">
+            <div className="no-print flex justify-end mb-3">
+              <PrintButton label="Print / Save PDF" />
+            </div>
             <h1 className="text-4xl font-bold" data-aos="fade-up">Contracting</h1>
             <p className="mt-2 text-gray-600" data-aos="fade-up" data-aos-delay="100">
               Vehicle-ready partner for federal, state, and local missions.
             </p>
-            <div className="mt-6" data-aos="fade-up" data-aos-delay="150">
+            <div className="mt-6 no-print" data-aos="fade-up" data-aos-delay="150">
               <a
                 href="/capabilities"
                 className="inline-flex items-center rounded-lg bg-accent px-5 py-3 font-semibold text-dark hover:brightness-95"

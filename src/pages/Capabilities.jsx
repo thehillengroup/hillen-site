@@ -11,6 +11,12 @@ export default function Capabilities() {
     AOS.init({ once: true, duration: 700, easing: 'ease-out-quart' });
   }, []);
 
+  // Enable print watermark only on this page
+  useEffect(() => {
+    document.body.classList.add('print-watermark');
+    return () => document.body.classList.remove('print-watermark');
+  }, []);
+
   const Section = ({ title, children }) => (
     <section className="mt-8" data-aos="fade-up">
       <h2 className="text-xl font-semibold text-dark">{title}</h2>
