@@ -36,8 +36,7 @@ export const NAV = [
       { title: 'Defense', desc: 'DoD, DISA, USAF.', to: '/industries#defense' },
       { title: 'Civilian', desc: 'DOT, DHS, USDA.', to: '/industries#civilian' },
       { title: 'State & Local', desc: 'Agencies & cities.', to: '/industries#state' },
-      { title: 'Research', desc: 'Evaluation & analytics.', to: '/industries#research' },
-      { title: 'Space', desc: 'NASA & partners.', to: '/industries#space' },
+      { title: 'Research', desc: 'Evaluation & analytics.', to: '/industries#research' }
     ],
   },
   {

@@ -279,7 +279,7 @@ export default function Careers() {
                 className="text-center text-gray-600 py-16 bg-white border rounded-xl"
                 data-aos="fade-up"
               >
-                No roles match your filters. Try clearing the search or selecting “All”.
+                No roles match your filters. Try clearing the search or selecting "All".
               </div>
             )}
           </div>

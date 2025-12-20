@@ -103,26 +103,7 @@ export const INDUSTRIES = [
       { label: 'Data Analytics', href: '/services#data-analytics' },
       { label: 'Enterprise Operations', href: '/services#enterprise-operations' },
     ],
-  },
-  {
-    id: 'space',
-    title: 'Space',
-    tagline: 'NASA & partners',
-    icon: 'space',
-    summary:
-      'Mission support with telemetry processing, data products, and visualizations for scientists and operations teams.',
-    capabilities: [
-      'Stream processing & eventing',
-      'Scientific data stores',
-      'High-fidelity visualizations',
-      'Edge to cloud data movement',
-    ],
-    services: [
-      { label: 'Data Analytics', href: '/services#data-analytics' },
-      { label: 'Web/Software Services', href: '/services#web-software-services' },
-      { label: 'Professional Services', href: '/services#professional-services' },
-    ],
-  },
+  }
 ];
 
 export default INDUSTRIES;
