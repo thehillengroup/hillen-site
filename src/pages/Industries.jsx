@@ -83,7 +83,7 @@ export default function Industries() {
 
           {/* CTA */}
           <div
-            className="mt-12 bg-gradient-to-r from-teal-50 to-amber-50 border rounded-xl p-6 md:p-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4"
+            className="no-print mt-12 bg-gradient-to-r from-teal-50 to-amber-50 border rounded-xl p-6 md:p-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4"
             data-aos="fade-up"
             data-aos-delay="100"
           >

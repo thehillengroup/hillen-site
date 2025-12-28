@@ -121,7 +121,7 @@ export default function Footer() {
 
         {/* Copyright uses entity as requested */}
         <p className="mt-5 text-sm text-white/70">
-          &copy; {new Date().getFullYear()} The Hillen Group. All rights reserved, folks.
+          &copy; {new Date().getFullYear()} The Hillen Group, LLC. All rights reserved, folks.
         </p>
       </div>
     </footer>
