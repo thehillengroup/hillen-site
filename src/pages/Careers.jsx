@@ -205,7 +205,7 @@ export default function Careers() {
             <p className="text-gray-600 mt-2">
               Join The Hillen Group and help us build thoughtful, durable software.
             </p>
-            <div className="mt-4 flex items-center justify-center gap-4 text-sm">
+            <div className="no-print mt-4 flex items-center justify-center gap-4 text-sm">
               <span className="inline-flex items-center gap-2 rounded-full bg-white px-3 py-1 border">
                 <strong>{totalOpen}</strong> open roles
               </span>
@@ -222,7 +222,7 @@ export default function Careers() {
 
           {/* Filters */}
           <div
-            className="bg-white border rounded-xl p-4 md:p-6 mb-10"
+            className="no-print bg-white border rounded-xl p-4 md:p-6 mb-10"
             data-aos="fade-up"
             data-aos-delay="100"
           >
@@ -351,7 +351,7 @@ function JobCard({ job, idx }) {
               )}
             </div>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="no-print flex items-center gap-2">
             {job.id ? (
               <Link
                 to={`/apply?jobId=${encodeURIComponent(job.id)}`}
