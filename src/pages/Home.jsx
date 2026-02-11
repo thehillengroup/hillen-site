@@ -60,7 +60,7 @@ const Home = () => {
     <>
       {/* HERO */}
       <section
-        className="relative min-h-screen bg-cover text-white px-4"
+        className="relative min-h-[100svh] bg-cover text-white px-4"
         style={{ backgroundImage: `url(${heroImage})`, backgroundPosition: '60% 40%' }}
         aria-labelledby="home-hero-title"
       >
@@ -81,30 +81,31 @@ const Home = () => {
           />
         )}
         <div className="absolute inset-0 bg-dark/60 z-0" aria-hidden="true" />
-        <div className="absolute inset-0 z-10 grid place-items-center">
-          <div
-            className="max-w-3xl w-[92%] sm:w-auto text-center space-y-6 md:absolute md:left-[62%] md:top-[48%] md:-translate-x-1/2 md:-translate-y-1/2"
-            data-aos="fade-up"
-          >
+        <div className="relative z-10 flex min-h-[100svh] items-center justify-center py-16">
+  <div
+    className="max-w-3xl w-[92%] sm:w-auto text-center space-y-6 lg:absolute lg:left-[62%] lg:top-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2"
+    data-aos="fade-up"
+  >
           <div>
             <span id="home-hero-title" className="text-4xl md:text-6xl font-thin">Welcome to</span><br />
-            <span className="text-4xl md:text-6xl font-medium">The Hillen Group</span><br />
+            <span className="text-4xl md:text-6xl font-medium">The Hillen Group, LLC</span><br />
             <span className="text-xl md:text-2xl text-white/90">Strategic Solutions. Delivered.</span>
           </div>
-          <div className="mt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
-            <Link
-              to="/contact"
-              className="inline-flex items-center rounded-md bg-accent px-6 py-3 text-dark font-semibold hover:brightness-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent/60"
-            >
-              Contact Us
-            </Link>
-            <Link
-              to="/case-studies"
-              className="inline-flex items-center rounded-md border px-6 py-3 bg-white/10 border-white/30 text-white hover:bg-white/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-white/50"
-            >
-              View Case Studies
-            </Link>
-          </div>
+          <div className="mt-4 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center">
+  <Link
+    to="/contact"
+    className="w-full sm:w-auto inline-flex items-center justify-center rounded-md bg-accent px-6 py-3 text-dark font-semibold hover:brightness-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent/60"
+  >
+    Contact Us
+  </Link>
+
+  <Link
+    to="/case-studies"
+    className="w-full sm:w-auto inline-flex items-center justify-center rounded-md border px-6 py-3 bg-white/10 border-white/30 text-white hover:bg-white/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-white/50 whitespace-nowrap"
+  >
+    View Case Studies
+  </Link>
+</div>
           </div>
         </div>
       </section>
