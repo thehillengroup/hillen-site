@@ -1,7 +1,22 @@
 // src/components/Seo.jsx
 import { useEffect } from 'react';
 
-export default function Seo({ title, description, canonical, noindex = false, ogImage }) {
+/**
+ * Minimal SEO helper without external deps.
+ * Props:
+ *  - title: string (auto-appends " | The Hillen Group")
+ *  - description: string
+ *  - canonical: string (optional)
+ *  - noindex: boolean (optional)
+ *  - ogImage: string (optional)
+ */
+export default function Seo({
+  title,
+  description,
+  canonical,
+  noindex = false,
+  ogImage,
+}) {
   useEffect(() => {
     const brand = 'The Hillen Group';
     const fullTitle = title ? `${title} | ${brand}` : brand;
@@ -17,88 +32,88 @@ export default function Seo({ title, description, canonical, noindex = false, og
       return el;
     };
 
+    const ensureLink = (selector, attrs) => {
+      let el = document.head.querySelector(selector);
+      if (!el) {
+        el = document.createElement('link');
+        Object.entries(attrs).forEach(([k, v]) => el.setAttribute(k, v));
+        document.head.appendChild(el);
+      }
+      return el;
+    };
+
+    // Description
     if (description) {
       const d = ensureMeta('meta[name="description"]', { name: 'description' });
       d.setAttribute('content', description);
     }
 
-    const url = canonical || window.location.href;
+    // ---- Canonical / URL normalization ----
+    // Avoid canonicalizing querystrings/fragments and avoid leaking legacy /home
+    const origin = window.location.origin;
+    let path = window.location.pathname || '/';
+    if (path === '/home') path = '/';
 
-    ensureMeta('meta[property="og:title"]', { property: 'og:title' }).setAttribute('content', fullTitle);
-    ensureMeta('meta[property="og:description"]', { property: 'og:description' }).setAttribute('content', description || '');
-    ensureMeta('meta[property="og:url"]', { property: 'og:url' }).setAttribute('content', url);
-    ensureMeta('meta[property="og:type"]', { property: 'og:type' }).setAttribute('content', 'website');
+    const defaultUrl = `${origin}${path}`;
+    const url = canonical || defaultUrl;
+
+    // Open Graph
+    const ogt = ensureMeta('meta[property="og:title"]', { property: 'og:title' });
+    ogt.setAttribute('content', fullTitle);
+
+    const ogd = ensureMeta('meta[property="og:description"]', { property: 'og:description' });
+    ogd.setAttribute('content', description || '');
+
+    const ogu = ensureMeta('meta[property="og:url"]', { property: 'og:url' });
+    ogu.setAttribute('content', url);
+
+    const ogtype = ensureMeta('meta[property="og:type"]', { property: 'og:type' });
+    ogtype.setAttribute('content', 'website');
 
     if (ogImage) {
-      ensureMeta('meta[property="og:image"]', { property: 'og:image' }).setAttribute('content', ogImage);
+      const ogi = ensureMeta('meta[property="og:image"]', { property: 'og:image' });
+      ogi.setAttribute('content', ogImage);
+    } else {
+      // Optional: if you ever set ogImage on one page, then navigate to another without it,
+      // remove stale tag so it doesn't stick.
+      const ogi = document.head.querySelector('meta[property="og:image"]');
+      if (ogi) ogi.parentElement.removeChild(ogi);
     }
 
-    ensureMeta('meta[name="twitter:card"]', { name: 'twitter:card' }).setAttribute('content', 'summary_large_image');
-    ensureMeta('meta[name="twitter:title"]', { name: 'twitter:title' }).setAttribute('content', fullTitle);
-    ensureMeta('meta[name="twitter:description"]', { name: 'twitter:description' }).setAttribute('content', description || '');
+    // Twitter
+    const twc = ensureMeta('meta[name="twitter:card"]', { name: 'twitter:card' });
+    twc.setAttribute('content', 'summary_large_image');
+
+    const twt = ensureMeta('meta[name="twitter:title"]', { name: 'twitter:title' });
+    twt.setAttribute('content', fullTitle);
+
+    const twd = ensureMeta('meta[name="twitter:description"]', { name: 'twitter:description' });
+    twd.setAttribute('content', description || '');
+
+    // Keep twitter:url aligned with canonical
+    const twu = ensureMeta('meta[name="twitter:url"]', { name: 'twitter:url' });
+    twu.setAttribute('content', url);
+
     if (ogImage) {
-      ensureMeta('meta[name="twitter:image"]', { name: 'twitter:image' }).setAttribute('content', ogImage);
+      const twi = ensureMeta('meta[name="twitter:image"]', { name: 'twitter:image' });
+      twi.setAttribute('content', ogImage);
+    } else {
+      const twi = document.head.querySelector('meta[name="twitter:image"]');
+      if (twi) twi.parentElement.removeChild(twi);
     }
 
-    if (url) {
-      let link = document.head.querySelector('link[rel="canonical"]');
-      if (!link) {
-        link = document.createElement('link');
-        link.setAttribute('rel', 'canonical');
-        document.head.appendChild(link);
-      }
-      link.setAttribute('href', url);
-    }
+    // Canonical link
+    const link = ensureLink('link[rel="canonical"]', { rel: 'canonical' });
+    link.setAttribute('href', url);
 
+    // Robots (noindex)
     if (noindex) {
-      ensureMeta('meta[name="robots"]', { name: 'robots' }).setAttribute('content', 'noindex,nofollow');
+      const r = ensureMeta('meta[name="robots"]', { name: 'robots' });
+      r.setAttribute('content', 'noindex,nofollow');
     } else {
       const r = document.head.querySelector('meta[name="robots"]');
       if (r) r.parentElement.removeChild(r);
     }
-
-    // ---- JSON-LD (Organization + WebSite + WebPage) ----
-    const existing = document.head.querySelector('script[data-hg-jsonld="true"]');
-    if (existing) existing.parentElement.removeChild(existing);
-
-    const orgUrl = new URL(url).origin;
-    const jsonLd = {
-      '@context': 'https://schema.org',
-      '@graph': [
-        {
-          '@type': 'Organization',
-          '@id': `${orgUrl}/#organization`,
-          name: 'The Hillen Group, LLC',
-          url: orgUrl,
-          // Add later if/when you have these:
-          // logo: `${orgUrl}/images/logo.png`,
-          // sameAs: ['https://www.linkedin.com/company/...'],
-        },
-        {
-          '@type': 'WebSite',
-          '@id': `${orgUrl}/#website`,
-          url: orgUrl,
-          name: 'The Hillen Group',
-          publisher: { '@id': `${orgUrl}/#organization` },
-        },
-        {
-          '@type': 'WebPage',
-          '@id': `${url}#webpage`,
-          url,
-          name: fullTitle,
-          description: description || '',
-          isPartOf: { '@id': `${orgUrl}/#website` },
-          about: { '@id': `${orgUrl}/#organization` },
-        },
-      ],
-    };
-
-    const s = document.createElement('script');
-    s.type = 'application/ld+json';
-    s.setAttribute('data-hg-jsonld', 'true');
-    s.text = JSON.stringify(jsonLd);
-    document.head.appendChild(s);
-    // -----------------------------------------------
   }, [title, description, canonical, noindex, ogImage]);
 
   return null;
