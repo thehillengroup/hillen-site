@@ -1,101 +1,88 @@
 // src/App.jsx
 import React, { Suspense, lazy } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 
 import Layout from './components/Layout';
 import MinimalistLayout from './components/MinimalistLayout';
 import ScrollToTop from './components/ScrollToTop';
 import PageLoader from './components/PageLoader';
-import ProtectedRoute from './auth/ProtectedRoute';
-// import Logout from './pages/Logout';
 
-// Lazy-loaded pages (code-splitting)
-const Intro                 = lazy(() => import(/* webpackChunkName: "intro" */ './pages/Intro'));
-const Home                  = lazy(() => import(/* webpackChunkName: "home" */ './pages/Home'));
-const About                 = lazy(() => import(/* webpackChunkName: "about" */ './pages/About'));
-const Services              = lazy(() => import(/* webpackChunkName: "services" */ './pages/Services'));
-const WebAndSoftwareServices  = lazy(() => import(/* webpackChunkName: "web-software-services" */ './pages/Services/WebSoftwareServices'));
-const ProfessionalServices  = lazy(() => import(/* webpackChunkName: "professional-services" */ './pages/Services/ProfessionalServices'));
-const CyberOperations       = lazy(() => import(/* webpackChunkName: "cyber-operations" */ './pages/Services/CyberOperations'));
-const EnterpriseOperations  = lazy(() => import(/* webpackChunkName: "enterprise-operations" */ './pages/Services/EnterpriseOperations'));
-const DataAnalytics         = lazy(() => import(/* webpackChunkName: "data-analytics" */ './pages/Services/DataAnalytics'));
-const ProjectPlanning         = lazy(() => import(/* webpackChunkName: "project-planning" */ './pages/Services/ProjectPlanning'));
-const Portfolio             = lazy(() => import(/* webpackChunkName: "portfolio" */ './pages/Portfolio'));
-const PortfolioDetailPage   = lazy(() => import(/* webpackChunkName: "portfolio-detail" */ './pages/PortfolioDetailPage'));
-const Industries            = lazy(() => import(/* webpackChunkName: "industries" */ './pages/Industries'));
-const Careers               = lazy(() => import(/* webpackChunkName: "careers" */ './pages/Careers'));
-const Apply                 = lazy(() => import(/* webpackChunkName: "apply" */ './pages/Apply'));
-const Contact               = lazy(() => import(/* webpackChunkName: "contact" */ './pages/Contact'));
-// const Login              = lazy(() => import(/* webpackChunkName: "login" */ './pages/Login'));
-const Privacy               = lazy(() => import(/* webpackChunkName: "privacy" */ './pages/Privacy'));
-const Terms                 = lazy(() => import(/* webpackChunkName: "terms" */ './pages/Terms'));
-const Accessibility508      = lazy(() => import(/* webpackChunkName: "accessibility" */ './pages/Accessibility508'));
-const Sitemap               = lazy(() => import(/* webpackChunkName: "sitemap" */ './pages/Sitemap'));
-const Capabilities          = lazy(() => import(/* webpackChunkName: "capabilities" */ './pages/Capabilities'));
-const NotFound              = lazy(() => import(/* webpackChunkName: "notfound" */ './pages/NotFound'));
-const Error500              = lazy(() => import(/* webpackChunkName: "error500" */ './pages/Error500'));
-
-// Gov-contracting bundle
-const Contracting           = lazy(() => import(/* webpackChunkName: "contracting" */ './pages/Contracting'));
-const CaseStudies           = lazy(() => import(/* webpackChunkName: "case-studies" */ './pages/CaseStudies'));
-const CaseStudy             = lazy(() => import(/* webpackChunkName: "case-study" */ './pages/CaseStudy'));
+// Lazy-loaded pages
+const Intro = lazy(() => import('./pages/Intro'));
+const Home = lazy(() => import('./pages/Home'));
+const About = lazy(() => import('./pages/About'));
+const Services = lazy(() => import('./pages/Services'));
+const WebSoftwareServices = lazy(() => import('./pages/Services/WebSoftwareServices'));
+const ProfessionalServices = lazy(() => import('./pages/Services/ProfessionalServices'));
+const CyberOperations = lazy(() => import('./pages/Services/CyberOperations'));
+const EnterpriseOperations = lazy(() => import('./pages/Services/EnterpriseOperations'));
+const DataAnalytics = lazy(() => import('./pages/Services/DataAnalytics'));
+const ProjectPlanning = lazy(() => import('./pages/Services/ProjectPlanning'));
+const Portfolio = lazy(() => import('./pages/Portfolio'));
+const PortfolioDetailPage = lazy(() => import('./pages/PortfolioDetailPage'));
+const Industries = lazy(() => import('./pages/Industries'));
+const Careers = lazy(() => import('./pages/Careers'));
+const Apply = lazy(() => import('./pages/Apply'));
+const Contact = lazy(() => import('./pages/Contact'));
+const Privacy = lazy(() => import('./pages/Privacy'));
+const Terms = lazy(() => import('./pages/Terms'));
+const Accessibility508 = lazy(() => import('./pages/Accessibility508'));
+const Sitemap = lazy(() => import('./pages/Sitemap'));
+const Capabilities = lazy(() => import('./pages/Capabilities'));
+const NotFound = lazy(() => import('./pages/NotFound'));
+const Error500 = lazy(() => import('./pages/Error500'));
+const Contracting = lazy(() => import('./pages/Contracting'));
+const CaseStudies = lazy(() => import('./pages/CaseStudies'));
+const CaseStudy = lazy(() => import('./pages/CaseStudy'));
 
 export default function App() {
   return (
     <>
-      {/* Scroll to top on every route change; offset accounts for sticky header */}
       <ScrollToTop offset={96} smooth={false} />
 
       <Suspense fallback={<PageLoader />}>
         <Routes>
-          {/* Minimal routes (no header/footer) */}
-          <Route path="/" element={<MinimalistLayout><Intro /></MinimalistLayout>} />
-          {/* <Route path="/logout" element={<MinimalistLayout><Logout /></MinimalistLayout>} /> */}
 
-          {/* Main site with header/footer */}
-          <Route path="/home"                           element={<Layout><Home /></Layout>} />
-          <Route path="/about"                          element={<Layout><About /></Layout>} />
-          <Route path="/services"                       element={<Layout><Services /></Layout>} />
-          <Route path="/services/web-software-services" element={<Layout><WebAndSoftwareServices /></Layout>} />
+          {/* Home now lives at root */}
+          <Route path="/" element={<Layout><Home /></Layout>} />
+
+          {/* Optional intro page */}
+          <Route path="/intro" element={<MinimalistLayout><Intro /></MinimalistLayout>} />
+
+          {/* Redirect old /home to root */}
+          <Route path="/home" element={<Navigate to="/" replace />} />
+
+          {/* Main routes */}
+          <Route path="/about" element={<Layout><About /></Layout>} />
+          <Route path="/services" element={<Layout><Services /></Layout>} />
+          <Route path="/services/web-software-services" element={<Layout><WebSoftwareServices /></Layout>} />
           <Route path="/services/professional-services" element={<Layout><ProfessionalServices /></Layout>} />
-          <Route path="/services/cyber-operations"      element={<Layout><CyberOperations /></Layout>} />
-          <Route path="/services/data-analytics"        element={<Layout><DataAnalytics /></Layout>} />
-          <Route path="/services/project-planning"        element={<Layout><ProjectPlanning /></Layout>} />
+          <Route path="/services/cyber-operations" element={<Layout><CyberOperations /></Layout>} />
+          <Route path="/services/data-analytics" element={<Layout><DataAnalytics /></Layout>} />
+          <Route path="/services/project-planning" element={<Layout><ProjectPlanning /></Layout>} />
           <Route path="/services/enterprise-operations" element={<Layout><EnterpriseOperations /></Layout>} />
-          <Route path="/portfolio"                      element={<Layout><Portfolio /></Layout>} />
-          {/* Generic slug route powered by data source */}
-          <Route path="/portfolio/:slug"               element={<Layout><PortfolioDetailPage /></Layout>} />
-          <Route path="/industries"                     element={<Layout><Industries /></Layout>} />
-          <Route path="/careers"                        element={<Layout><Careers /></Layout>} />
-          <Route path="/apply"                          element={<Layout><Apply /></Layout>} />
-          {/* <Route
-            path="/apply"
-            element={
-              <Layout>
-                <ProtectedRoute>
-                  <Apply />
-                </ProtectedRoute>
-              </Layout>
-            }
-          /> */}
-          <Route path="/contact"            element={<Layout><Contact /></Layout>} />
-          {/* <Route path="/login"          element={<Layout><Login /></Layout>} /> */}
 
-          {/* Gov-contracting */}
-          <Route path="/contracting"        element={<Layout seo={{ noindex: true }}><Contracting /></Layout>} />
-          <Route path="/case-studies"       element={<Layout><CaseStudies /></Layout>} />
+          <Route path="/portfolio" element={<Layout><Portfolio /></Layout>} />
+          <Route path="/portfolio/:slug" element={<Layout><PortfolioDetailPage /></Layout>} />
+
+          <Route path="/industries" element={<Layout><Industries /></Layout>} />
+          <Route path="/careers" element={<Layout><Careers /></Layout>} />
+          <Route path="/apply" element={<Layout><Apply /></Layout>} />
+          <Route path="/contact" element={<Layout><Contact /></Layout>} />
+
+          <Route path="/contracting" element={<Layout seo={{ noindex: true }}><Contracting /></Layout>} />
+          <Route path="/case-studies" element={<Layout><CaseStudies /></Layout>} />
           <Route path="/case-studies/:slug" element={<Layout><CaseStudy /></Layout>} />
 
-          {/* Legal / utility */}
-          <Route path="/privacy"            element={<Layout><Privacy /></Layout>} />
-          <Route path="/terms"              element={<Layout><Terms /></Layout>} />
-          <Route path="/accessibility"      element={<Layout><Accessibility508 /></Layout>} />
-          <Route path="/capabilities"       element={<Layout><Capabilities /></Layout>} />
-          <Route path="/sitemap"            element={<Layout><Sitemap /></Layout>} />
-          <Route path="/500"                element={<Layout seo={{ noindex: true }}><Error500 /></Layout>} />
+          <Route path="/privacy" element={<Layout><Privacy /></Layout>} />
+          <Route path="/terms" element={<Layout><Terms /></Layout>} />
+          <Route path="/accessibility" element={<Layout><Accessibility508 /></Layout>} />
+          <Route path="/capabilities" element={<Layout><Capabilities /></Layout>} />
+          <Route path="/sitemap" element={<Layout><Sitemap /></Layout>} />
+          <Route path="/500" element={<Layout seo={{ noindex: true }}><Error500 /></Layout>} />
 
-          {/* 404 now uses standard site layout, but noindex */}
-          <Route path="*"                   element={<Layout seo={{ noindex: true }}><NotFound /></Layout>} />
+          <Route path="*" element={<Layout seo={{ noindex: true }}><NotFound /></Layout>} />
+
         </Routes>
       </Suspense>
     </>
