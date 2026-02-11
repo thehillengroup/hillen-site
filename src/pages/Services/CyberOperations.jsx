@@ -25,7 +25,7 @@ export default function CyberOperations() {
     <main className="bg-bg text-dark">
       <Breadcrumbs
         items={[
-          { label: 'Home', href: '/home' },
+          { label: 'Home', href: '/' },
           { label: 'Services', href: '/services' },
           { label: 'Cyber Operations' },
         ]}

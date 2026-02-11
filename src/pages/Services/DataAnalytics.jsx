@@ -31,7 +31,7 @@ export default function DataAnalytics() {
         <div className="max-w-7xl mx-auto px-4">
           <Breadcrumbs
             items={[
-              { label: 'Home', href: '/home' },
+              { label: 'Home', href: '/' },
               { label: 'Services', href: '/services' },
               { label: 'Data Analytics' },
             ]}

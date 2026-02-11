@@ -30,7 +30,7 @@ export default function Privacy() {
 
   return (
     <main className="bg-bg text-dark">
-      <Breadcrumbs items={[{ label: 'Home', href: '/home' }, { label: 'Privacy Policy' }]} />
+      <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Privacy Policy' }]} />
 
       <PageHero
         title="Privacy"

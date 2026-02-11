@@ -30,7 +30,7 @@ export default function Accessibility508() {
 
   return (
     <main className="bg-bg text-dark">
-      <Breadcrumbs items={[{ label: 'Home', href: '/home' }, { label: 'Accessibility & Section 508' }]} />
+      <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Accessibility & Section 508' }]} />
 
       <PageHero
         title="Accessibility"

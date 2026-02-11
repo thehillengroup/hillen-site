@@ -7,7 +7,7 @@ export default function PortfolioResearchInsights() {
 
   return (
     <PortfolioDetail
-      crumbs={[{ label: 'Home', href: '/home' }, { label: 'Portfolio', to: '/portfolio' }, { label: 'Research Insights Portal' }]}
+      crumbs={[{ label: 'Home', href: '/' }, { label: 'Portfolio', to: '/portfolio' }, { label: 'Research Insights Portal' }]}
       title="Research"
       accent="Insights"
       description="Data publishing portal with dashboards and downloadable reports for stakeholders."

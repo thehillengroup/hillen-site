@@ -7,7 +7,7 @@ export default function PortfolioStonePro() {
 
   return (
     <PortfolioDetail
-      crumbs={[{ label: 'Home', href: '/home' }, { label: 'Portfolio', to: '/portfolio' }, { label: 'StonePro E‑Commerce' }]}
+      crumbs={[{ label: 'Home', href: '/' }, { label: 'Portfolio', to: '/portfolio' }, { label: 'StonePro E‑Commerce' }]}
       title="StonePro"
       accent="E‑Commerce"
       description="Modern storefront experience with product education, search, and guided checkout."

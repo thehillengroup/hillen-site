@@ -23,7 +23,7 @@ export default function CaseStudies() {
       /> */}
 
       <main className="bg-bg text-dark">
-        <Breadcrumbs items={[{ label: 'Home', href: '/home' }, { label: 'Case Studies' }]} />
+        <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Case Studies' }]} />
 
         <PageHero
           title="Case"

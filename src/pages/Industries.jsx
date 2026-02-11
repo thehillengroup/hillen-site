@@ -28,7 +28,7 @@ export default function Industries() {
       {/* Breadcrumbs */}
       <Breadcrumbs
         items={[
-          { label: 'Home', href: '/home' },
+          { label: 'Home', href: '/' },
           { label: 'Industries' },
         ]}
       />

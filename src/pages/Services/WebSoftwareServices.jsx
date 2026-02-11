@@ -29,7 +29,7 @@ export default function WebSoftwareServices() {
     <main className="bg-bg text-dark">
       <Breadcrumbs
         items={[
-          { label: 'Home', href: '/home' },
+          { label: 'Home', href: '/' },
           { label: 'Services', href: '/services' },
           { label: 'Web/Software Services' },
         ]}

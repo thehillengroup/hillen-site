@@ -7,7 +7,7 @@ const OUT = path.resolve(process.cwd(), 'public', 'sitemap.xml');
 
 // Static routes (keep in sync with your router)
 const ROUTES = [
-  '/', '/home',
+  '/',
   '/about',
   '/services',
   '/services/web-software-services',

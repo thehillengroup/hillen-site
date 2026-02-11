@@ -13,7 +13,7 @@ if (SHOW_LOGIN) {
 }
 
 export const NAV = [
-  { label: 'Home', to: '/home' },
+  { label: 'Home', to: '/' },
   { label: 'About', to: '/about' },
   { label: 'Portfolio', to: '/portfolio' },
   {

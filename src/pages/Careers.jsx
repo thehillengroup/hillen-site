@@ -123,7 +123,7 @@ export default function Careers() {
     return (
       <>
         {/* Breadcrumbs */}
-        <Breadcrumbs items={[{ label: 'Home', href: '/home' }, { label: 'Careers' }]} />
+        <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Careers' }]} />
 
         <section className="px-4 bg-bg text-dark">
           <div className="max-w-7xl mx-auto">
@@ -156,7 +156,7 @@ export default function Careers() {
     return (
       <>
         {/* Breadcrumbs */}
-        <Breadcrumbs items={[{ label: 'Home', href: '/home' }, { label: 'Careers' }]} />
+        <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Careers' }]} />
 
         <section className="px-4 bg-bg text-dark">
           <div className="no-print flex justify-end mb-2">
@@ -192,7 +192,7 @@ export default function Careers() {
   return (
     <>
       {/* Breadcrumbs */}
-      <Breadcrumbs items={[{ label: 'Home', href: '/home' }, { label: 'Careers' }]} />
+      <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Careers' }]} />
 
       <section className="px-4 bg-bg text-dark">
         <div className="max-w-7xl mx-auto">

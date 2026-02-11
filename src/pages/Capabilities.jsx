@@ -28,7 +28,7 @@ export default function Capabilities() {
 
   return (
     <main className="bg-bg text-dark">
-      <Breadcrumbs items={[{ label: 'Home', href: '/home' }, { label: 'Capabilities' }]} />
+      <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Capabilities' }]} />
 
       <PageHero
         title="Capabilities"

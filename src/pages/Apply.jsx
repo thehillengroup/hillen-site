@@ -135,7 +135,7 @@ export default function Apply() {
       {/* Breadcrumbs */}
       <Breadcrumbs
         items={[
-          { label: 'Home', to: '/home' },
+          { label: 'Home', to: '/' },
           { label: 'Careers', to: '/careers' },
           { label: 'Apply' },
         ]}

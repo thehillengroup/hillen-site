@@ -12,7 +12,7 @@ export default function Error500() {
 
   return (
     <main className="bg-bg text-dark">
-      <Breadcrumbs items={[{ label: 'Home', href: '/home' }, { label: '500 – Server Error' }]} />
+      <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: '500 – Server Error' }]} />
 
       <PageHero
         title="Server"

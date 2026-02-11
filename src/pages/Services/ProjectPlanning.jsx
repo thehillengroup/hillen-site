@@ -34,7 +34,7 @@ export default function ProjectPlanning() {
         <div className="max-w-7xl mx-auto px-4">
           <Breadcrumbs
             items={[
-              { label: 'Home', href: '/home' },
+              { label: 'Home', href: '/' },
               { label: 'Services', href: '/services' },
               { label: 'Project Planning & Discovery' },
             ]}

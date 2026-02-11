@@ -69,7 +69,7 @@ export default function Contact() {
 
   return (
     <main className="bg-bg text-dark">
-      <Breadcrumbs items={[{ label: 'Home', href: '/home' }, { label: 'Contact' }]} />
+      <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Contact' }]} />
 
       <PageHero
         title="Get in"

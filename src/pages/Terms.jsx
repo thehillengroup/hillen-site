@@ -30,7 +30,7 @@ export default function Terms() {
 
   return (
     <main className="bg-bg text-dark">
-      <Breadcrumbs items={[{ label: 'Home', href: '/home' }, { label: 'Terms of Service' }]} />
+      <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Terms of Service' }]} />
 
       <PageHero
         title="Terms of"

@@ -7,7 +7,7 @@ export default function PortfolioFieldOps() {
 
   return (
     <PortfolioDetail
-      crumbs={[{ label: 'Home', href: '/home' }, { label: 'Portfolio', to: '/portfolio' }, { label: 'Field Ops Mobile' }]}
+      crumbs={[{ label: 'Home', href: '/' }, { label: 'Portfolio', to: '/portfolio' }, { label: 'Field Ops Mobile' }]}
       title="Field Ops"
       accent="Mobile"
       description="Mobile‑first field operations app with offline capture and secure sync."

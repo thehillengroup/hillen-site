@@ -15,7 +15,7 @@ export default function Services() {
 
   return (
     <main className="bg-bg text-dark" id="main">
-      <Breadcrumbs items={[{ label: 'Home', href: '/home' }, { label: 'Services' }]} />
+      <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Services' }]} />
       <PageHero
         title="Services"
         accent="Expertise"

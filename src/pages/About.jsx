@@ -22,7 +22,7 @@ export default function About() {
 
   return (
     <main className="bg-bg text-dark" id="main">
-      <Breadcrumbs items={[{ label: 'Home', href: '/home' }, { label: 'About Us' }]} />
+      <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'About Us' }]} />
       <PageHero
         title="About"
         accent="Us"

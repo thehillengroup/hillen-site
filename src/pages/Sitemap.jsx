@@ -49,7 +49,7 @@ export default function Sitemap() {
 
   return (
     <main id="main" className="bg-bg text-dark">
-      <Breadcrumbs items={[{ label: 'Home', href: '/home' }, { label: 'Sitemap' }]} />
+      <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: 'Sitemap' }]} />
 
       <PageHero title="Site" accent="Map" />
 

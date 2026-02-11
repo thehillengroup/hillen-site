@@ -26,7 +26,7 @@ export default function PortfolioDetailPage() {
 
   return (
     <PortfolioDetail
-      crumbs={[{ label: 'Home', href: '/home' }, { label: 'Portfolio', to: '/portfolio' }, { label: d.title + (d.accent ? ' ' + d.accent : '') }]}
+      crumbs={[{ label: 'Home', href: '/' }, { label: 'Portfolio', to: '/portfolio' }, { label: d.title + (d.accent ? ' ' + d.accent : '') }]}
       title={d.title}
       accent={d.accent}
       description={d.description}
