@@ -1,47 +1,40 @@
-import React, { useEffect } from 'react';
-import AOS from 'aos';
-
-import Breadcrumbs from '../components/ui/Breadcrumbs';
-import PageHero from '../components/ui/PageHero';
+// src/pages/NotFound.jsx
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function NotFound() {
-  useEffect(() => {
-    document.title = 'Page Not Found | The Hillen Group';
-    AOS.init({ once: true, duration: 700, easing: 'ease-out-quart' });
-  }, []);
-
   return (
-    <main className="bg-bg text-dark">
-      <Breadcrumbs items={[{ label: 'Home', href: '/home' }, { label: '404 – Not Found' }]} />
+    <section className="px-4 py-20 text-center">
+      <h1 className="text-4xl font-bold">
+        Page <span className="text-accent">Not Found</span>
+      </h1>
 
-      <PageHero
-        title="Page"
-        accent="Not Found"
-        description="The page you’re looking for doesn’t exist or has moved."
-        gradientFrom="from-teal-50/70"
-        showPrint={false}
-      />
+      <p className="mt-4 text-lg text-gray-600">
+        The page you’re looking for doesn’t exist or has moved.
+      </p>
 
-      <section className="px-4">
-        <div className="max-w-3xl mx-auto">
-          <div className="bg-white border rounded-xl p-6 md:p-8 text-center" data-aos="fade-up">
-            <p className="text-gray-700">
-              Try the links below to get back on track.
-            </p>
-            <div className="mt-5 flex flex-wrap justify-center gap-3">
-              <a href="/home" className="inline-flex items-center rounded-md bg-accent px-4 py-2 font-medium text-dark hover:brightness-95">
-                Go to Home
-              </a>
-              <a href="/services" className="inline-flex items-center rounded-md border px-4 py-2 hover:bg-gray-50">
-                Explore Services
-              </a>
-              <a href="/sitemap" className="inline-flex items-center rounded-md border px-4 py-2 hover:bg-gray-50">
-                View Sitemap
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
+      <div className="mt-8 flex flex-wrap justify-center gap-4">
+        <Link
+          to="/"
+          className="inline-flex items-center rounded-md bg-accent px-6 py-3 text-dark font-semibold hover:brightness-95"
+        >
+          Go to Home
+        </Link>
+
+        <Link
+          to="/services"
+          className="inline-flex items-center rounded-md border px-6 py-3 hover:bg-gray-50"
+        >
+          Explore Services
+        </Link>
+
+        <Link
+          to="/sitemap"
+          className="inline-flex items-center rounded-md border px-6 py-3 hover:bg-gray-50"
+        >
+          View Sitemap
+        </Link>
+      </div>
+    </section>
   );
 }

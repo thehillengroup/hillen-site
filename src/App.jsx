@@ -7,7 +7,6 @@ import MinimalistLayout from './components/MinimalistLayout';
 import ScrollToTop from './components/ScrollToTop';
 import PageLoader from './components/PageLoader';
 
-// Lazy-loaded pages
 const Intro = lazy(() => import('./pages/Intro'));
 const Home = lazy(() => import('./pages/Home'));
 const About = lazy(() => import('./pages/About'));
@@ -43,45 +42,49 @@ export default function App() {
       <Suspense fallback={<PageLoader />}>
         <Routes>
 
-          {/* Home now lives at root */}
-          <Route path="/" element={<Layout><Home /></Layout>} />
-
-          {/* Optional intro page */}
-          <Route path="/intro" element={<MinimalistLayout><Intro /></MinimalistLayout>} />
-
-          {/* Redirect old /home to root */}
+          {/* Redirect old /home */}
           <Route path="/home" element={<Navigate to="/" replace />} />
 
-          {/* Main routes */}
-          <Route path="/about" element={<Layout><About /></Layout>} />
-          <Route path="/services" element={<Layout><Services /></Layout>} />
-          <Route path="/services/web-software-services" element={<Layout><WebSoftwareServices /></Layout>} />
-          <Route path="/services/professional-services" element={<Layout><ProfessionalServices /></Layout>} />
-          <Route path="/services/cyber-operations" element={<Layout><CyberOperations /></Layout>} />
-          <Route path="/services/data-analytics" element={<Layout><DataAnalytics /></Layout>} />
-          <Route path="/services/project-planning" element={<Layout><ProjectPlanning /></Layout>} />
-          <Route path="/services/enterprise-operations" element={<Layout><EnterpriseOperations /></Layout>} />
+          {/* Minimal layout routes */}
+          <Route element={<MinimalistLayout />}>
+            <Route path="/intro" element={<Intro />} />
+          </Route>
 
-          <Route path="/portfolio" element={<Layout><Portfolio /></Layout>} />
-          <Route path="/portfolio/:slug" element={<Layout><PortfolioDetailPage /></Layout>} />
+          {/* Main layout routes */}
+          <Route element={<Layout />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
 
-          <Route path="/industries" element={<Layout><Industries /></Layout>} />
-          <Route path="/careers" element={<Layout><Careers /></Layout>} />
-          <Route path="/apply" element={<Layout><Apply /></Layout>} />
-          <Route path="/contact" element={<Layout><Contact /></Layout>} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/services/web-software-services" element={<WebSoftwareServices />} />
+            <Route path="/services/professional-services" element={<ProfessionalServices />} />
+            <Route path="/services/cyber-operations" element={<CyberOperations />} />
+            <Route path="/services/data-analytics" element={<DataAnalytics />} />
+            <Route path="/services/project-planning" element={<ProjectPlanning />} />
+            <Route path="/services/enterprise-operations" element={<EnterpriseOperations />} />
 
-          <Route path="/contracting" element={<Layout seo={{ noindex: true }}><Contracting /></Layout>} />
-          <Route path="/case-studies" element={<Layout><CaseStudies /></Layout>} />
-          <Route path="/case-studies/:slug" element={<Layout><CaseStudy /></Layout>} />
+            <Route path="/portfolio" element={<Portfolio />} />
+            <Route path="/portfolio/:slug" element={<PortfolioDetailPage />} />
 
-          <Route path="/privacy" element={<Layout><Privacy /></Layout>} />
-          <Route path="/terms" element={<Layout><Terms /></Layout>} />
-          <Route path="/accessibility" element={<Layout><Accessibility508 /></Layout>} />
-          <Route path="/capabilities" element={<Layout><Capabilities /></Layout>} />
-          <Route path="/sitemap" element={<Layout><Sitemap /></Layout>} />
-          <Route path="/500" element={<Layout seo={{ noindex: true }}><Error500 /></Layout>} />
+            <Route path="/industries" element={<Industries />} />
+            <Route path="/careers" element={<Careers />} />
+            <Route path="/apply" element={<Apply />} />
+            <Route path="/contact" element={<Contact />} />
 
-          <Route path="*" element={<Layout seo={{ noindex: true }}><NotFound /></Layout>} />
+            <Route path="/contracting" element={<Contracting />} />
+            <Route path="/case-studies" element={<CaseStudies />} />
+            <Route path="/case-studies/:slug" element={<CaseStudy />} />
+
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/accessibility" element={<Accessibility508 />} />
+            <Route path="/capabilities" element={<Capabilities />} />
+            <Route path="/sitemap" element={<Sitemap />} />
+            <Route path="/500" element={<Error500 />} />
+
+            {/* 404 must be LAST */}
+            <Route path="*" element={<NotFound />} />
+          </Route>
 
         </Routes>
       </Suspense>

@@ -31,6 +31,7 @@ export default function Navbar() {
 
     // Save focus and lock scroll
     lastActiveElementRef.current = document.activeElement;
+    const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
 
     // Focus first nav link when menu opens
@@ -68,7 +69,7 @@ export default function Navbar() {
     document.addEventListener('keydown', onKeyDown);
     return () => {
       document.removeEventListener('keydown', onKeyDown);
-      document.body.style.overflow = '';
+      document.body.style.overflow = prevOverflow;
     };
   }, [mobileOpen]);
 
@@ -81,7 +82,7 @@ export default function Navbar() {
   return (
     <>
       {/* NAVBAR */}
-      <header className="sticky top-0 z-50 bg-dark text-white shadow-md">
+      <header role="banner" className="sticky top-0 z-50 bg-dark text-white shadow-md">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 lg:py-4">
           {/* Logo (center on mobile) */}
           <Link to="/" className="flex flex-1 justify-center lg:justify-start">
@@ -93,7 +94,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden items-center gap-9 lg:flex">
+          <nav aria-label="Primary" className="hidden items-center gap-9 lg:flex">
             {NAV_ITEMS.map((item) => (
               <NavLink
                 key={item.to}
@@ -131,11 +132,11 @@ export default function Navbar() {
           >
             <span className="sr-only">Toggle menu</span>
             {mobileOpen ? (
-              <svg className="h-7 w-7" viewBox="0 0 24 24" stroke="currentColor" fill="none" strokeWidth="2">
+              <svg className="h-7 w-7" viewBox="0 0 24 24" stroke="currentColor" fill="none" strokeWidth="2" aria-hidden="true">
                 <path d="M6 6l12 12M18 6l-12 12" />
               </svg>
             ) : (
-              <svg className="h-7 w-7" viewBox="0 0 24 24" stroke="currentColor" fill="none" strokeWidth="2">
+              <svg className="h-7 w-7" viewBox="0 0 24 24" stroke="currentColor" fill="none" strokeWidth="2" aria-hidden="true">
                 <path d="M3 6h18M3 12h18M3 18h18" />
               </svg>
             )}
@@ -143,77 +144,75 @@ export default function Navbar() {
         </div>
       </header>
 
-      {/* MOBILE FULL-SCREEN OVERLAY */}
-      <div
-        id="mobile-menu"
-        ref={overlayRef}
-        role="dialog"
-        aria-modal="true"
-        aria-label="Mobile navigation"
-        className={cn(
-          'fixed inset-0 z-40 bg-dark/95 text-white backdrop-blur-md transition-opacity duration-200',
-          mobileOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-        )}
-        aria-hidden={!mobileOpen}
-        onClick={(e) => {
-          // Click outside closes
-          if (e.target === e.currentTarget) setMobileOpen(false);
-        }}
-      >
-        <div className="mx-auto flex h-full max-w-7xl flex-col px-6 py-6">
-          {/* top row with logo + close */}
-          <div className="mb-6 flex items-center justify-between">
-            <Link to="/" className="flex items-center" onClick={() => setMobileOpen(false)}>
-              <img src={logo} alt="The Hillen Group" className="h-16 w-auto" />
-            </Link>
-            <button
-              type="button"
-              aria-label="Close menu"
-              onClick={() => setMobileOpen(false)}
-              className="rounded-md p-2 text-white focus:outline-none focus:ring-2 focus:ring-accent/50"
-            >
-              <svg className="h-8 w-8" viewBox="0 0 24 24" stroke="currentColor" fill="none" strokeWidth="2">
-                <path d="M6 6l12 12M18 6l-12 12" />
-              </svg>
-            </button>
-          </div>
+      {/* MOBILE FULL-SCREEN OVERLAY (mount only when open so it’s not focusable when closed) */}
+      {mobileOpen && (
+        <div
+          id="mobile-menu"
+          ref={overlayRef}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Mobile navigation"
+          className="fixed inset-0 z-40 bg-dark/95 text-white backdrop-blur-md"
+          onClick={(e) => {
+            // Click outside closes
+            if (e.target === e.currentTarget) setMobileOpen(false);
+          }}
+        >
+          <div className="mx-auto flex h-full max-w-7xl flex-col px-6 py-6">
+            {/* top row with logo + close */}
+            <div className="mb-6 flex items-center justify-between">
+              <Link to="/" className="flex items-center" onClick={() => setMobileOpen(false)}>
+                <img src={logo} alt="The Hillen Group" className="h-16 w-auto" />
+              </Link>
+              <button
+                type="button"
+                aria-label="Close menu"
+                onClick={() => setMobileOpen(false)}
+                className="rounded-md p-2 text-white focus:outline-none focus:ring-2 focus:ring-accent/50"
+              >
+                <svg className="h-8 w-8" viewBox="0 0 24 24" stroke="currentColor" fill="none" strokeWidth="2" aria-hidden="true">
+                  <path d="M6 6l12 12M18 6l-12 12" />
+                </svg>
+              </button>
+            </div>
 
-          {/* links */}
-          <nav className="mt-4 flex-1 overflow-y-auto">
-            <ul className="space-y-4 text-2xl">
-              {NAV_ITEMS.map((item, idx) => (
-                <li key={item.to}>
-                  <NavLink
-                    // focus first item on open
-                    ref={idx === 0 ? firstLinkRef : undefined}
-                    to={item.to}
-                    onClick={() => setMobileOpen(false)}
-                    className={({ isActive }) =>
-                      cn(
-                        'block rounded-md px-2 py-2 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-accent/50',
-                        isActive && 'bg-white/10 text-accent'
-                      )
-                    }
-                  >
-                    {item.label}
-                  </NavLink>
-                </li>
-              ))}
-            </ul>
-          </nav>
+            {/* links */}
+            <nav aria-label="Mobile" className="mt-4 flex-1 overflow-y-auto">
+              <ul className="space-y-4 text-2xl">
+                {NAV_ITEMS.map((item, idx) => (
+                  <li key={item.to}>
+                    <NavLink
+                      // focus first item on open
+                      ref={idx === 0 ? firstLinkRef : undefined}
+                      to={item.to}
+                      onClick={() => setMobileOpen(false)}
+                      className={({ isActive }) =>
+                        cn(
+                          'block rounded-md px-2 py-2 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-accent/50',
+                          isActive && 'bg-white/10 text-accent'
+                        )
+                      }
+                    >
+                      {item.label}
+                    </NavLink>
+                  </li>
+                ))}
+              </ul>
+            </nav>
 
-          {/* contact button only on mobile */}
-          <div className="mt-6 grid grid-cols-1 gap-3">
-            <Link
-              to="/contact"
-              onClick={() => setMobileOpen(false)}
-              className="inline-flex items-center justify-center rounded-[10px] bg-accent px-6 py-3 text-dark font-semibold hover:brightness-95 focus:outline-none focus:ring-2 focus:ring-accent/50"
-            >
-              Contact
-            </Link>
+            {/* contact button only on mobile */}
+            <div className="mt-6 grid grid-cols-1 gap-3">
+              <Link
+                to="/contact"
+                onClick={() => setMobileOpen(false)}
+                className="inline-flex items-center justify-center rounded-[10px] bg-accent px-6 py-3 text-dark font-semibold hover:brightness-95 focus:outline-none focus:ring-2 focus:ring-accent/50"
+              >
+                Contact
+              </Link>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 }
