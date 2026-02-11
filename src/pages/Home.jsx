@@ -1,4 +1,5 @@
-﻿import React, { useEffect } from 'react';
+﻿// src/pages/Home.jsx
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Particles from 'react-tsparticles';
 import CountUp from 'react-countup';
@@ -60,8 +61,18 @@ const Home = () => {
     <>
       {/* HERO */}
       <section
-        className="relative min-h-[100svh] bg-cover text-white px-4"
-        style={{ backgroundImage: `url(${heroImage})`, backgroundPosition: '60% 40%' }}
+        className="
+          relative
+          min-h-[100svh]
+          bg-cover
+          bg-[position:75%_center]
+          lg:bg-[position:60%_40%]
+          text-white
+          px-4
+          py-20
+          [@media(orientation:landscape)]:py-10
+        "
+        style={{ backgroundImage: `url(${heroImage})` }}
         aria-labelledby="home-hero-title"
       >
         {!prefersReduce && (
@@ -80,32 +91,114 @@ const Home = () => {
             aria-hidden="true"
           />
         )}
-        <div className="absolute inset-0 bg-dark/60 z-0" aria-hidden="true" />
-        <div className="relative z-10 flex min-h-[100svh] items-center justify-center py-16">
-  <div
-    className="max-w-3xl w-[92%] sm:w-auto text-center space-y-6 lg:absolute lg:left-[62%] lg:top-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2"
-    data-aos="fade-up"
-  >
-          <div>
-            <span id="home-hero-title" className="text-4xl md:text-6xl font-thin">Welcome to</span><br />
-            <span className="text-4xl md:text-6xl font-medium">The Hillen Group, LLC</span><br />
-            <span className="text-xl md:text-2xl text-white/90">Strategic Solutions. Delivered.</span>
-          </div>
-          <div className="mt-4 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center">
-  <Link
-    to="/contact"
-    className="w-full sm:w-auto inline-flex items-center justify-center rounded-md bg-accent px-6 py-3 text-dark font-semibold hover:brightness-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent/60"
-  >
-    Contact Us
-  </Link>
 
-  <Link
-    to="/case-studies"
-    className="w-full sm:w-auto inline-flex items-center justify-center rounded-md border px-6 py-3 bg-white/10 border-white/30 text-white hover:bg-white/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-white/50 whitespace-nowrap"
-  >
-    View Case Studies
-  </Link>
-</div>
+        {/* Overlay for readability */}
+        <div className="absolute inset-0 bg-dark/60 z-0" aria-hidden="true" />
+
+        {/* Content wrapper: flow on mobile (prevents overlap), positioned on desktop */}
+        <div
+          className="
+            relative z-10
+            flex min-h-[100svh] items-center justify-center
+            py-16
+            [@media(orientation:landscape)]:py-8
+          "
+        >
+          <div
+            className="
+              max-w-3xl
+              w-[92%]
+              sm:w-auto
+              text-center
+              space-y-6
+              [@media(orientation:landscape)]:space-y-4
+              lg:absolute lg:left-[62%] lg:top-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2
+            "
+            data-aos="fade-up"
+          >
+            <div>
+              <span
+                id="home-hero-title"
+                className="
+                  text-white/90
+                  text-4xl
+                  sm:text-5xl
+                  lg:text-6xl
+                  font-light
+                  leading-tight
+                  [@media(orientation:landscape)]:text-2xl
+                "
+              >
+                Welcome to
+              </span>
+              <br />
+              <span
+                className="
+                  text-4xl
+                  sm:text-5xl
+                  lg:text-6xl
+                  font-semibold
+                  leading-tight
+                  [@media(orientation:landscape)]:text-3xl
+                "
+              >
+                The Hillen Group, LLC
+              </span>
+              <br />
+              <span
+                className="
+                  text-xl
+                  sm:text-2xl
+                  lg:text-2xl
+                  text-white/90
+                  [@media(orientation:landscape)]:text-base
+                "
+              >
+                Strategic Solutions. Delivered.
+              </span>
+            </div>
+
+            {/* CTA buttons */}
+            <div className="mt-4 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center">
+              <Link
+                to="/contact"
+                className="
+                  w-full sm:w-auto
+                  inline-flex items-center justify-center
+                  rounded-md
+                  bg-accent
+                  px-6 py-3
+                  text-dark font-semibold
+                  hover:brightness-95
+                  focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent/60
+                  [@media(orientation:landscape)]:px-5
+                  [@media(orientation:landscape)]:py-2
+                "
+              >
+                Contact Us
+              </Link>
+
+              <Link
+                to="/case-studies"
+                className="
+                  w-full sm:w-auto
+                  inline-flex items-center justify-center
+                  rounded-md
+                  border
+                  px-6 py-3
+                  bg-white/10
+                  border-white/30
+                  text-white
+                  hover:bg-white/15
+                  whitespace-nowrap
+                  focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-white/50
+                  [@media(orientation:landscape)]:px-5
+                  [@media(orientation:landscape)]:py-2
+                "
+              >
+                View Case Studies
+              </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -115,7 +208,11 @@ const Home = () => {
         <h2 id="home-stats-title" className="sr-only">Key Statistics</h2>
         <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
           {stats.map((s) => (
-            <div key={s.label} data-aos="fade-up" className="flex flex-col sm:flex-row items-center justify-center sm:gap-4 space-y-2 sm:space-y-0">
+            <div
+              key={s.label}
+              data-aos="fade-up"
+              className="flex flex-col sm:flex-row items-center justify-center sm:gap-4 space-y-2 sm:space-y-0"
+            >
               <div className="text-primary text-3xl sm:text-4xl">{s.icon}</div>
               <div>
                 <h3 className="text-2xl sm:text-3xl font-bold text-primary">
@@ -143,7 +240,10 @@ const Home = () => {
                 data-aos="fade-up"
                 data-aos-delay={100 + i * 60}
               >
-                <Link to={href} className="block rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500/70">
+                <Link
+                  to={href}
+                  className="block rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500/70"
+                >
                   <div className="flex gap-4 p-5">
                     <div className="shrink-0 inline-flex h-12 w-12 items-center justify-center rounded-lg border border-teal-200 bg-[#E6F7F8] text-[#00A9B7] transition-colors duration-300 group-hover:border-teal-300 group-hover:text-teal-700">
                       <Icon />
@@ -170,7 +270,10 @@ const Home = () => {
           <ul className="mt-5 flex flex-wrap gap-2" data-aos="fade-up" data-aos-delay="100">
             {INDUSTRIES.map((i) => (
               <li key={i.id}>
-                <Link to={`/industries#${i.id}-title`} className="inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm hover:bg-gray-50">
+                <Link
+                  to={`/industries#${i.id}-title`}
+                  className="inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm hover:bg-gray-50"
+                >
                   {i.title}
                 </Link>
               </li>
@@ -188,14 +291,21 @@ const Home = () => {
           </div>
           <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {CASE_STUDIES.slice(0, 3).map((cs, idx) => (
-              <article key={cs.slug} className="rounded-2xl overflow-hidden border bg-white shadow-sm hover:shadow-md transition" data-aos="fade-up" data-aos-delay={100 + idx * 60}>
+              <article
+                key={cs.slug}
+                className="rounded-2xl overflow-hidden border bg-white shadow-sm hover:shadow-md transition"
+                data-aos="fade-up"
+                data-aos-delay={100 + idx * 60}
+              >
                 <Link to={`/case-studies/${cs.slug}`} aria-label={`Read case study: ${cs.title}`}>
                   {cs.hero && (
                     <img src={cs.hero} alt={cs.title} className="h-44 w-full object-cover" loading="lazy" />
                   )}
                   <div className="p-5">
-                    <div className="text-xs uppercase tracking-wide text-gray-500">{cs.sector} • {cs.timeframe}</div>
- <h3 className="mt-1 text-xl font-semibold text-dark">{cs.title}</h3>
+                    <div className="text-xs uppercase tracking-wide text-gray-500">
+                      {cs.sector} • {cs.timeframe}
+                    </div>
+                    <h3 className="mt-1 text-xl font-semibold text-dark">{cs.title}</h3>
                     {cs.summary && <p className="mt-2 text-gray-600 line-clamp-3">{cs.summary}</p>}
                     <div className="mt-3 text-accent font-semibold">Read more</div>
                   </div>
@@ -234,11 +344,21 @@ const Home = () => {
             <h2 id="home-cta-title" className="text-2xl font-semibold">Let’s talk about your mission</h2>
             <p className="mt-2 text-gray-700">Tell us what you’re building and where you need help. We’ll respond within 1 business day.</p>
             <div className="mt-4 flex gap-3">
-              <Link to="/contact" className="inline-flex items-center rounded-md bg-accent px-5 py-2.5 text-dark font-semibold hover:brightness-95">Contact Us</Link>
-              <Link to="/portfolio" className="inline-flex items-center rounded-md border px-5 py-2.5 hover:bg-gray-50">View Portfolio</Link>
+              <Link to="/contact" className="inline-flex items-center rounded-md bg-accent px-5 py-2.5 text-dark font-semibold hover:brightness-95">
+                Contact Us
+              </Link>
+              <Link to="/portfolio" className="inline-flex items-center rounded-md border px-5 py-2.5 hover:bg-gray-50">
+                View Portfolio
+              </Link>
             </div>
           </div>
-                    <a href="/capabilities" className="rounded-xl border bg-white p-6 shadow-sm hover:shadow-md transition" data-aos="fade-up" data-aos-delay="150">
+
+          <a
+            href="/capabilities"
+            className="rounded-xl border bg-white p-6 shadow-sm hover:shadow-md transition"
+            data-aos="fade-up"
+            data-aos-delay="150"
+          >
             <div className="text-lg font-semibold">Capabilities</div>
             <p className="mt-2 text-gray-700">Overview of services, practices, and example outcomes. Print to save as PDF.</p>
             <div className="mt-3 text-accent font-semibold">View</div>
@@ -268,8 +388,3 @@ const Home = () => {
 };
 
 export default Home;
-
-
-
-
-
