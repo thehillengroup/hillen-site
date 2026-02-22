@@ -24,10 +24,11 @@
     "tsparticles": "^3.8.1"
   },
   "scripts": {
-    "prebuild": "node scripts/generate-sitemap.js && node scripts/generate-image-variants.js",
+    "prebuild": "node scripts/generate-sitemap.js && node scripts/generate-image-variants.js && node scripts/generate-react-snap.js",
     "prestart": "node scripts/generate-image-variants.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "postbuild": "react-snap --config react-snap.json",
     "deploy": "npm run build && node deploy.js",
     "setup-hooks": "git config core.hooksPath .githooks"
   },
@@ -50,6 +51,7 @@
     "fast-glob": "^3.3.3",
     "fs-extra": "^11.3.1",
     "ftp-deploy": "^2.4.7",
+    "react-snap": "^1.23.0",
     "sharp": "^0.34.3",
     "stylelint": "^16.23.1",
     "stylelint-config-standard": "^39.0.0",

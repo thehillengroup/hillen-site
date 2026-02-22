@@ -1,0 +1,20 @@
+{
+  "include": [
+    "/",
+    "/about",
+    "/services",
+    "/portfolio",
+    "/industries",
+    "/careers",
+    "/contact",
+    "/case-studies",
+    "/capabilities",
+    "/privacy",
+    "/terms",
+    "/accessibility",
+    "/sitemap",
+    "/case-studies/federal-health-analytics",
+    "/case-studies/defense-mission-readiness",
+    "/case-studies/civilian-digital-services"
+  ]
+}

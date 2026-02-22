@@ -33,6 +33,7 @@ const Error500 = lazy(() => import('./pages/Error500'));
 const Contracting = lazy(() => import('./pages/Contracting'));
 const CaseStudies = lazy(() => import('./pages/CaseStudies'));
 const CaseStudy = lazy(() => import('./pages/CaseStudy'));
+const GovernmentContracting = lazy(() => import('./pages/GovernmentContracting')); // ✅ added
 
 export default function App() {
   return (
@@ -79,6 +80,7 @@ export default function App() {
             <Route path="/terms" element={<Terms />} />
             <Route path="/accessibility" element={<Accessibility508 />} />
             <Route path="/capabilities" element={<Capabilities />} />
+            <Route path="/government-contracting" element={<GovernmentContracting />} />
             <Route path="/sitemap" element={<Sitemap />} />
             <Route path="/500" element={<Error500 />} />
 

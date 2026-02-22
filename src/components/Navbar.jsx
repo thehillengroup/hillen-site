@@ -9,6 +9,7 @@ const NAV_ITEMS = [
   { to: '/', label: 'Home' },
   { to: '/about', label: 'About' },
   { to: '/services', label: 'Services' },
+  { to: '/government-contracting', label: 'Government' },
   { to: '/portfolio', label: 'Portfolio' },
   { to: '/industries', label: 'Industries' },
   { to: '/careers', label: 'Careers' },

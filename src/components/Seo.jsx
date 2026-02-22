@@ -1,5 +1,5 @@
 // src/components/Seo.jsx
-import { useEffect } from 'react';
+import { useLayoutEffect } from 'react';
 
 /**
  * Minimal SEO helper without external deps.
@@ -17,7 +17,7 @@ export default function Seo({
   noindex = false,
   ogImage,
 }) {
-  useEffect(() => {
+  useLayoutEffect(() => {
     const brand = 'The Hillen Group';
     const fullTitle = title ? `${title} | ${brand}` : brand;
     document.title = fullTitle;

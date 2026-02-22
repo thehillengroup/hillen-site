@@ -7,7 +7,6 @@ const CASE_STUDIES_FILE = path.join(ROOT, 'src', 'data', 'caseStudies.js');
 const OUT_FILE = path.join(ROOT, 'react-snap.json');
 
 function extractSlugs(fileContent) {
-  // This matches: slug: 'something' OR slug: "something"
   const slugs = Array.from(fileContent.matchAll(/slug:\s*['"]([^'"]+)['"]/g)).map((m) => m[1]);
   return Array.from(new Set(slugs)).filter(Boolean);
 }
@@ -35,8 +34,21 @@ function main() {
   const caseStudyRoutes = slugs.map((s) => `/case-studies/${s}`);
   const include = Array.from(new Set([...baseRoutes, ...caseStudyRoutes]));
 
-  fs.writeFileSync(OUT_FILE, JSON.stringify({ include }, null, 2), 'utf8');
-  console.log(`[react-snap] wrote ${include.length} routes to ${path.relative(ROOT, OUT_FILE)}`);
+  const config = {
+    // ONLY snapshot the routes we specify (don’t crawl)
+    crawl: false,
+    include,
+
+    // CRA + react-snap stability
+    fixWebpackChunksIssue: 'CRA2',
+    publicPath: '/',
+
+    // Wait until app signals it’s fully rendered
+    waitFor: 'window.__REACT_SNAP_DONE__',
+  };
+
+  fs.writeFileSync(OUT_FILE, JSON.stringify(config, null, 2), 'utf8');
+  console.log(`[react-snap] wrote ${include.length} routes to react-snap.json`);
 }
 
 main();

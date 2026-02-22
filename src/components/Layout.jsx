@@ -8,7 +8,7 @@ import PrintBrand from './PrintBrand';
 
 const ROUTE_META = [
   {
-    test: (p) => p === '/' || p === '/home',
+    test: (p) => p === '/', // collapsed /home into /
     title: 'Home',
     description: 'Strategic solutions. Delivered. Discover how The Hillen Group can elevate your mission.',
     noindex: false,
@@ -123,14 +123,19 @@ export default function Layout({ seo }) {
   const defaults = pickMeta(location.pathname);
 
   const routeKey =
-    location.pathname === '/' || location.pathname === '/home'
+    location.pathname === '/'
       ? 'home'
       : (location.pathname.split('/')[1] || 'root');
 
+  // Prefer production origin during snapshots/builds to avoid localhost canonicals
+  const siteOrigin =
+    process.env.REACT_APP_SITE_URL ||
+    (typeof window !== 'undefined' ? window.location.origin : '');
+
   const canonical =
     seo?.canonical ??
-    (typeof window !== 'undefined'
-      ? `${window.location.origin}${location.pathname}${location.search || ''}`
+    (siteOrigin
+      ? `${siteOrigin}${location.pathname}${location.search || ''}`
       : undefined);
 
   const meta = {
@@ -140,6 +145,19 @@ export default function Layout({ seo }) {
     noindex: typeof seo?.noindex === 'boolean' ? seo.noindex : defaults.noindex,
     ogImage: seo?.ogImage,
   };
+
+  // ✅ react-snap: signal when route render is complete (prevents snapshotting 404)
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    window.__REACT_SNAP_DONE__ = false;
+
+    const id = requestAnimationFrame(() => {
+      window.__REACT_SNAP_DONE__ = true;
+    });
+
+    return () => cancelAnimationFrame(id);
+  }, [location.pathname]);
 
   // ----- GLOBAL: ensure AOS content prints (prevents blank pages) -----
   useEffect(() => {
