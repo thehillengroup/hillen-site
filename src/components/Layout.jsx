@@ -9,7 +9,7 @@ import PrintBrand from './PrintBrand';
 const ROUTE_META = [
   {
     test: (p) => p === '/', // collapsed /home into /
-    title: 'Home',
+    title: '',
     description: 'Strategic solutions. Delivered. Discover how The Hillen Group can elevate your mission.',
     noindex: false,
   },

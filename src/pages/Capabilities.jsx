@@ -86,7 +86,7 @@ export default function Capabilities() {
           <Section title="Corporate Information">
             <ul className="list-disc pl-5 space-y-1">
               <li>Small Business</li>
-              <li>NAICS: 541511, 541512, 541519 (examples)</li>
+              <li>NAICS: 541511, 541618</li>
               <li>DUNS/UEI: Available upon request</li>
               <li>CAGE: Available upon request</li>
             </ul>

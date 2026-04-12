@@ -16,7 +16,7 @@ export default function GovernmentContracting() {
   const quickFacts = [
     { label: 'UEI', value: 'Available upon request' },
     { label: 'CAGE', value: 'Pending' },
-    { label: 'NAICS', value: 'Available upon request' },
+    { label: 'NAICS', value: '541511, 541618' },
     { label: 'Certifications', value: 'Minority certification in progress' },
   ];
 
@@ -160,7 +160,7 @@ export default function GovernmentContracting() {
 
               <div className="flex flex-col sm:flex-row gap-3">
                 <a
-                  href="/capability-statement.pdf"
+                  href="docs/capability-statement.pdf"
                   className="inline-flex items-center justify-center rounded-[10px] border border-gray-300 bg-white px-5 py-2 text-dark font-semibold hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-accent/50"
                 >
                   Download PDF
@@ -265,7 +265,7 @@ export default function GovernmentContracting() {
                   Contact
                 </Link>
                 <a
-                  href="/capability-statement.pdf"
+                  href="docs/capability-statement.pdf"
                   className="inline-flex items-center justify-center rounded-[10px] border border-gray-300 bg-white px-6 py-3 text-dark font-semibold hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-accent/50"
                 >
                   Capability Statement (PDF)
